@@ -97,3 +97,4 @@ function TabButton({ icon, label, active, onClick }) {
     </button>
   );
 }
+/* Force rebuild */
