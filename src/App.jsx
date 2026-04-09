@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Home, CheckSquare, Calendar, Users, Settings } from 'lucide-react';
+import { Home, CheckSquare, Calendar, Users, Workflow, Settings } from 'lucide-react';
 import Dashboard from './screens/Dashboard';
 import Tasks from './screens/Tasks';
 import CalendarScreen from './screens/Calendar';
 import Agents from './screens/Agents';
+import WorkflowIntelligence from './screens/WorkflowIntelligence';
 import SettingsScreen from './screens/Settings';
 import './index.css';
 
@@ -20,6 +21,8 @@ export default function App() {
         return <CalendarScreen />;
       case 'agents':
         return <Agents />;
+      case 'workflows':
+        return <WorkflowIntelligence />;
       case 'settings':
         return <SettingsScreen />;
       default:
@@ -35,8 +38,8 @@ export default function App() {
       </div>
 
       {/* Bottom Tab Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-dark-card/95 backdrop-blur border-t border-cyan/20">
-        <div className="flex justify-around items-center h-20 max-w-md mx-auto w-full">
+      <div className="fixed bottom-0 left-0 right-0 bg-dark-card/95 backdrop-blur border-t border-cyan/20 overflow-x-auto">
+        <div className="flex justify-around items-center h-20 min-w-max px-2">
           <TabButton
             icon={<Home size={24} />}
             label="Home"
@@ -60,6 +63,12 @@ export default function App() {
             label="Agents"
             active={activeTab === 'agents'}
             onClick={() => setActiveTab('agents')}
+          />
+          <TabButton
+            icon={<Workflow size={24} />}
+            label="Workflows"
+            active={activeTab === 'workflows'}
+            onClick={() => setActiveTab('workflows')}
           />
           <TabButton
             icon={<Settings size={24} />}

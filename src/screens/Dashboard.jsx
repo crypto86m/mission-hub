@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { TrendingUp, Activity, Users, Zap } from 'lucide-react';
 import OrbitalRing from '../components/OrbitalRing';
 import ActivityFeed from '../components/ActivityFeed';
+<<<<<<< HEAD
 import MasterConnect from '../components/MasterConnect';
+=======
+import SystemHealthWidget from '../components/SystemHealthWidget';
+>>>>>>> 6d6f03c (Integrate Workflow Intelligence as 6th tab + Add Agents tab + Add SystemHealthWidget to Dashboard)
 
 export default function Dashboard() {
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -71,9 +75,29 @@ export default function Dashboard() {
         <p className="text-gray-400">Command center for Benjamin's empire</p>
       </div>
 
+<<<<<<< HEAD
       {/* Master Connect - NEW */}
       <div className="mb-8">
         <MasterConnect />
+=======
+      {/* System Health Widget */}
+      <div className="mb-8">
+        <SystemHealthWidget />
+      </div>
+
+      {/* Status Section */}
+      <div className="mb-8 glass-card">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="text-3xl glow-text">🛰️</div>
+          <div>
+            <h2 className="text-lg font-semibold">System Status</h2>
+            <div className="flex items-center gap-2">
+              <div className="status-dot active"></div>
+              <span className="text-sm text-green-400">All Systems Operational</span>
+            </div>
+          </div>
+        </div>
+>>>>>>> 6d6f03c (Integrate Workflow Intelligence as 6th tab + Add Agents tab + Add SystemHealthWidget to Dashboard)
       </div>
 
       {/* Orbital Ring - Companies */}
