@@ -104,13 +104,17 @@ export default function OrbitalRing({ companies, selectedCompany, setSelectedCom
             >
               <button
                 onClick={() => setSelectedCompany(company)}
-                className={`w-20 h-20 rounded-full flex flex-col items-center justify-center transition-all duration-300 hover:scale-125 ${
+                className={`w-20 h-20 rounded-full flex flex-col items-center justify-center transition-all duration-300 hover:scale-125 overflow-hidden ${
                   isSelected
                     ? 'bg-gradient-to-br from-cyan to-blue-600 border-2 border-white scale-125 shadow-glow-strong'
                     : `bg-gradient-to-br ${company.color} border-2 border-cyan/50 hover:border-cyan hover:shadow-glow`
                 }`}
               >
-                <div className="text-3xl">{company.icon}</div>
+                {company.logo ? (
+                  <img src={company.logo} alt={company.name} className="w-16 h-16 object-contain rounded-full bg-white p-1" />
+                ) : (
+                  <div className="text-3xl">{company.icon}</div>
+                )}
               </button>
               <p className={`text-center mt-2 font-semibold text-xs transition-colors ${isSelected ? 'text-cyan' : 'text-gray-300'}`}>
                 {company.name}
