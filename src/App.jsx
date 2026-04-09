@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug } from 'lucide-react';
+import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain } from 'lucide-react';
 import Dashboard from './screens/Dashboard';
 import Tasks from './screens/Tasks';
 import CalendarScreen from './screens/Calendar';
@@ -7,6 +7,7 @@ import Agents from './screens/Agents';
 import WorkflowIntelligence from './screens/WorkflowIntelligence';
 import SettingsScreen from './screens/Settings';
 import Integrations from './screens/Integrations';
+import AgentIntelligence from './screens/AgentIntelligence';
 import './index.css';
 
 export default function App() {
@@ -28,6 +29,8 @@ export default function App() {
         return <SettingsScreen />;
       case 'integrations':
         return <Integrations />;
+      case 'intelligence':
+        return <AgentIntelligence />;
       default:
         return <Dashboard />;
     }
@@ -72,6 +75,12 @@ export default function App() {
             label="Workflows"
             active={activeTab === 'workflows'}
             onClick={() => setActiveTab('workflows')}
+          />
+          <TabButton
+            icon={<Brain size={24} />}
+            label="Intel"
+            active={activeTab === 'intelligence'}
+            onClick={() => setActiveTab('intelligence')}
           />
           <TabButton
             icon={<Plug size={24} />}
