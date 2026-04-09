@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { AlertCircle, Zap, Lock, Database, Bell } from 'lucide-react';
+import { AlertCircle, Zap, Lock, Database, Bell, WifiOff } from 'lucide-react';
+import MasterConnect from '../components/MasterConnect';
 
 export default function SettingsScreen() {
   const [budget, setBudget] = useState({
@@ -140,6 +141,15 @@ export default function SettingsScreen() {
     <div className="w-full h-full overflow-y-auto pb-24 px-4 pt-6">
       <h1 className="text-3xl font-bold glow-text mb-2">Settings</h1>
       <p className="text-gray-400 mb-6">Manage integrations, budgets, and automations</p>
+
+      {/* Master Connect - Connection Diagnostics */}
+      <div className="mb-8">
+        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+          <WifiOff size={20} className="text-cyan" />
+          Master Connection Control
+        </h2>
+        <MasterConnect />
+      </div>
 
       {/* Budget Controls */}
       <div className="mb-8">

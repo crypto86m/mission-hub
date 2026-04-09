@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TrendingUp, Activity, Users, Zap } from 'lucide-react';
 import OrbitalRing from '../components/OrbitalRing';
 import ActivityFeed from '../components/ActivityFeed';
+import MasterConnect from '../components/MasterConnect';
 
 export default function Dashboard() {
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -70,21 +71,14 @@ export default function Dashboard() {
         <p className="text-gray-400">Command center for Benjamin's empire</p>
       </div>
 
-      {/* Status Section */}
-      <div className="mb-8 glass-card">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="text-3xl glow-text">🛰️</div>
-          <div>
-            <h2 className="text-lg font-semibold">System Status</h2>
-            <div className="flex items-center gap-2">
-              <div className="status-dot active"></div>
-              <span className="text-sm text-green-400">All Systems Operational</span>
-            </div>
-          </div>
-        </div>
+      {/* Master Connect - NEW */}
+      <div className="mb-8">
+        <MasterConnect />
       </div>
 
       {/* Orbital Ring - Companies */}
+      {/* Status Section - LEGACY */}
+      {/* <div className="mb-8 glass-card"> ... (commented out) </div> */}
       <div className="mb-8">
         <h2 className="text-xl font-bold mb-4">Portfolio Overview</h2>
         <OrbitalRing companies={companies} selectedCompany={selectedCompany} setSelectedCompany={setSelectedCompany} />
