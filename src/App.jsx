@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Home, CheckSquare, Calendar, Users, Workflow, Settings } from 'lucide-react';
+import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug } from 'lucide-react';
 import Dashboard from './screens/Dashboard';
 import Tasks from './screens/Tasks';
 import CalendarScreen from './screens/Calendar';
 import Agents from './screens/Agents';
 import WorkflowIntelligence from './screens/WorkflowIntelligence';
 import SettingsScreen from './screens/Settings';
+import Integrations from './screens/Integrations';
 import './index.css';
 
 export default function App() {
@@ -25,6 +26,8 @@ export default function App() {
         return <WorkflowIntelligence />;
       case 'settings':
         return <SettingsScreen />;
+      case 'integrations':
+        return <Integrations />;
       default:
         return <Dashboard />;
     }
@@ -69,6 +72,12 @@ export default function App() {
             label="Workflows"
             active={activeTab === 'workflows'}
             onClick={() => setActiveTab('workflows')}
+          />
+          <TabButton
+            icon={<Plug size={24} />}
+            label="Integrations"
+            active={activeTab === 'integrations'}
+            onClick={() => setActiveTab('integrations')}
           />
           <TabButton
             icon={<Settings size={24} />}
