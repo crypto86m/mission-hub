@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TrendingUp, Activity, Users, Zap } from 'lucide-react';
+import NotificationSystem from '../components/NotificationSystem';
 import OrbitalRing from '../components/OrbitalRing';
 import ActivityFeed from '../components/ActivityFeed';
 import MasterConnect from '../components/MasterConnect';
@@ -69,9 +70,12 @@ export default function Dashboard() {
   return (
     <div className="w-full h-full overflow-y-auto pb-24 px-4 pt-6">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold glow-text mb-2">Mission Control</h1>
-        <p className="text-gray-400">Command center for Benjamin's empire</p>
+      <div className="mb-8 flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-bold glow-text mb-2">Mission Control</h1>
+          <p className="text-gray-400">Command center for Benjamin's empire</p>
+        </div>
+        <NotificationSystem />
       </div>
 
       {/* Pending Approvals — Quick Access */}
