@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain, Trophy } from 'lucide-react';
+import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain, Trophy, Database } from 'lucide-react';
 import Dashboard from './screens/Dashboard';
 import Tasks from './screens/Tasks';
 import CalendarScreen from './screens/Calendar';
@@ -9,6 +9,8 @@ import SettingsScreen from './screens/Settings';
 import Integrations from './screens/Integrations';
 import AgentIntelligence from './screens/AgentIntelligence';
 import WeeklyScorecard from './screens/WeeklyScorecard';
+import ContentPipeline from './screens/ContentPipeline';
+import MemoryBank from './screens/MemoryBank';
 import './index.css';
 
 export default function App() {
@@ -34,6 +36,10 @@ export default function App() {
         return <AgentIntelligence />;
       case 'scorecard':
         return <WeeklyScorecard />;
+      case 'content':
+        return <ContentPipeline />;
+      case 'memory':
+        return <MemoryBank />;
       default:
         return <Dashboard />;
     }
@@ -75,9 +81,9 @@ export default function App() {
           />
           <TabButton
             icon={<Workflow size={24} />}
-            label="Workflows"
-            active={activeTab === 'workflows'}
-            onClick={() => setActiveTab('workflows')}
+            label="Content"
+            active={activeTab === 'content'}
+            onClick={() => setActiveTab('content')}
           />
           <TabButton
             icon={<Brain size={24} />}
@@ -90,6 +96,12 @@ export default function App() {
             label="Integrations"
             active={activeTab === 'integrations'}
             onClick={() => setActiveTab('integrations')}
+          />
+          <TabButton
+            icon={<Database size={24} />}
+            label="Memory"
+            active={activeTab === 'memory'}
+            onClick={() => setActiveTab('memory')}
           />
           <TabButton
             icon={<Trophy size={24} />}
