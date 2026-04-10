@@ -67,11 +67,44 @@ export function useApprovals() {
     return () => { supabase.removeChannel(channel); };
   }, []);
 
+  const PROXY_URL = 'http://100.65.157.30:4500';
+
   const approve = async (id) => {
+    const approval = approvals.find(a => a.id === id);
+    const actionMap = {
+      'Trading Bot': 'trade',
+      'Email Responder': 'email',
+      'Content Writer': 'publish',
+      'RLM Estimator': 'bid',
+    };
+    const action = actionMap[approval?.agent] || 'unknown';
+
+    // Execute real action via proxy
+    try {
+      await fetch(`${PROXY_URL}/api/approve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action, approvalId: id, decision: 'approved' }),
+      });
+    } catch (err) {
+      console.log('Proxy unavailable, updating Supabase only');
+    }
+
+    // Update Supabase
     await supabase.from('approvals').update({ status: 'approved', decided_at: new Date().toISOString() }).eq('id', id);
   };
 
   const reject = async (id) => {
+    try {
+      await fetch(`${PROXY_URL}/api/approve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ approvalId: id, decision: 'rejected' }),
+      });
+    } catch (err) {
+      console.log('Proxy unavailable, updating Supabase only');
+    }
+
     await supabase.from('approvals').update({ status: 'rejected', decided_at: new Date().toISOString() }).eq('id', id);
   };
 
