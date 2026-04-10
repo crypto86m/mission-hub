@@ -74,6 +74,116 @@ export default function Dashboard() {
         <p className="text-gray-400">Command center for Benjamin's empire</p>
       </div>
 
+      {/* Pending Approvals — Quick Access */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-bold">Pending Approvals</h2>
+          <span className="text-xs font-mono text-cyan">4 AWAITING</span>
+        </div>
+        <div className="space-y-2">
+          {[
+            { id: 1, agent: 'Trading Bot', title: 'TSLA Bull Put Spread', risk: 'HIGH', value: '$250 risk', color: '#EF4444', time: '2m ago' },
+            { id: 2, agent: 'RLM Estimator', title: 'Hotel Oxbow Bid', risk: 'MEDIUM', value: '$410K revenue', color: '#F59E0B', time: '3h ago' },
+            { id: 3, agent: 'Email Responder', title: 'Marriott Contract Reply', risk: 'MEDIUM', value: '$80K opportunity', color: '#F59E0B', time: '15m ago' },
+          ].map(item => (
+            <div key={item.id} className="glass-card flex items-center gap-3">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-white truncate">{item.title}</span>
+                  <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono border ${
+                    item.risk === 'HIGH' ? 'text-red-400 border-red-400/30 bg-red-400/10' :
+                    'text-yellow-400 border-yellow-400/30 bg-yellow-400/10'
+                  }`}>{item.risk}</span>
+                </div>
+                <p className="text-[10px] text-gray-400">{item.agent} • {item.value} • {item.time}</p>
+              </div>
+              <div className="flex gap-1.5 shrink-0">
+                <button className="px-3 py-1.5 rounded-lg text-[10px] font-bold bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30">✓</button>
+                <button className="px-3 py-1.5 rounded-lg text-[10px] font-bold bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30">✗</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Real-Time P&L Widget */}
+      <div className="mb-6">
+        <div className="glass-card">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-lg font-bold">Today's P&L</h2>
+            <span className="text-xs font-mono text-green-400">MARKET OPEN</span>
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            <div className="text-center">
+              <p className="text-2xl font-bold text-green-400">+$18.50</p>
+              <p className="text-[10px] text-gray-400">Unrealized</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-white">$518.50</p>
+              <p className="text-[10px] text-gray-400">Account Value</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-cyan">2</p>
+              <p className="text-[10px] text-gray-400">Open Positions</p>
+            </div>
+          </div>
+          <div className="mt-3 flex items-center gap-2">
+            <div className="flex-1 bg-gray-800 rounded-full h-2">
+              <div className="h-2 rounded-full bg-green-500" style={{ width: '23%' }} />
+            </div>
+            <span className="text-[10px] text-gray-400 font-mono">$18.50 / $80 daily limit</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Agent Health Scores */}
+      <div className="mb-6">
+        <h2 className="text-lg font-bold mb-3">Agent Health</h2>
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            { name: 'Trading', score: 88, color: '#22C55E' },
+            { name: 'Email', score: 97, color: '#22C55E' },
+            { name: 'Content', score: 92, color: '#22C55E' },
+            { name: 'Discord', score: 100, color: '#22C55E' },
+            { name: 'Cost Mon', score: 100, color: '#22C55E' },
+            { name: 'RLM Est', score: 85, color: '#F59E0B' },
+            { name: 'Research', score: 78, color: '#F59E0B' },
+            { name: 'Social', score: 45, color: '#EF4444' },
+            { name: 'Prospect', score: 32, color: '#EF4444' },
+          ].map((a, i) => (
+            <div key={i} className="glass-card text-center py-2">
+              <p className="text-lg font-bold font-mono" style={{ color: a.color }}>{a.score}</p>
+              <p className="text-[9px] text-gray-400">{a.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Cost Forecast */}
+      <div className="mb-6">
+        <div className="glass-card">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-lg font-bold">Cost Forecast</h2>
+            <span className="text-xs font-mono text-yellow-400">⚠️ WATCH</span>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <p className="text-[10px] text-gray-400">Today</p>
+              <p className="text-xl font-bold text-white">$142</p>
+              <p className="text-[10px] text-yellow-400">71% of $200 limit</p>
+            </div>
+            <div>
+              <p className="text-[10px] text-gray-400">Month Forecast</p>
+              <p className="text-xl font-bold text-yellow-400">$187</p>
+              <p className="text-[10px] text-gray-400">of $200 budget</p>
+            </div>
+          </div>
+          <div className="mt-2 bg-gray-800 rounded-full h-2">
+            <div className="h-2 rounded-full bg-yellow-500" style={{ width: '93%' }} />
+          </div>
+        </div>
+      </div>
+
       {/* Master Connect */}
       <div className="mb-8">
         <MasterConnect />

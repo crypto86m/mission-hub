@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain } from 'lucide-react';
+import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain, Trophy } from 'lucide-react';
 import Dashboard from './screens/Dashboard';
 import Tasks from './screens/Tasks';
 import CalendarScreen from './screens/Calendar';
@@ -8,6 +8,7 @@ import WorkflowIntelligence from './screens/WorkflowIntelligence';
 import SettingsScreen from './screens/Settings';
 import Integrations from './screens/Integrations';
 import AgentIntelligence from './screens/AgentIntelligence';
+import WeeklyScorecard from './screens/WeeklyScorecard';
 import './index.css';
 
 export default function App() {
@@ -31,6 +32,8 @@ export default function App() {
         return <Integrations />;
       case 'intelligence':
         return <AgentIntelligence />;
+      case 'scorecard':
+        return <WeeklyScorecard />;
       default:
         return <Dashboard />;
     }
@@ -87,6 +90,12 @@ export default function App() {
             label="Integrations"
             active={activeTab === 'integrations'}
             onClick={() => setActiveTab('integrations')}
+          />
+          <TabButton
+            icon={<Trophy size={24} />}
+            label="Scorecard"
+            active={activeTab === 'scorecard'}
+            onClick={() => setActiveTab('scorecard')}
           />
           <TabButton
             icon={<Settings size={24} />}
