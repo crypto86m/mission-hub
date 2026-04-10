@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { TrendingUp, Activity, Users, Zap } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import NotificationSystem from '../components/NotificationSystem';
 import AgentCommsLog from '../components/AgentCommsLog';
 import TimeTravelSlider from '../components/TimeTravelSlider';
@@ -11,6 +12,38 @@ import SystemHealthWidget from '../components/SystemHealthWidget';
 
 export default function Dashboard() {
   const [selectedCompany, setSelectedCompany] = useState(null);
+  const [approvals, setApprovals] = useState([]);
+  const [approvalsLoading, setApprovalsLoading] = useState(true);
+
+  const fetchApprovals = useCallback(async () => {
+    const { data, error } = await supabase
+      .from('approvals')
+      .select('*')
+      .eq('status', 'pending')
+      .order('created_at', { ascending: false });
+    if (!error && data) setApprovals(data);
+    setApprovalsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    fetchApprovals();
+    // realtime subscription
+    const channel = supabase
+      .channel('approvals-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'approvals' }, () => fetchApprovals())
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [fetchApprovals]);
+
+  const handleApproval = async (id, newStatus) => {
+    const { error } = await supabase
+      .from('approvals')
+      .update({ status: newStatus, decided_at: new Date().toISOString() })
+      .eq('id', id);
+    if (!error) {
+      setApprovals(prev => prev.filter(a => a.id !== id));
+    }
+  };
 
   const companies = [
     {
@@ -85,28 +118,30 @@ export default function Dashboard() {
       <div className="mb-6">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold">Pending Approvals</h2>
-          <span className="text-xs font-mono text-cyan">4 AWAITING</span>
+          <span className="text-xs font-mono text-cyan">{approvals.length} AWAITING</span>
         </div>
         <div className="space-y-2">
-          {[
-            { id: 1, agent: 'Trading Bot', title: 'TSLA Bull Put Spread', risk: 'HIGH', value: '$250 risk', color: '#EF4444', time: '2m ago' },
-            { id: 2, agent: 'RLM Estimator', title: 'Hotel Oxbow Bid', risk: 'MEDIUM', value: '$410K revenue', color: '#F59E0B', time: '3h ago' },
-            { id: 3, agent: 'Email Responder', title: 'Marriott Contract Reply', risk: 'MEDIUM', value: '$80K opportunity', color: '#F59E0B', time: '15m ago' },
-          ].map(item => (
+          {approvalsLoading ? (
+            <p className="text-xs text-gray-500">Loading approvals...</p>
+          ) : approvals.length === 0 ? (
+            <p className="text-xs text-gray-500">No pending approvals ✅</p>
+          ) : approvals.map(item => (
             <div key={item.id} className="glass-card flex items-center gap-3">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium text-white truncate">{item.title}</span>
                   <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono border ${
                     item.risk === 'HIGH' ? 'text-red-400 border-red-400/30 bg-red-400/10' :
+                    item.risk === 'LOW' ? 'text-green-400 border-green-400/30 bg-green-400/10' :
                     'text-yellow-400 border-yellow-400/30 bg-yellow-400/10'
                   }`}>{item.risk}</span>
                 </div>
-                <p className="text-[10px] text-gray-400">{item.agent} • {item.value} • {item.time}</p>
+                <p className="text-[10px] text-gray-400">{item.agent} • {item.value || ''}</p>
+                {item.description && <p className="text-[10px] text-gray-500 mt-0.5 truncate">{item.description}</p>}
               </div>
               <div className="flex gap-1.5 shrink-0">
-                <button className="px-3 py-1.5 rounded-lg text-[10px] font-bold bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30">✓</button>
-                <button className="px-3 py-1.5 rounded-lg text-[10px] font-bold bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30">✗</button>
+                <button onClick={() => handleApproval(item.id, 'approved')} className="px-3 py-1.5 rounded-lg text-[10px] font-bold bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30 transition-colors cursor-pointer">✓</button>
+                <button onClick={() => handleApproval(item.id, 'denied')} className="px-3 py-1.5 rounded-lg text-[10px] font-bold bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 transition-colors cursor-pointer">✗</button>
               </div>
             </div>
           ))}
