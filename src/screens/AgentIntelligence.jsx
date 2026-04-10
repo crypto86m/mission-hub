@@ -1,466 +1,565 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Search, ZoomIn, ZoomOut, Maximize2, Filter, Activity, AlertTriangle, Zap, Brain, Eye } from 'lucide-react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Search, ZoomIn, ZoomOut, Maximize2, Brain, Eye, Activity, Zap, DollarSign, BarChart3, Target, AlertTriangle, Pause, Play, RefreshCw, X, Layers, Grid3X3, GitBranch, Flame, Focus } from 'lucide-react';
 
-// ═══════════════════════════════════════════════════════
-// AGENT INTELLIGENCE COMMAND CENTER
-// A live intelligence system + control interface
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════
+// AGENT INTELLIGENCE COMMAND CENTER v2
+// A live business intelligence engine for autonomous systems
+// ═══════════════════════════════════════════════════════════════════
 
-// NODE DEFINITIONS — Every agent, integration, workflow, data source
-const nodes = [
-  // Core Agents (large)
-  { id: 'charles', label: 'Charles (CBV2)', type: 'core', status: 'active', role: 'Primary AI Agent', model: 'Opus 4.6', tasksCompleted: 4521, revenue: '$2.8M influenced', x: 400, y: 300, size: 60 },
-  
-  // Sub-agents (medium)
-  { id: 'trading-bot', label: 'Trading Bot', type: 'agent', status: 'active', role: 'Live Trading', model: 'GPT-4o', tasksCompleted: 892, revenue: '$500 capital', x: 200, y: 150, size: 40 },
-  { id: 'email-responder', label: 'Email Responder', type: 'agent', status: 'active', role: 'Auto-Reply', model: 'Haiku', tasksCompleted: 1247, revenue: '$80K pipeline', x: 600, y: 150, size: 40 },
-  { id: 'content-agent', label: 'Content Agent', type: 'agent', status: 'active', role: 'Newsletter', model: 'Sonnet', tasksCompleted: 287, revenue: '287 subs', x: 600, y: 450, size: 40 },
-  { id: 'social-agent', label: 'Social Media', type: 'agent', status: 'idle', role: 'Distribution', model: 'GPT-4o', tasksCompleted: 90, revenue: '18.7K reach', x: 750, y: 350, size: 35 },
-  { id: 'market-research', label: 'Market Research', type: 'agent', status: 'active', role: 'Analysis', model: 'Perplexity', tasksCompleted: 365, revenue: 'Intel feeds', x: 150, y: 300, size: 35 },
-  { id: 'prospect-research', label: 'Prospect Research', type: 'agent', status: 'idle', role: 'Lead Gen', model: 'Perplexity', tasksCompleted: 42, revenue: '$5K MRR target', x: 650, y: 250, size: 35 },
-  { id: 'cost-monitor', label: 'Cost Monitor', type: 'agent', status: 'active', role: 'Budget Tracking', model: 'Custom', tasksCompleted: 730, revenue: '$200/mo budget', x: 300, y: 480, size: 35 },
-  { id: 'discord-bot', label: 'Discord Bot', type: 'agent', status: 'active', role: '14 Channels', model: 'Haiku', tasksCompleted: 4521, revenue: 'Ops visibility', x: 200, y: 450, size: 35 },
-  { id: 'rlm-estimator', label: 'RLM Estimator', type: 'agent', status: 'processing', role: 'Bid Generation', model: 'GPT-4o', tasksCompleted: 354, revenue: '$410K pipeline', x: 500, y: 100, size: 40 },
-  
-  // Integrations (small)
-  { id: 'alpaca', label: 'Alpaca', type: 'integration', status: 'active', role: 'Live Trading API', x: 80, y: 100, size: 25 },
-  { id: 'gmail', label: 'Gmail', type: 'integration', status: 'active', role: 'OAuth + App Pass', x: 700, y: 100, size: 25 },
-  { id: 'discord-api', label: 'Discord', type: 'integration', status: 'active', role: '14 channels', x: 100, y: 500, size: 25 },
-  { id: 'substack', label: 'Substack', type: 'integration', status: 'active', role: 'Publishing', x: 700, y: 500, size: 25 },
-  { id: 'buffer', label: 'Buffer', type: 'integration', status: 'active', role: 'Tweet Queue', x: 780, y: 420, size: 25 },
-  { id: 'perplexity', label: 'Perplexity', type: 'integration', status: 'active', role: 'Research API', x: 50, y: 250, size: 25 },
-  { id: 'stripe', label: 'Stripe', type: 'integration', status: 'active', role: 'Payments', x: 750, y: 200, size: 25 },
-  { id: 'ollama', label: 'Ollama', type: 'integration', status: 'active', role: 'Local LLM', x: 350, y: 50, size: 25 },
-  { id: 'anthropic', label: 'Anthropic', type: 'integration', status: 'active', role: 'Claude API', x: 450, y: 50, size: 25 },
-  { id: 'openai', label: 'OpenAI', type: 'integration', status: 'active', role: 'GPT-4o API', x: 300, y: 80, size: 25 },
-  { id: 'vercel', label: 'Vercel', type: 'integration', status: 'active', role: 'Deployment', x: 550, y: 530, size: 25 },
-  { id: 'supabase', label: 'Supabase', type: 'integration', status: 'active', role: 'Database', x: 450, y: 530, size: 25 },
-  { id: 'tailscale', label: 'Tailscale', type: 'integration', status: 'active', role: 'VPN Mesh', x: 350, y: 550, size: 25 },
-  { id: 'zapier', label: 'Zapier', type: 'integration', status: 'configured', role: 'Automation', x: 150, y: 380, size: 25 },
-  { id: 'tradingview', label: 'TradingView', type: 'integration', status: 'planned', role: 'Webhooks', x: 80, y: 180, size: 25 },
-  
-  // Data Sources (external)
-  { id: 'rlm-data', label: 'RLM Pipeline', type: 'data', status: 'active', role: '354 projects', x: 550, y: 50, size: 20 },
-  { id: 'nvcc-data', label: 'NVCC Members', type: 'data', status: 'active', role: '128 members', x: 650, y: 50, size: 20 },
+const CLUSTERS = {
+  trading: { label: 'Trading', color: '#A855F7', x: 200, y: 200 },
+  content: { label: 'Content', color: '#F97316', x: 600, y: 200 },
+  operations: { label: 'Operations', color: '#22C55E', x: 200, y: 450 },
+  automation: { label: 'Automation', color: '#3B82F6', x: 600, y: 450 },
+};
+
+const agents = [
+  { id: 'charles', label: 'Charles (CBV2)', type: 'core', status: 'active', cluster: null, role: 'Primary AI Agent', model: 'Opus 4.6', objective: 'Orchestrate all agents, maximize revenue, minimize cost', tasks: 4521, successRate: 94, efficiency: 92, revenue: 2800000, cost: 142, apiCalls: 12847, latency: 1.2, throughput: 226, reliability: 97, x: 400, y: 320, size: 65 },
+
+  // Trading cluster
+  { id: 'trading-bot', label: 'Trading Bot', type: 'agent', status: 'active', cluster: 'trading', role: 'Live Trading Executor', model: 'GPT-4o', objective: 'Execute Bollinger Squeeze, ORB, RSI strategies', tasks: 892, successRate: 52, efficiency: 78, revenue: 500, cost: 18, apiCalls: 3421, latency: 0.8, throughput: 45, reliability: 88, x: 150, y: 160, size: 42 },
+  { id: 'market-research', label: 'Market Research', type: 'agent', status: 'active', cluster: 'trading', role: 'Pre-Market Analysis', model: 'Perplexity', objective: 'Scan gaps, identify setups, sector analysis', tasks: 365, successRate: 89, efficiency: 95, revenue: 0, cost: 8, apiCalls: 1820, latency: 2.1, throughput: 18, reliability: 96, x: 120, y: 260, size: 36 },
+
+  // Content cluster
+  { id: 'content-agent', label: 'Content Agent', type: 'agent', status: 'active', cluster: 'content', role: 'Newsletter Writer', model: 'Sonnet', objective: 'Draft Bennett\'s Brief Issue #7', tasks: 287, successRate: 96, efficiency: 88, revenue: 3400, cost: 12, apiCalls: 574, latency: 3.2, throughput: 14, reliability: 98, x: 620, y: 160, size: 42 },
+  { id: 'social-agent', label: 'Social Media', type: 'agent', status: 'idle', cluster: 'content', role: 'Distribution', model: 'GPT-4o', objective: 'Queue tweets, LinkedIn posts, Instagram', tasks: 90, successRate: 100, efficiency: 70, revenue: 0, cost: 2, apiCalls: 180, latency: 1.0, throughput: 5, reliability: 100, x: 700, y: 250, size: 34 },
+
+  // Operations cluster
+  { id: 'email-responder', label: 'Email Responder', type: 'agent', status: 'active', cluster: 'operations', role: 'Auto-Reply System', model: 'Haiku', objective: 'Reply non-sensitive emails, flag urgent', tasks: 1247, successRate: 91, efficiency: 97, revenue: 80000, cost: 5, apiCalls: 2494, latency: 0.3, throughput: 62, reliability: 99, x: 180, y: 420, size: 42 },
+  { id: 'discord-bot', label: 'Discord Bot', type: 'agent', status: 'active', cluster: 'operations', role: '14-Channel Monitor', model: 'Haiku', objective: 'Monitor all channels, auto-respond, log activity', tasks: 4521, successRate: 99, efficiency: 99, revenue: 0, cost: 3, apiCalls: 9042, latency: 0.1, throughput: 226, reliability: 100, x: 120, y: 500, size: 36 },
+  { id: 'cost-monitor', label: 'Cost Monitor', type: 'agent', status: 'active', cluster: 'operations', role: 'Budget Guardian', model: 'Custom', objective: 'Track spend, alert thresholds, optimize routing', tasks: 730, successRate: 100, efficiency: 100, revenue: 0, cost: 0, apiCalls: 2190, latency: 0.1, throughput: 37, reliability: 100, x: 260, y: 520, size: 34 },
+
+  // Automation cluster
+  { id: 'rlm-estimator', label: 'RLM Estimator', type: 'agent', status: 'processing', cluster: 'automation', role: 'Bid Generator', model: 'GPT-4o', objective: 'Generate Hotel Oxbow bid — $410K', tasks: 354, successRate: 87, efficiency: 82, revenue: 410000, cost: 22, apiCalls: 708, latency: 4.5, throughput: 18, reliability: 90, x: 580, y: 420, size: 42 },
+  { id: 'prospect-research', label: 'Prospect Research', type: 'agent', status: 'idle', cluster: 'automation', role: 'Lead Generation', model: 'Perplexity', objective: 'Find AI Support customers', tasks: 42, successRate: 76, efficiency: 60, revenue: 0, cost: 4, apiCalls: 84, latency: 3.8, throughput: 2, reliability: 80, x: 680, y: 480, size: 34 },
 ];
 
-// EDGE DEFINITIONS — All connections between nodes
+const integrations = [
+  { id: 'alpaca', label: 'Alpaca', type: 'integration', status: 'active', x: 60, y: 120, size: 22 },
+  { id: 'gmail', label: 'Gmail', type: 'integration', status: 'active', x: 80, y: 380, size: 22 },
+  { id: 'discord-api', label: 'Discord', type: 'integration', status: 'active', x: 50, y: 520, size: 22 },
+  { id: 'substack', label: 'Substack', type: 'integration', status: 'active', x: 720, y: 120, size: 22 },
+  { id: 'buffer', label: 'Buffer', type: 'integration', status: 'active', x: 760, y: 280, size: 22 },
+  { id: 'perplexity', label: 'Perplexity', type: 'integration', status: 'active', x: 40, y: 200, size: 22 },
+  { id: 'stripe', label: 'Stripe', type: 'integration', status: 'active', x: 750, y: 440, size: 22 },
+  { id: 'ollama', label: 'Ollama', type: 'integration', status: 'active', x: 300, y: 60, size: 22 },
+  { id: 'anthropic', label: 'Anthropic', type: 'integration', status: 'active', x: 420, y: 60, size: 22 },
+  { id: 'openai', label: 'OpenAI', type: 'integration', status: 'active', x: 340, y: 100, size: 22 },
+  { id: 'vercel', label: 'Vercel', type: 'integration', status: 'active', x: 500, y: 560, size: 22 },
+  { id: 'supabase', label: 'Supabase', type: 'integration', status: 'active', x: 400, y: 560, size: 22 },
+  { id: 'tailscale', label: 'Tailscale', type: 'integration', status: 'active', x: 300, y: 570, size: 22 },
+  { id: 'zapier', label: 'Zapier', type: 'integration', status: 'configured', x: 650, y: 540, size: 22 },
+  { id: 'tradingview', label: 'TradingView', type: 'integration', status: 'planned', x: 60, y: 60, size: 22 },
+];
+
+const allNodes = [...agents, ...integrations];
+
 const edges = [
-  // Charles → all sub-agents (dependency)
-  { from: 'charles', to: 'trading-bot', type: 'dependency', traffic: 'high' },
-  { from: 'charles', to: 'email-responder', type: 'dependency', traffic: 'high' },
-  { from: 'charles', to: 'content-agent', type: 'dependency', traffic: 'medium' },
-  { from: 'charles', to: 'social-agent', type: 'dependency', traffic: 'low' },
-  { from: 'charles', to: 'market-research', type: 'dependency', traffic: 'medium' },
-  { from: 'charles', to: 'prospect-research', type: 'dependency', traffic: 'low' },
-  { from: 'charles', to: 'cost-monitor', type: 'dependency', traffic: 'medium' },
-  { from: 'charles', to: 'discord-bot', type: 'dependency', traffic: 'high' },
-  { from: 'charles', to: 'rlm-estimator', type: 'dependency', traffic: 'medium' },
-  
-  // Agent → Integration (API communication)
+  { from: 'charles', to: 'trading-bot', type: 'dep', traffic: 'high' },
+  { from: 'charles', to: 'email-responder', type: 'dep', traffic: 'high' },
+  { from: 'charles', to: 'content-agent', type: 'dep', traffic: 'med' },
+  { from: 'charles', to: 'social-agent', type: 'dep', traffic: 'low' },
+  { from: 'charles', to: 'market-research', type: 'dep', traffic: 'med' },
+  { from: 'charles', to: 'prospect-research', type: 'dep', traffic: 'low' },
+  { from: 'charles', to: 'cost-monitor', type: 'dep', traffic: 'med' },
+  { from: 'charles', to: 'discord-bot', type: 'dep', traffic: 'high' },
+  { from: 'charles', to: 'rlm-estimator', type: 'dep', traffic: 'med' },
   { from: 'trading-bot', to: 'alpaca', type: 'api', traffic: 'high' },
-  { from: 'trading-bot', to: 'openai', type: 'api', traffic: 'medium' },
-  { from: 'email-responder', to: 'gmail', type: 'api', traffic: 'high' },
-  { from: 'email-responder', to: 'anthropic', type: 'api', traffic: 'medium' },
-  { from: 'content-agent', to: 'substack', type: 'api', traffic: 'medium' },
-  { from: 'content-agent', to: 'anthropic', type: 'api', traffic: 'high' },
-  { from: 'social-agent', to: 'buffer', type: 'api', traffic: 'low' },
+  { from: 'trading-bot', to: 'openai', type: 'api', traffic: 'med' },
   { from: 'market-research', to: 'perplexity', type: 'api', traffic: 'high' },
+  { from: 'market-research', to: 'trading-bot', type: 'data', traffic: 'high' },
+  { from: 'email-responder', to: 'gmail', type: 'api', traffic: 'high' },
+  { from: 'email-responder', to: 'anthropic', type: 'api', traffic: 'med' },
+  { from: 'content-agent', to: 'substack', type: 'api', traffic: 'med' },
+  { from: 'content-agent', to: 'anthropic', type: 'api', traffic: 'high' },
+  { from: 'content-agent', to: 'social-agent', type: 'data', traffic: 'med' },
+  { from: 'social-agent', to: 'buffer', type: 'api', traffic: 'low' },
+  { from: 'discord-bot', to: 'discord-api', type: 'api', traffic: 'high' },
+  { from: 'rlm-estimator', to: 'openai', type: 'api', traffic: 'med' },
   { from: 'prospect-research', to: 'perplexity', type: 'api', traffic: 'low' },
   { from: 'prospect-research', to: 'stripe', type: 'api', traffic: 'low' },
-  { from: 'discord-bot', to: 'discord-api', type: 'api', traffic: 'high' },
-  { from: 'rlm-estimator', to: 'openai', type: 'api', traffic: 'medium' },
   { from: 'cost-monitor', to: 'anthropic', type: 'api', traffic: 'low' },
-  
-  // Data flow
-  { from: 'rlm-data', to: 'rlm-estimator', type: 'data', traffic: 'medium' },
-  { from: 'nvcc-data', to: 'prospect-research', type: 'data', traffic: 'low' },
-  { from: 'alpaca', to: 'tradingview', type: 'data', traffic: 'low' },
-  { from: 'market-research', to: 'trading-bot', type: 'data', traffic: 'high' },
-  { from: 'content-agent', to: 'social-agent', type: 'data', traffic: 'medium' },
-  
-  // Infrastructure
-  { from: 'charles', to: 'supabase', type: 'api', traffic: 'medium' },
+  { from: 'charles', to: 'supabase', type: 'api', traffic: 'med' },
   { from: 'charles', to: 'vercel', type: 'api', traffic: 'low' },
-  { from: 'charles', to: 'tailscale', type: 'api', traffic: 'low' },
   { from: 'zapier', to: 'email-responder', type: 'data', traffic: 'low' },
+  { from: 'alpaca', to: 'tradingview', type: 'data', traffic: 'low' },
 ];
 
-// Status colors and styles
-const statusStyles = {
-  active: { color: '#00D4FF', glow: '0 0 20px rgba(0,212,255,0.6)', pulse: true },
-  idle: { color: '#6B7280', glow: 'none', pulse: false },
-  error: { color: '#EF4444', glow: '0 0 20px rgba(239,68,68,0.8)', pulse: true },
-  processing: { color: '#F59E0B', glow: '0 0 15px rgba(245,158,11,0.5)', pulse: true },
-  learning: { color: '#FBBF24', glow: '0 0 15px rgba(251,191,36,0.5)', pulse: true },
-  configured: { color: '#3B82F6', glow: '0 0 10px rgba(59,130,246,0.4)', pulse: false },
-  planned: { color: '#9CA3AF', glow: 'none', pulse: false },
+const activityFeed = [
+  { time: 'Now', text: 'Trading Bot: QQQ Bollinger squeeze signal detected', type: 'trade', color: '#A855F7' },
+  { time: '2m', text: 'Email Responder: Auto-replied to vendor inquiry', type: 'action', color: '#22C55E' },
+  { time: '5m', text: 'Cost Monitor: Daily spend $142 / $200 budget', type: 'alert', color: '#F59E0B' },
+  { time: '15m', text: 'Content Agent: Issue #7 draft at 80% (1,247 words)', type: 'action', color: '#F97316' },
+  { time: '30m', text: 'Discord Bot: 28 messages logged in #general', type: 'action', color: '#3B82F6' },
+  { time: '1h', text: 'RLM Estimator: Hotel Oxbow bid processing — $410K', type: 'action', color: '#22C55E' },
+  { time: '2h', text: 'Market Research: Pre-market scan — 3 setups found', type: 'action', color: '#A855F7' },
+  { time: '3h', text: '⚠️ Prospect Research idle for 24h — review needed', type: 'warning', color: '#EF4444' },
+];
+
+const bottlenecks = [
+  { agent: 'Prospect Research', issue: 'Idle 24h+', suggestion: 'Reassign to AI Support lead gen or disable', severity: 'warning' },
+  { agent: 'Social Media', issue: 'Idle — no content queued', suggestion: 'Feed content from Content Agent automatically', severity: 'info' },
+  { agent: 'TradingView', issue: 'Not connected', suggestion: 'Set up webhook integration for auto-trade signals', severity: 'info' },
+];
+
+const statusColor = {
+  active: '#00D4FF',
+  idle: '#6B7280',
+  error: '#EF4444',
+  processing: '#F59E0B',
+  configured: '#3B82F6',
+  planned: '#9CA3AF',
 };
 
-const typeStyles = {
-  core: { border: 3, labelSize: 12, bg: 'rgba(0,212,255,0.15)' },
-  agent: { border: 2, labelSize: 10, bg: 'rgba(0,212,255,0.08)' },
-  integration: { border: 1.5, labelSize: 9, bg: 'rgba(100,100,100,0.1)' },
-  data: { border: 1, labelSize: 8, bg: 'rgba(100,100,100,0.05)' },
-};
-
-const edgeStyles = {
-  dependency: { dash: '8,4', width: 1.5 },
-  api: { dash: 'none', width: 1 },
-  data: { dash: 'none', width: 0.8 },
-};
-
-const trafficWidth = { high: 2.5, medium: 1.5, low: 0.8 };
+const trafficW = { high: 2.5, med: 1.5, low: 0.7 };
 
 export default function AgentIntelligence() {
-  const [selectedNode, setSelectedNode] = useState(null);
-  const [zoom, setZoom] = useState(1);
-  const [filter, setFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [viewMode, setViewMode] = useState('graph');
-  const canvasRef = useRef(null);
+  const [selected, setSelected] = useState(null);
+  const [zoom, setZoom] = useState(0.85);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [viewMode, setViewMode] = useState('graph');
+  const [showRevenue, setShowRevenue] = useState(false);
+  const [showPerf, setShowPerf] = useState(false);
+  const [showHeatmap, setShowHeatmap] = useState(false);
+  const [focusNode, setFocusNode] = useState(null);
+  const [showClusters, setShowClusters] = useState(true);
+  const [showFeed, setShowFeed] = useState(false);
+  const [tick, setTick] = useState(0);
 
-  // Filter nodes
-  const filteredNodes = nodes.filter(n => {
-    if (searchQuery && !n.label.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+  // Simulated real-time tick
+  useEffect(() => {
+    const interval = setInterval(() => setTick(t => t + 1), 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Ranking — compute score for each agent
+  const rankedAgents = useMemo(() => {
+    return agents
+      .filter(a => a.type !== 'core')
+      .map(a => ({
+        ...a,
+        score: (a.revenue > 0 ? 30 : 0) + (a.successRate * 0.3) + (a.efficiency * 0.2) + (a.reliability * 0.2) - (a.cost * 0.1),
+      }))
+      .sort((a, b) => b.score - a.score);
+  }, []);
+
+  // Filter logic
+  const filteredNodes = allNodes.filter(n => {
+    if (search && !n.label.toLowerCase().includes(search.toLowerCase())) return false;
+    if (focusNode) {
+      const connected = edges.filter(e => e.from === focusNode || e.to === focusNode).flatMap(e => [e.from, e.to]);
+      if (n.id !== focusNode && !connected.includes(n.id)) return false;
+    }
     if (filter === 'active' && n.status !== 'active') return false;
-    if (filter === 'agents' && !['core', 'agent'].includes(n.type)) return false;
-    if (filter === 'integrations' && n.type !== 'integration') return false;
-    if (filter === 'issues' && !['error', 'idle', 'planned'].includes(n.status)) return false;
+    if (filter === 'idle' && n.status !== 'idle') return false;
+    if (filter === 'error' && !['error', 'planned'].includes(n.status)) return false;
+    if (filter === 'revenue' && (n.revenue === undefined || n.revenue === 0)) return false;
+    if (filter === 'underperforming' && (n.successRate === undefined || n.successRate > 80)) return false;
     return true;
   });
 
-  const filteredNodeIds = new Set(filteredNodes.map(n => n.id));
-  const filteredEdges = edges.filter(e => filteredNodeIds.has(e.from) && filteredNodeIds.has(e.to));
+  const filteredIds = new Set(filteredNodes.map(n => n.id));
+  const filteredEdges = edges.filter(e => filteredIds.has(e.from) && filteredIds.has(e.to));
+  const selectedNode = selected ? allNodes.find(n => n.id === selected) : null;
 
   // Stats
-  const activeAgents = nodes.filter(n => ['core', 'agent'].includes(n.type) && n.status === 'active').length;
-  const totalAgents = nodes.filter(n => ['core', 'agent'].includes(n.type)).length;
-  const activeIntegrations = nodes.filter(n => n.type === 'integration' && n.status === 'active').length;
-  const totalIntegrations = nodes.filter(n => n.type === 'integration').length;
-  const issues = nodes.filter(n => ['error', 'planned'].includes(n.status)).length;
+  const activeCount = agents.filter(a => a.status === 'active').length;
+  const totalCost = agents.reduce((s, a) => s + (a.cost || 0), 0);
+  const totalRevenue = agents.reduce((s, a) => s + (a.revenue || 0), 0);
 
-  // Touch/mouse handlers for pan
-  const handleMouseDown = (e) => {
+  // Pan handlers
+  const onDown = (e) => {
+    const p = e.touches ? e.touches[0] : e;
     setDragging(true);
-    setDragStart({ x: e.clientX - offset.x, y: e.clientY - offset.y });
+    setDragStart({ x: p.clientX - offset.x, y: p.clientY - offset.y });
   };
-  const handleMouseMove = (e) => {
+  const onMove = (e) => {
     if (!dragging) return;
-    setOffset({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
+    const p = e.touches ? e.touches[0] : e;
+    setOffset({ x: p.clientX - dragStart.x, y: p.clientY - dragStart.y });
   };
-  const handleMouseUp = () => setDragging(false);
+  const onUp = () => setDragging(false);
 
-  const selected = selectedNode ? nodes.find(n => n.id === selectedNode) : null;
+  const fmt = (n) => n >= 1000000 ? `$${(n/1000000).toFixed(1)}M` : n >= 1000 ? `$${(n/1000).toFixed(0)}K` : `$${n}`;
 
-  return (
-    <div className="w-full h-full overflow-hidden pb-20 flex flex-col">
-      {/* Header */}
-      <div className="px-4 pt-4 pb-2">
-        <div className="flex items-center justify-between mb-2">
-          <div>
-            <h1 className="text-lg font-bold text-white flex items-center gap-2">
-              <Brain size={20} className="text-cyan-400" />
-              Agent Intelligence
-            </h1>
-            <p className="text-[10px] text-gray-400 font-mono">
-              {activeAgents}/{totalAgents} AGENTS • {activeIntegrations}/{totalIntegrations} INTEGRATIONS • {issues} ISSUES
-            </p>
-          </div>
-          <div className="flex gap-1">
-            <button onClick={() => setZoom(z => Math.min(z + 0.2, 3))} className="w-8 h-8 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white"><ZoomIn size={14} /></button>
-            <button onClick={() => setZoom(z => Math.max(z - 0.2, 0.3))} className="w-8 h-8 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white"><ZoomOut size={14} /></button>
-            <button onClick={() => { setZoom(1); setOffset({ x: 0, y: 0 }); }} className="w-8 h-8 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white"><Maximize2 size={14} /></button>
-          </div>
-        </div>
-
-        {/* Search */}
-        <div className="relative mb-2">
-          <Search size={14} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
-          <input
-            type="text"
-            placeholder="Search agents, integrations..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            className="w-full pl-8 pr-3 py-1.5 bg-gray-900 border border-gray-700 rounded-lg text-xs text-white placeholder-gray-500 focus:border-cyan-500 focus:outline-none"
-          />
-        </div>
-
-        {/* Filters */}
-        <div className="flex gap-1.5 overflow-x-auto pb-1">
-          {[
-            { key: 'all', label: 'All Nodes' },
-            { key: 'active', label: 'Active' },
-            { key: 'agents', label: 'Agents' },
-            { key: 'integrations', label: 'Integrations' },
-            { key: 'issues', label: 'Issues' },
-          ].map(f => (
-            <button
-              key={f.key}
-              onClick={() => setFilter(f.key)}
-              className={`px-2.5 py-1 text-[9px] rounded-full border whitespace-nowrap ${
-                filter === f.key ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400' : 'border-gray-700 text-gray-400'
-              }`}
-            >
-              {f.label}
+  // ═══════════════ GRID VIEW ═══════════════
+  if (viewMode === 'grid') {
+    return (
+      <div className="w-full h-full overflow-y-auto pb-24 px-4 pt-4">
+        <Header search={search} setSearch={setSearch} filter={filter} setFilter={setFilter} viewMode={viewMode} setViewMode={setViewMode} activeCount={activeCount} totalRevenue={totalRevenue} totalCost={totalCost} />
+        <div className="grid grid-cols-2 gap-2 mt-3">
+          {rankedAgents.map((a, i) => (
+            <button key={a.id} onClick={() => setSelected(a.id)} className="bg-gray-900/60 border border-gray-800 rounded-xl p-3 text-left hover:border-gray-600 transition-all">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 rounded-full border flex items-center justify-center text-[10px] font-mono font-bold" style={{ borderColor: statusColor[a.status], color: statusColor[a.status], backgroundColor: statusColor[a.status] + '15' }}>
+                  #{i + 1}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-white truncate">{a.label}</p>
+                  <p className="text-[9px] text-gray-500">{a.model}</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-1 text-[9px]">
+                <div><span className="text-gray-500">Success:</span> <span className="text-green-400">{a.successRate}%</span></div>
+                <div><span className="text-gray-500">Efficiency:</span> <span className="text-cyan-400">{a.efficiency}%</span></div>
+                <div><span className="text-gray-500">Revenue:</span> <span className="text-yellow-400">{a.revenue > 0 ? fmt(a.revenue) : '—'}</span></div>
+                <div><span className="text-gray-500">Cost:</span> <span className="text-red-400">${a.cost}/day</span></div>
+              </div>
+              <div className="mt-2 w-full bg-gray-800 rounded-full h-1">
+                <div className="h-1 rounded-full" style={{ width: `${a.score / 1.2}%`, backgroundColor: statusColor[a.status] }} />
+              </div>
             </button>
           ))}
         </div>
+        {selectedNode && <DetailPanel node={selectedNode} edges={edges} allNodes={allNodes} onClose={() => setSelected(null)} fmt={fmt} />}
+      </div>
+    );
+  }
+
+  // ═══════════════ FLOW VIEW ═══════════════
+  if (viewMode === 'flow') {
+    const flowStages = [
+      { label: 'Data Sources', nodes: ['perplexity', 'alpaca', 'gmail', 'discord-api', 'tradingview'] },
+      { label: 'Research', nodes: ['market-research', 'prospect-research'] },
+      { label: 'Execution', nodes: ['trading-bot', 'email-responder', 'rlm-estimator', 'content-agent'] },
+      { label: 'Distribution', nodes: ['social-agent', 'discord-bot', 'buffer', 'substack'] },
+      { label: 'Infrastructure', nodes: ['charles', 'cost-monitor', 'vercel', 'supabase'] },
+    ];
+
+    return (
+      <div className="w-full h-full overflow-y-auto pb-24 px-4 pt-4">
+        <Header search={search} setSearch={setSearch} filter={filter} setFilter={setFilter} viewMode={viewMode} setViewMode={setViewMode} activeCount={activeCount} totalRevenue={totalRevenue} totalCost={totalCost} />
+        <div className="mt-3 space-y-4">
+          {flowStages.map((stage, si) => (
+            <div key={stage.label}>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-6 h-6 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-[10px] text-cyan-400 font-bold">{si + 1}</div>
+                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">{stage.label}</h3>
+                {si < flowStages.length - 1 && <div className="flex-1 h-px bg-gray-800 ml-2" />}
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                {stage.nodes.map(nid => {
+                  const n = allNodes.find(x => x.id === nid);
+                  if (!n) return null;
+                  return (
+                    <button key={n.id} onClick={() => setSelected(n.id)} className="shrink-0 w-24 bg-gray-900/60 border border-gray-800 rounded-xl p-2 text-center hover:border-gray-600">
+                      <div className="w-8 h-8 mx-auto rounded-full border flex items-center justify-center text-[9px] font-mono font-bold mb-1" style={{ borderColor: statusColor[n.status], color: statusColor[n.status] }}>
+                        {n.label.split(' ').map(w => w[0]).join('').slice(0, 2)}
+                      </div>
+                      <p className="text-[9px] text-white truncate">{n.label}</p>
+                      <div className="w-2 h-2 rounded-full mx-auto mt-1" style={{ backgroundColor: statusColor[n.status] }} />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+        {selectedNode && <DetailPanel node={selectedNode} edges={edges} allNodes={allNodes} onClose={() => setSelected(null)} fmt={fmt} />}
+      </div>
+    );
+  }
+
+  // ═══════════════ GRAPH VIEW (DEFAULT) ═══════════════
+  return (
+    <div className="w-full h-full overflow-hidden pb-20 flex flex-col">
+      <div className="px-3 pt-3 pb-1">
+        <Header search={search} setSearch={setSearch} filter={filter} setFilter={setFilter} viewMode={viewMode} setViewMode={setViewMode} activeCount={activeCount} totalRevenue={totalRevenue} totalCost={totalCost} />
+
+        {/* Toggles */}
+        <div className="flex gap-1.5 mt-2 overflow-x-auto pb-1">
+          <ToggleBtn icon={<DollarSign size={10} />} label="Revenue" active={showRevenue} onClick={() => setShowRevenue(!showRevenue)} />
+          <ToggleBtn icon={<BarChart3 size={10} />} label="Perf" active={showPerf} onClick={() => setShowPerf(!showPerf)} />
+          <ToggleBtn icon={<Flame size={10} />} label="Heatmap" active={showHeatmap} onClick={() => setShowHeatmap(!showHeatmap)} />
+          <ToggleBtn icon={<Layers size={10} />} label="Clusters" active={showClusters} onClick={() => setShowClusters(!showClusters)} />
+          <ToggleBtn icon={<Activity size={10} />} label="Feed" active={showFeed} onClick={() => setShowFeed(!showFeed)} />
+          {focusNode && <button onClick={() => setFocusNode(null)} className="px-2 py-1 text-[9px] rounded-full border border-red-500/30 text-red-400 bg-red-500/10">Exit Focus</button>}
+        </div>
+
+        {/* Zoom controls */}
+        <div className="flex gap-1 mt-1">
+          <button onClick={() => setZoom(z => Math.min(z + 0.15, 2.5))} className="w-7 h-7 rounded bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400"><ZoomIn size={12} /></button>
+          <button onClick={() => setZoom(z => Math.max(z - 0.15, 0.3))} className="w-7 h-7 rounded bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400"><ZoomOut size={12} /></button>
+          <button onClick={() => { setZoom(0.85); setOffset({ x: 0, y: 0 }); setFocusNode(null); }} className="w-7 h-7 rounded bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400"><Maximize2 size={12} /></button>
+        </div>
       </div>
 
-      {/* Graph Canvas */}
-      <div
-        ref={canvasRef}
-        className="flex-1 relative overflow-hidden cursor-grab active:cursor-grabbing"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onTouchStart={(e) => {
-          const touch = e.touches[0];
-          setDragging(true);
-          setDragStart({ x: touch.clientX - offset.x, y: touch.clientY - offset.y });
-        }}
-        onTouchMove={(e) => {
-          if (!dragging) return;
-          const touch = e.touches[0];
-          setOffset({ x: touch.clientX - dragStart.x, y: touch.clientY - dragStart.y });
-        }}
-        onTouchEnd={handleMouseUp}
+      {/* SVG Graph */}
+      <div className="flex-1 relative overflow-hidden cursor-grab active:cursor-grabbing"
+        onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}
+        onTouchStart={onDown} onTouchMove={onMove} onTouchEnd={onUp}
       >
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 800 600"
-          style={{
-            transform: `scale(${zoom}) translate(${offset.x / zoom}px, ${offset.y / zoom}px)`,
-            transformOrigin: 'center center',
-          }}
-        >
-          {/* Background grid */}
+        <svg width="100%" height="100%" viewBox="0 0 800 600" style={{ transform: `scale(${zoom}) translate(${offset.x / zoom}px, ${offset.y / zoom}px)`, transformOrigin: 'center' }}>
           <defs>
-            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
               <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,212,255,0.03)" strokeWidth="0.5" />
             </pattern>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <filter id="glowStrong">
-              <feGaussianBlur stdDeviation="6" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
+            <filter id="g1"><feGaussianBlur stdDeviation="3" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+            <filter id="g2"><feGaussianBlur stdDeviation="6" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
           </defs>
-          <rect width="800" height="600" fill="url(#grid)" />
+          <rect width="800" height="600" fill="url(#grid2)" />
+
+          {/* Cluster backgrounds */}
+          {showClusters && Object.entries(CLUSTERS).map(([key, cl]) => (
+            <g key={key}>
+              <circle cx={cl.x} cy={cl.y} r="120" fill={cl.color + '06'} stroke={cl.color + '15'} strokeWidth="1" strokeDasharray="6,6" />
+              <text x={cl.x} y={cl.y - 105} textAnchor="middle" fill={cl.color + '60'} fontSize="10" fontFamily="monospace" fontWeight="600">{cl.label.toUpperCase()}</text>
+            </g>
+          ))}
+
+          {/* Heatmap overlay */}
+          {showHeatmap && agents.filter(a => a.throughput > 30).map(a => (
+            <circle key={`heat-${a.id}`} cx={a.x} cy={a.y} r={a.throughput * 0.8} fill="rgba(239,68,68,0.05)" />
+          ))}
 
           {/* Edges */}
-          {filteredEdges.map((edge, i) => {
-            const from = nodes.find(n => n.id === edge.from);
-            const to = nodes.find(n => n.id === edge.to);
+          {filteredEdges.map((e, i) => {
+            const from = allNodes.find(n => n.id === e.from);
+            const to = allNodes.find(n => n.id === e.to);
             if (!from || !to) return null;
-            const style = edgeStyles[edge.type] || edgeStyles.api;
-            const width = trafficWidth[edge.traffic] || 1;
-            const isHighTraffic = edge.traffic === 'high';
-
+            const w = trafficW[e.traffic] || 1;
+            const isHigh = e.traffic === 'high';
             return (
-              <g key={`edge-${i}`}>
-                {isHighTraffic && (
-                  <line
-                    x1={from.x} y1={from.y} x2={to.x} y2={to.y}
-                    stroke="rgba(0,212,255,0.15)"
-                    strokeWidth={width + 3}
-                    filter="url(#glow)"
-                  />
-                )}
-                <line
-                  x1={from.x} y1={from.y} x2={to.x} y2={to.y}
-                  stroke={isHighTraffic ? 'rgba(0,212,255,0.4)' : 'rgba(100,116,139,0.25)'}
-                  strokeWidth={width}
-                  strokeDasharray={style.dash}
+              <g key={`e${i}`}>
+                {isHigh && <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="rgba(0,212,255,0.12)" strokeWidth={w + 3} filter="url(#g1)" />}
+                <line x1={from.x} y1={from.y} x2={to.x} y2={to.y}
+                  stroke={isHigh ? 'rgba(0,212,255,0.35)' : 'rgba(100,116,139,0.2)'}
+                  strokeWidth={w}
+                  strokeDasharray={e.type === 'dep' ? '6,4' : 'none'}
                 />
               </g>
             );
           })}
 
           {/* Nodes */}
-          {filteredNodes.map(node => {
-            const ss = statusStyles[node.status] || statusStyles.idle;
-            const ts = typeStyles[node.type] || typeStyles.agent;
-            const isSelected = selectedNode === node.id;
-
+          {filteredNodes.map(n => {
+            const sc = statusColor[n.status] || '#6B7280';
+            const isActive = n.status === 'active' || n.status === 'processing';
+            const isSel = selected === n.id;
+            const isGold = n.revenue > 50000;
             return (
-              <g
-                key={node.id}
-                onClick={(e) => { e.stopPropagation(); setSelectedNode(isSelected ? null : node.id); }}
-                className="cursor-pointer"
-              >
-                {/* Glow effect for active nodes */}
-                {ss.pulse && (
-                  <circle
-                    cx={node.x} cy={node.y} r={node.size / 2 + 8}
-                    fill="none"
-                    stroke={ss.color}
-                    strokeWidth="1"
-                    opacity="0.3"
-                  >
-                    <animate attributeName="r" values={`${node.size / 2 + 4};${node.size / 2 + 12};${node.size / 2 + 4}`} dur="2s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" values="0.3;0.1;0.3" dur="2s" repeatCount="indefinite" />
+              <g key={n.id} onClick={(e) => { e.stopPropagation(); setSelected(isSel ? null : n.id); }} className="cursor-pointer">
+                {/* Pulse for active */}
+                {isActive && (
+                  <circle cx={n.x} cy={n.y} r={n.size / 2 + 8} fill="none" stroke={sc} strokeWidth="0.8" opacity="0.25">
+                    <animate attributeName="r" values={`${n.size/2+4};${n.size/2+14};${n.size/2+4}`} dur="2.5s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.25;0.05;0.25" dur="2.5s" repeatCount="indefinite" />
                   </circle>
                 )}
-
+                {/* Gold accent for high performers */}
+                {isGold && <circle cx={n.x} cy={n.y} r={n.size / 2 + 3} fill="none" stroke="#FBBF24" strokeWidth="1" opacity="0.4" />}
                 {/* Selection ring */}
-                {isSelected && (
-                  <circle
-                    cx={node.x} cy={node.y} r={node.size / 2 + 6}
-                    fill="none"
-                    stroke="#00D4FF"
-                    strokeWidth="2"
-                    strokeDasharray="4,4"
-                  >
-                    <animateTransform attributeName="transform" type="rotate" from={`0 ${node.x} ${node.y}`} to={`360 ${node.x} ${node.y}`} dur="10s" repeatCount="indefinite" />
+                {isSel && (
+                  <circle cx={n.x} cy={n.y} r={n.size / 2 + 6} fill="none" stroke="#00D4FF" strokeWidth="2" strokeDasharray="4,3">
+                    <animateTransform attributeName="transform" type="rotate" from={`0 ${n.x} ${n.y}`} to={`360 ${n.x} ${n.y}`} dur="8s" repeatCount="indefinite" />
                   </circle>
                 )}
-
-                {/* Node circle */}
-                <circle
-                  cx={node.x}
-                  cy={node.y}
-                  r={node.size / 2}
-                  fill={ts.bg}
-                  stroke={ss.color}
-                  strokeWidth={ts.border}
-                  filter={ss.pulse ? 'url(#glow)' : undefined}
-                />
-
-                {/* Node label */}
-                <text
-                  x={node.x}
-                  y={node.y + node.size / 2 + 14}
-                  textAnchor="middle"
-                  fill={ss.color}
-                  fontSize={ts.labelSize}
-                  fontFamily="monospace"
-                  fontWeight="600"
-                >
-                  {node.label}
+                {/* Node */}
+                <circle cx={n.x} cy={n.y} r={n.size / 2} fill={sc + '12'} stroke={sc} strokeWidth={n.type === 'core' ? 3 : n.type === 'agent' ? 2 : 1.5} filter={isActive ? 'url(#g1)' : undefined} />
+                {/* Initials */}
+                <text x={n.x} y={n.y + (n.size > 30 ? 4 : 3)} textAnchor="middle" fill={sc} fontSize={n.size * 0.32} fontFamily="monospace" fontWeight="bold">
+                  {n.label.split(' ').map(w => w[0]).join('').slice(0, 2)}
                 </text>
+                {/* Label */}
+                <text x={n.x} y={n.y + n.size / 2 + 12} textAnchor="middle" fill={sc} fontSize={n.type === 'core' ? 11 : n.type === 'agent' ? 9 : 8} fontFamily="monospace" fontWeight="600">{n.label}</text>
 
-                {/* Node icon/initials */}
-                <text
-                  x={node.x}
-                  y={node.y + 4}
-                  textAnchor="middle"
-                  fill={ss.color}
-                  fontSize={node.size * 0.35}
-                  fontFamily="monospace"
-                  fontWeight="bold"
-                >
-                  {node.label.split(' ').map(w => w[0]).join('').slice(0, 2)}
-                </text>
+                {/* Revenue overlay */}
+                {showRevenue && n.revenue !== undefined && n.revenue > 0 && (
+                  <text x={n.x} y={n.y - n.size / 2 - 6} textAnchor="middle" fill="#FBBF24" fontSize="9" fontFamily="monospace" fontWeight="bold">{fmt(n.revenue)}</text>
+                )}
+                {/* Perf overlay */}
+                {showPerf && n.throughput !== undefined && (
+                  <text x={n.x + n.size / 2 + 4} y={n.y} fill="#00D4FF" fontSize="8" fontFamily="monospace">{n.throughput}/h</text>
+                )}
               </g>
             );
           })}
         </svg>
+
+        {/* Legend */}
+        <div className="absolute top-2 right-2 bg-gray-900/90 backdrop-blur border border-gray-800 rounded-lg p-2 text-[8px] space-y-0.5 z-20">
+          <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Active</div>
+          <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-gray-500" /> Idle</div>
+          <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-yellow-400" /> Processing</div>
+          <div className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-red-400" /> Error</div>
+          <div className="flex items-center gap-1.5 text-yellow-400/50">⬡ Gold = Revenue</div>
+        </div>
+
+        {/* Bottleneck alerts */}
+        {bottlenecks.length > 0 && (
+          <div className="absolute bottom-2 left-2 right-2 z-20">
+            {bottlenecks.slice(0, 2).map((b, i) => (
+              <div key={i} className="bg-gray-900/90 backdrop-blur border border-yellow-500/20 rounded-lg p-2 mb-1 flex items-start gap-2">
+                <AlertTriangle size={12} className="text-yellow-400 shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-[10px] text-white"><strong>{b.agent}:</strong> {b.issue}</p>
+                  <p className="text-[9px] text-gray-400">💡 {b.suggestion}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Node Detail Panel */}
-      {selected && (
-        <div className="absolute bottom-24 left-4 right-4 bg-gray-900/95 backdrop-blur-xl border border-gray-700 rounded-xl p-4 z-50 animate-in fade-in slide-in-from-bottom-4">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-full border-2 flex items-center justify-center font-mono text-xs font-bold"
-                style={{ borderColor: statusStyles[selected.status]?.color, color: statusStyles[selected.status]?.color, backgroundColor: statusStyles[selected.status]?.color + '15' }}
-              >
-                {selected.label.split(' ').map(w => w[0]).join('').slice(0, 2)}
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-white">{selected.label}</h3>
-                <p className="text-[10px] text-gray-400">{selected.role} • {selected.model || 'System'}</p>
-              </div>
-            </div>
-            <span className={`text-[9px] px-2 py-0.5 rounded-full border font-mono ${
-              selected.status === 'active' ? 'text-cyan-400 border-cyan-400/30 bg-cyan-400/10' :
-              selected.status === 'error' ? 'text-red-400 border-red-400/30 bg-red-400/10' :
-              selected.status === 'processing' ? 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10' :
-              selected.status === 'idle' ? 'text-gray-400 border-gray-400/30 bg-gray-400/10' :
-              'text-blue-400 border-blue-400/30 bg-blue-400/10'
-            }`}>
-              {selected.status.toUpperCase()}
-            </span>
+      {/* Activity Feed */}
+      {showFeed && (
+        <div className="absolute bottom-24 left-0 right-0 max-h-40 overflow-y-auto bg-gray-900/95 backdrop-blur border-t border-gray-700 z-30">
+          <div className="px-3 py-1.5 flex items-center justify-between border-b border-gray-800">
+            <span className="text-[10px] text-gray-400 font-mono">LIVE ACTIVITY FEED</span>
+            <button onClick={() => setShowFeed(false)} className="text-gray-500"><X size={12} /></button>
           </div>
-
-          {/* Metrics */}
-          {selected.tasksCompleted && (
-            <div className="grid grid-cols-3 gap-2 mb-3">
-              <div className="bg-gray-800/50 rounded-lg p-2 text-center">
-                <p className="text-[9px] text-gray-500 font-mono">TASKS</p>
-                <p className="text-sm font-bold text-white">{selected.tasksCompleted.toLocaleString()}</p>
+          {activityFeed.map((item, i) => (
+            <div key={i} className="px-3 py-1.5 flex items-start gap-2 border-b border-gray-800/50">
+              <div className="w-1 h-4 rounded-full shrink-0 mt-0.5" style={{ backgroundColor: item.color }} />
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] text-gray-300">{item.text}</p>
               </div>
-              <div className="bg-gray-800/50 rounded-lg p-2 text-center">
-                <p className="text-[9px] text-gray-500 font-mono">REVENUE</p>
-                <p className="text-sm font-bold text-cyan-400">{selected.revenue || 'N/A'}</p>
-              </div>
-              <div className="bg-gray-800/50 rounded-lg p-2 text-center">
-                <p className="text-[9px] text-gray-500 font-mono">TYPE</p>
-                <p className="text-sm font-bold text-white capitalize">{selected.type}</p>
-              </div>
+              <span className="text-[9px] text-gray-500 font-mono shrink-0">{item.time}</span>
             </div>
-          )}
-
-          {/* Connections */}
-          <div className="mb-3">
-            <p className="text-[9px] text-gray-500 font-mono mb-1">CONNECTIONS</p>
-            <div className="flex flex-wrap gap-1">
-              {edges.filter(e => e.from === selected.id || e.to === selected.id).map((e, i) => {
-                const other = e.from === selected.id ? e.to : e.from;
-                const otherNode = nodes.find(n => n.id === other);
-                return (
-                  <span key={i} className="text-[9px] px-2 py-0.5 rounded-full border border-gray-700 text-gray-300">
-                    {e.type === 'dependency' ? '→ ' : e.type === 'api' ? '⚡ ' : '📊 '}{otherNode?.label}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="flex gap-2">
-            <button className="flex-1 py-1.5 rounded-lg text-[10px] font-semibold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center gap-1">
-              <Eye size={12} /> Inspect
-            </button>
-            <button className="flex-1 py-1.5 rounded-lg text-[10px] font-semibold bg-gray-800 text-gray-300 border border-gray-700 flex items-center justify-center gap-1">
-              <Activity size={12} /> Logs
-            </button>
-            <button className="flex-1 py-1.5 rounded-lg text-[10px] font-semibold bg-gray-800 text-gray-300 border border-gray-700 flex items-center justify-center gap-1">
-              <Zap size={12} /> Restart
-            </button>
-          </div>
-
-          <button onClick={() => setSelectedNode(null)} className="absolute top-2 right-2 text-gray-500 hover:text-white text-sm">✕</button>
+          ))}
         </div>
       )}
 
-      {/* Legend */}
-      <div className="absolute top-[140px] right-2 bg-gray-900/80 backdrop-blur border border-gray-800 rounded-lg p-2 text-[8px] space-y-1">
-        <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-cyan-400" /> Active</div>
-        <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-gray-500" /> Idle</div>
-        <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-red-400" /> Error</div>
-        <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-yellow-400" /> Processing</div>
-        <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-blue-400" /> Configured</div>
-        <div className="flex items-center gap-1.5 text-gray-500">── Dependency</div>
-        <div className="flex items-center gap-1.5 text-gray-500">—— API Call</div>
-        <div className="flex items-center gap-1.5 text-cyan-400/50">━━ High Traffic</div>
+      {/* Detail Panel */}
+      {selectedNode && <DetailPanel node={selectedNode} edges={edges} allNodes={allNodes} onClose={() => setSelected(null)} fmt={fmt} onFocus={() => { setFocusNode(selectedNode.id); setSelected(null); }} />}
+    </div>
+  );
+}
+
+// ═══════════════ SHARED COMPONENTS ═══════════════
+
+function Header({ search, setSearch, filter, setFilter, viewMode, setViewMode, activeCount, totalRevenue, totalCost }) {
+  return (
+    <>
+      <div className="flex items-center justify-between mb-1.5">
+        <div>
+          <h1 className="text-base font-bold text-white flex items-center gap-1.5"><Brain size={16} className="text-cyan-400" />Agent Intelligence</h1>
+          <p className="text-[9px] text-gray-400 font-mono">{activeCount}/10 ACTIVE • ${totalCost}/day • {totalRevenue > 0 ? `$${(totalRevenue/1000000).toFixed(1)}M influenced` : ''}</p>
+        </div>
+        <div className="flex gap-1">
+          {[
+            { key: 'graph', icon: <Target size={12} />, label: 'Graph' },
+            { key: 'grid', icon: <Grid3X3 size={12} />, label: 'Grid' },
+            { key: 'flow', icon: <GitBranch size={12} />, label: 'Flow' },
+          ].map(v => (
+            <button key={v.key} onClick={() => setViewMode(v.key)} className={`px-2 py-1 text-[9px] rounded border flex items-center gap-1 ${viewMode === v.key ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400' : 'border-gray-700 text-gray-500'}`}>
+              {v.icon}{v.label}
+            </button>
+          ))}
+        </div>
       </div>
+      <div className="relative mb-1.5">
+        <Search size={12} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500" />
+        <input type="text" placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} className="w-full pl-7 pr-3 py-1 bg-gray-900 border border-gray-700 rounded text-[10px] text-white placeholder-gray-500 focus:border-cyan-500 focus:outline-none" />
+      </div>
+      <div className="flex gap-1 overflow-x-auto pb-1">
+        {['all', 'active', 'idle', 'error', 'revenue', 'underperforming'].map(f => (
+          <button key={f} onClick={() => setFilter(f)} className={`px-2 py-0.5 text-[8px] rounded-full border whitespace-nowrap ${filter === f ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400' : 'border-gray-700 text-gray-500'}`}>
+            {f === 'all' ? 'All' : f === 'revenue' ? '💰 Revenue' : f === 'underperforming' ? '⚠️ Under' : f.charAt(0).toUpperCase() + f.slice(1)}
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function ToggleBtn({ icon, label, active, onClick }) {
+  return (
+    <button onClick={onClick} className={`px-2 py-1 text-[9px] rounded-full border flex items-center gap-1 whitespace-nowrap ${active ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400' : 'border-gray-700 text-gray-500'}`}>
+      {icon}{label}
+    </button>
+  );
+}
+
+function DetailPanel({ node, edges, allNodes, onClose, fmt, onFocus }) {
+  const sc = statusColor[node.status] || '#6B7280';
+  const connections = edges.filter(e => e.from === node.id || e.to === node.id);
+
+  return (
+    <div className="absolute bottom-24 left-3 right-3 bg-gray-900/95 backdrop-blur-xl border border-gray-700 rounded-xl p-3 z-50 max-h-[60vh] overflow-y-auto" style={{ animation: 'slideUp 0.2s ease-out' }}>
+      <style>{`@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }`}</style>
+      <button onClick={onClose} className="absolute top-2 right-2 text-gray-500 hover:text-white"><X size={14} /></button>
+
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-3">
+        <div className="w-10 h-10 rounded-full border-2 flex items-center justify-center font-mono text-xs font-bold" style={{ borderColor: sc, color: sc, backgroundColor: sc + '15' }}>
+          {node.label.split(' ').map(w => w[0]).join('').slice(0, 2)}
+        </div>
+        <div>
+          <h3 className="text-sm font-bold text-white">{node.label}</h3>
+          <p className="text-[10px] text-gray-400">{node.role} • {node.model || 'System'}</p>
+        </div>
+        <span className="ml-auto text-[9px] px-2 py-0.5 rounded-full border font-mono" style={{ color: sc, borderColor: sc + '40', backgroundColor: sc + '10' }}>{node.status?.toUpperCase()}</span>
+      </div>
+
+      {/* Objective */}
+      {node.objective && (
+        <div className="mb-3 bg-gray-800/50 rounded-lg p-2">
+          <p className="text-[9px] text-gray-500 font-mono mb-0.5">CURRENT OBJECTIVE</p>
+          <p className="text-[10px] text-white">{node.objective}</p>
+        </div>
+      )}
+
+      {/* Metrics */}
+      {node.tasks !== undefined && (
+        <div className="grid grid-cols-4 gap-1.5 mb-3">
+          <Metric label="TASKS" value={node.tasks?.toLocaleString()} color="#00D4FF" />
+          <Metric label="SUCCESS" value={`${node.successRate}%`} color={node.successRate > 85 ? '#22C55E' : '#F59E0B'} />
+          <Metric label="EFFICIENCY" value={`${node.efficiency}%`} color="#A855F7" />
+          <Metric label="RELIABILITY" value={`${node.reliability}%`} color="#3B82F6" />
+        </div>
+      )}
+
+      {/* Revenue & Cost */}
+      {(node.revenue !== undefined || node.cost !== undefined) && (
+        <div className="grid grid-cols-3 gap-1.5 mb-3">
+          <Metric label="REVENUE" value={node.revenue > 0 ? fmt(node.revenue) : '—'} color="#FBBF24" />
+          <Metric label="COST/DAY" value={`$${node.cost}`} color="#EF4444" />
+          <Metric label="ROI" value={node.revenue > 0 && node.cost > 0 ? `${Math.round(node.revenue / (node.cost * 365))}x` : '—'} color={node.revenue > 0 ? '#22C55E' : '#6B7280'} />
+        </div>
+      )}
+
+      {/* Performance */}
+      {node.apiCalls !== undefined && (
+        <div className="grid grid-cols-3 gap-1.5 mb-3">
+          <Metric label="API CALLS" value={node.apiCalls?.toLocaleString()} color="#3B82F6" />
+          <Metric label="LATENCY" value={`${node.latency}s`} color={node.latency < 2 ? '#22C55E' : '#F59E0B'} />
+          <Metric label="THROUGHPUT" value={`${node.throughput}/h`} color="#A855F7" />
+        </div>
+      )}
+
+      {/* Connections */}
+      <div className="mb-3">
+        <p className="text-[9px] text-gray-500 font-mono mb-1">CONNECTIONS ({connections.length})</p>
+        <div className="flex flex-wrap gap-1">
+          {connections.map((e, i) => {
+            const otherId = e.from === node.id ? e.to : e.from;
+            const other = allNodes.find(n => n.id === otherId);
+            return <span key={i} className="text-[8px] px-1.5 py-0.5 rounded-full border border-gray-700 text-gray-400">{other?.label}</span>;
+          })}
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className="flex gap-1.5">
+        <button className="flex-1 py-1.5 rounded-lg text-[10px] font-semibold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center gap-1"><Eye size={10} />Inspect</button>
+        <button className="flex-1 py-1.5 rounded-lg text-[10px] font-semibold bg-gray-800 text-gray-300 border border-gray-700 flex items-center justify-center gap-1"><Pause size={10} />Pause</button>
+        <button className="flex-1 py-1.5 rounded-lg text-[10px] font-semibold bg-gray-800 text-gray-300 border border-gray-700 flex items-center justify-center gap-1"><RefreshCw size={10} />Restart</button>
+        {onFocus && <button onClick={onFocus} className="flex-1 py-1.5 rounded-lg text-[10px] font-semibold bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center gap-1"><Target size={10} />Focus</button>}
+      </div>
+    </div>
+  );
+}
+
+function Metric({ label, value, color }) {
+  return (
+    <div className="bg-gray-800/50 rounded-lg p-1.5 text-center">
+      <p className="text-[8px] text-gray-500 font-mono">{label}</p>
+      <p className="text-xs font-bold font-mono" style={{ color }}>{value}</p>
     </div>
   );
 }
