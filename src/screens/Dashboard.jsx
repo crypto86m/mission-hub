@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TrendingUp, Activity, Users, Zap } from 'lucide-react';
 import NotificationSystem from '../components/NotificationSystem';
+import AgentCommsLog from '../components/AgentCommsLog';
 import OrbitalRing from '../components/OrbitalRing';
 import ActivityFeed from '../components/ActivityFeed';
 import MasterConnect from '../components/MasterConnect';
@@ -254,9 +255,14 @@ export default function Dashboard() {
       </div>
 
       {/* Activity Feed */}
-      <div>
+      <div className="mb-8">
         <h2 className="text-xl font-bold mb-4">Live Activity</h2>
         <ActivityFeed activities={activityFeed} />
+      </div>
+
+      {/* Agent Communications */}
+      <div className="mb-8">
+        <AgentCommsLog />
       </div>
     </div>
   );
