@@ -12,6 +12,7 @@ import SystemHealthWidget from '../components/SystemHealthWidget';
 
 export default function Dashboard() {
   const [selectedCompany, setSelectedCompany] = useState(null);
+  const [liveData, setLiveData] = useState(null);
   const [approvals, setApprovals] = useState([]);
   const [recentActions, setRecentActions] = useState([]);
   const [approvalsLoading, setApprovalsLoading] = useState(true);
@@ -46,6 +47,14 @@ export default function Dashboard() {
     return () => { supabase.removeChannel(channel); };
   }, [fetchApprovals]);
 
+  // Fetch live data from status.json
+  useEffect(() => {
+    fetch('/api/status.json')
+      .then(r => r.json())
+      .then(d => setLiveData(d))
+      .catch(() => setLiveData(null));
+  }, []);
+
   const handleApproval = async (id, newStatus) => {
     const { error } = await supabase
       .from('approvals')
@@ -56,62 +65,72 @@ export default function Dashboard() {
     }
   };
 
+  const d = liveData || {};
+  const t = d.trading || {};
+  const c = d.costs || {};
+  const nl = d.newsletter || {};
+  const co = d.companies || {};
+  const rlm = co.rlm || {};
+  const nvcc = co.nvcc || {};
+  const em = d.email || {};
+  const ag = d.agents || {};
+  const ig = d.instagram || {};
+  const tw = d.twitter || {};
+
   const companies = [
     {
       id: 1,
       name: 'RLM',
       title: 'Commercial Painting',
-      stats: '$2.8M',
-      subtitle: 'YTD Revenue',
+      stats: `$${(rlm.revenue / 1000000).toFixed(1)}M`,
+      subtitle: `${rlm.activeProjects || 0} active projects · ${rlm.margin || 0}% margin`,
       color: 'from-blue-500 to-blue-600',
       icon: '🏢',
-      logo: '/logos/rlm-logo.jpg',
     },
     {
       id: 2,
       name: 'NVCC',
       title: 'Exotic Cars',
-      stats: '$145K',
-      subtitle: 'YTD Revenue',
+      stats: `$${(nvcc.ytdRevenue / 1000).toFixed(0)}K`,
+      subtitle: `${nvcc.members || 0} members · $${(nvcc.fleetValue / 1000000).toFixed(1)}M fleet · ${nvcc.rating}★`,
       color: 'from-green-500 to-green-600',
       icon: '🏎️',
-      logo: '/logos/nvcc-logo.jpg',
     },
     {
       id: 3,
       name: 'Trading',
-      title: 'Strategy Backtest Complete',
-      stats: '20 Strategies',
-      subtitle: 'Top 3: Range (100%), Breakout (83%), Price Action (78%)',
-      color: 'from-green-500 to-green-600',
+      title: t.phase || 'Paper Trading',
+      stats: `${t.strategiesLoaded || 0} Strategies`,
+      subtitle: `Account: $${(t.accountValue || 0).toLocaleString()} · ${t.openPositions || 0} positions`,
+      color: t.unrealizedPnl >= 0 ? 'from-green-500 to-green-600' : 'from-red-500 to-red-600',
       icon: '📈',
     },
     {
       id: 4,
       name: 'Brief',
-      title: 'Bennett\'s Brief',
-      stats: '8.2K',
-      subtitle: 'Subscribers',
+      title: "Bennett's Brief",
+      stats: `${nl.subscribers || 0}`,
+      subtitle: `${nl.openRate || 0}% open rate · ${nl.issuesPublished || 0} issues published`,
       color: 'from-orange-500 to-orange-600',
       icon: '📰',
     },
     {
       id: 5,
       name: 'AI Support',
-      title: 'AI Support',
-      stats: '94%',
-      subtitle: 'Uptime',
+      title: 'AI Support Platform',
+      stats: 'Live',
+      subtitle: 'ai-support-self.vercel.app',
       color: 'from-cyan-500 to-cyan-600',
       icon: '🤖',
     },
   ];
 
   const activityFeed = [
-    { id: 1, action: 'Trading Signal', details: 'QQQ: Opening Range Breakout', time: '2 min ago', status: 'active' },
-    { id: 2, action: 'Task Completed', details: 'RLM: Painter assignment for Marriott', time: '15 min ago', status: 'done' },
-    { id: 3, action: 'System Alert', details: 'Trading bot: 5% daily gain target reached', time: '1 hour ago', status: 'active' },
-    { id: 4, action: 'New Lead', details: 'AI Support: Enterprise prospect inquiry', time: '2 hours ago', status: 'active' },
-    { id: 5, action: 'Schedule Update', details: 'Brief: Scheduled publish for tomorrow 7am', time: '3 hours ago', status: 'pending' },
+    { id: 1, action: 'Email Responder', details: `${em.totalReplies || 0} total replies · ${em.unread || 0} unread`, time: 'Running', status: em.unread > 0 ? 'active' : 'done' },
+    { id: 2, action: 'Trading', details: `${t.todayTrades || 0} trades today · P&L: $${(t.todayPnl || 0).toFixed(2)}`, time: 'Live', status: 'active' },
+    { id: 3, action: 'Instagram', details: `${ig.followers || 0} followers · ${ig.engagementRate || 0}% ER`, time: '30d stats', status: 'active' },
+    { id: 4, action: 'Twitter', details: tw.status === 'blocked' ? `Blocked: ${tw.error}` : `${tw.queued || 0} queued`, time: tw.lastPosted || '', status: tw.status === 'blocked' ? 'pending' : 'done' },
+    { id: 5, action: 'Cron Jobs', details: `${ag.cronHealthy || 0}/${ag.cronJobs || 0} healthy`, time: 'Auto', status: ag.cronErrors > 0 ? 'pending' : 'done' },
   ];
 
   return (
@@ -211,75 +230,76 @@ export default function Dashboard() {
         <div className="glass-card">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-lg font-bold">Today's P&L</h2>
-            <span className="text-xs font-mono text-green-400">MARKET OPEN</span>
+            <span className={`text-xs font-mono ${t.openPositions > 0 ? 'text-green-400' : 'text-gray-400'}`}>{t.openPositions > 0 ? 'POSITIONS OPEN' : 'NO TRADES TODAY'}</span>
           </div>
           <div className="grid grid-cols-3 gap-3">
             <div className="text-center">
-              <p className="text-2xl font-bold text-green-400">+$18.50</p>
+              <p className={`text-2xl font-bold ${(t.unrealizedPnl || 0) >= 0 ? 'text-green-400' : 'text-red-400'}`}>{(t.unrealizedPnl || 0) >= 0 ? '+' : ''}${(t.unrealizedPnl || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
               <p className="text-[10px] text-gray-400">Unrealized</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-white">$518.50</p>
+              <p className="text-2xl font-bold text-white">${(t.accountValue || 0).toLocaleString()}</p>
               <p className="text-[10px] text-gray-400">Account Value</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-cyan">2</p>
+              <p className="text-2xl font-bold text-cyan">{t.openPositions || 0}</p>
               <p className="text-[10px] text-gray-400">Open Positions</p>
             </div>
           </div>
           <div className="mt-3 flex items-center gap-2">
             <div className="flex-1 bg-gray-800 rounded-full h-2">
-              <div className="h-2 rounded-full bg-green-500" style={{ width: '23%' }} />
+              <div className={`h-2 rounded-full ${Math.abs(t.todayPnl || 0) > (t.dailyLimit || 120) ? 'bg-red-500' : 'bg-green-500'}`} style={{ width: `${Math.min(Math.abs(t.todayPnl || 0) / (t.dailyLimit || 120) * 100, 100)}%` }} />
             </div>
-            <span className="text-[10px] text-gray-400 font-mono">$18.50 / $80 daily limit</span>
+            <span className="text-[10px] text-gray-400 font-mono">${Math.abs(t.todayPnl || 0).toFixed(2)} / ${t.dailyLimit || 120} daily limit</span>
           </div>
         </div>
       </div>
 
-      {/* Agent Health Scores */}
+      {/* System Status */}
       <div className="mb-6">
-        <h2 className="text-lg font-bold mb-3">Agent Health</h2>
+        <h2 className="text-lg font-bold mb-3">System Status</h2>
         <div className="grid grid-cols-3 gap-2">
           {[
-            { name: 'Trading', score: 88, color: '#22C55E' },
-            { name: 'Email', score: 97, color: '#22C55E' },
-            { name: 'Content', score: 92, color: '#22C55E' },
-            { name: 'Discord', score: 100, color: '#22C55E' },
-            { name: 'Cost Mon', score: 100, color: '#22C55E' },
-            { name: 'RLM Est', score: 85, color: '#F59E0B' },
-            { name: 'Research', score: 78, color: '#F59E0B' },
-            { name: 'Social', score: 45, color: '#EF4444' },
-            { name: 'Prospect', score: 32, color: '#EF4444' },
+            { name: 'Trading', status: t.openPositions > 0 ? 'active' : 'idle', label: `${t.strategiesLoaded || 0} strats` },
+            { name: 'Email', status: 'ok', label: `${em.totalReplies || 0} replies` },
+            { name: 'Brief', status: 'ok', label: `${nl.subscribers || 0} subs` },
+            { name: 'Instagram', status: 'ok', label: `${ig.followers || 0} follows` },
+            { name: 'Twitter', status: tw.status === 'blocked' ? 'error' : 'ok', label: tw.status === 'blocked' ? 'AUTH ERR' : `${tw.queued} queued` },
+            { name: 'Crons', status: ag.cronErrors > 0 ? 'warn' : 'ok', label: `${ag.cronHealthy || 0}/${ag.cronJobs || 0}` },
+            { name: 'AI Support', status: 'ok', label: 'Live' },
+            { name: 'Booking', status: 'ok', label: 'Port 4344' },
+            { name: 'Costs', status: (c.today || 0) > 15 ? 'warn' : 'ok', label: `$${(c.today || 0).toFixed(2)}/day` },
           ].map((a, i) => (
             <div key={i} className="glass-card text-center py-2">
-              <p className="text-lg font-bold font-mono" style={{ color: a.color }}>{a.score}</p>
+              <div className={`w-2 h-2 rounded-full mx-auto mb-1 ${a.status === 'ok' ? 'bg-green-400' : a.status === 'active' ? 'bg-blue-400 animate-pulse' : a.status === 'warn' ? 'bg-yellow-400' : 'bg-red-400'}`} />
               <p className="text-[9px] text-gray-400">{a.name}</p>
+              <p className="text-[10px] font-mono text-gray-300">{a.label}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Cost Forecast */}
+      {/* Cost Monitor */}
       <div className="mb-6">
         <div className="glass-card">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-lg font-bold">Cost Forecast</h2>
-            <span className="text-xs font-mono text-yellow-400">⚠️ WATCH</span>
+            <h2 className="text-lg font-bold">Cost Monitor</h2>
+            <span className={`text-xs font-mono ${(c.today || 0) > 15 ? 'text-yellow-400' : 'text-green-400'}`}>{(c.today || 0) > 15 ? '⚠️ WATCH' : '✅ ON BUDGET'}</span>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
               <p className="text-[10px] text-gray-400">Today</p>
-              <p className="text-xl font-bold text-white">$142</p>
-              <p className="text-[10px] text-yellow-400">71% of $200 limit</p>
+              <p className="text-xl font-bold text-white">${(c.today || 0).toFixed(2)}</p>
+              <p className="text-[10px] text-gray-400">{((c.today || 0) / (c.dailyLimit || 20) * 100).toFixed(0)}% of ${c.dailyLimit || 20} limit</p>
             </div>
             <div>
-              <p className="text-[10px] text-gray-400">Month Forecast</p>
-              <p className="text-xl font-bold text-yellow-400">$187</p>
-              <p className="text-[10px] text-gray-400">of $200 budget</p>
+              <p className="text-[10px] text-gray-400">Month Total</p>
+              <p className={`text-xl font-bold ${(c.monthTotal || 0) > 150 ? 'text-yellow-400' : 'text-white'}`}>${(c.monthTotal || 0).toFixed(2)}</p>
+              <p className="text-[10px] text-gray-400">of ${c.monthlyBudget || 200} budget</p>
             </div>
           </div>
           <div className="mt-2 bg-gray-800 rounded-full h-2">
-            <div className="h-2 rounded-full bg-yellow-500" style={{ width: '93%' }} />
+            <div className={`h-2 rounded-full ${(c.monthTotal || 0) / (c.monthlyBudget || 200) > 0.75 ? 'bg-yellow-500' : 'bg-green-500'}`} style={{ width: `${Math.min((c.monthTotal || 0) / (c.monthlyBudget || 200) * 100, 100)}%` }} />
           </div>
         </div>
       </div>
@@ -322,29 +342,29 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Quick Stats */}
+      {/* Key Metrics */}
       <div className="mb-8">
         <h2 className="text-xl font-bold mb-4">Key Metrics</h2>
         <div className="grid grid-cols-2 gap-3">
           <div className="glass-card text-center">
             <Activity className="mx-auto mb-2 text-cyan" size={20} />
-            <p className="text-2xl font-bold">8</p>
-            <p className="text-xs text-gray-400">Active Agents</p>
+            <p className="text-2xl font-bold">{ag.cronJobs || 0}</p>
+            <p className="text-xs text-gray-400">Cron Jobs</p>
           </div>
           <div className="glass-card text-center">
             <Zap className="mx-auto mb-2 text-cyan" size={20} />
-            <p className="text-2xl font-bold">$67.38</p>
-            <p className="text-xs text-gray-400">Daily Cost</p>
+            <p className="text-2xl font-bold">${(c.today || 0).toFixed(2)}</p>
+            <p className="text-xs text-gray-400">Today's Cost</p>
           </div>
           <div className="glass-card text-center">
             <TrendingUp className="mx-auto mb-2 text-cyan" size={20} />
-            <p className="text-2xl font-bold">+18.2%</p>
-            <p className="text-xs text-gray-400">Week Growth</p>
+            <p className="text-2xl font-bold">{nl.subscribers || 0}</p>
+            <p className="text-xs text-gray-400">Brief Subscribers</p>
           </div>
           <div className="glass-card text-center">
             <Users className="mx-auto mb-2 text-cyan" size={20} />
-            <p className="text-2xl font-bold">12</p>
-            <p className="text-xs text-gray-400">Team Members</p>
+            <p className="text-2xl font-bold">{ig.followers || 0}</p>
+            <p className="text-xs text-gray-400">IG Followers</p>
           </div>
         </div>
       </div>
