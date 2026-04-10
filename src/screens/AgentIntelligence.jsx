@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, ZoomIn, ZoomOut, Maximize2, Brain, Eye, Activity, Zap, DollarSign, BarChart3, Target, AlertTriangle, Pause, Play, RefreshCw, X, Layers, Grid3X3, GitBranch, Flame, Focus } from 'lucide-react';
+import { Search, ZoomIn, ZoomOut, Maximize2, Brain, Eye, Activity, Zap, DollarSign, BarChart3, Target, AlertTriangle, Pause, Play, RefreshCw, X, Layers, LayoutGrid, GitBranch, Flame, Focus } from 'lucide-react';
 
 // ═══════════════════════════════════════════════════════════════════
 // AGENT INTELLIGENCE COMMAND CENTER v2
@@ -443,7 +443,7 @@ function Header({ search, setSearch, filter, setFilter, viewMode, setViewMode, a
         <div className="flex gap-1">
           {[
             { key: 'graph', icon: <Target size={12} />, label: 'Graph' },
-            { key: 'grid', icon: <Grid3X3 size={12} />, label: 'Grid' },
+            { key: 'grid', icon: <LayoutGrid size={12} />, label: 'Grid' },
             { key: 'flow', icon: <GitBranch size={12} />, label: 'Flow' },
           ].map(v => (
             <button key={v.key} onClick={() => setViewMode(v.key)} className={`px-2 py-1 text-[9px] rounded border flex items-center gap-1 ${viewMode === v.key ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400' : 'border-gray-700 text-gray-500'}`}>
