@@ -7,82 +7,67 @@ export default function CalendarScreen() {
   const [viewMode, setViewMode] = useState('month'); // month, week, day
 
   const events = {
+    // Daily recurring events (shown on every relevant day)
+    7: [
+      { id: 100, title: 'Pre-Market Brief', time: '6:00 AM', duration: '20 min', category: 'trading', location: 'Auto (Charles)' },
+      { id: 101, title: 'Trading Session', time: '6:20 AM', duration: '6h 40m', category: 'trading', location: 'Alpaca Live' },
+      { id: 102, title: 'Operational Excellence Standard deployed', time: '8:37 PM', duration: 'Event', category: 'automation', location: 'Mission Control' },
+    ],
+    8: [
+      { id: 200, title: 'Pre-Market Brief', time: '6:00 AM', duration: '20 min', category: 'trading', location: 'Auto (Charles)' },
+      { id: 201, title: 'Trading Session', time: '6:20 AM', duration: '6h 40m', category: 'trading', location: 'Alpaca Live' },
+      { id: 202, title: 'Mission Control Lovable build started', time: '8:28 AM', duration: 'Event', category: 'content', location: 'lovable.dev' },
+    ],
     9: [
-      {
-        id: 1,
-        title: 'Morning Trading Briefing',
-        time: '7:00 AM',
-        duration: '30 min',
-        category: 'trading',
-        location: 'Home',
-      },
-      {
-        id: 2,
-        title: 'RLM Board Meeting',
-        time: '10:00 AM',
-        duration: '1 hour',
-        category: 'business',
-        location: 'RLM HQ',
-      },
-      {
-        id: 3,
-        title: 'Publish Bennett\'s Brief',
-        time: '3:00 PM',
-        duration: '15 min',
-        category: 'content',
-        location: 'Digital',
-      },
+      { id: 1, title: 'Pre-Market Brief', time: '6:00 AM', duration: '20 min', category: 'trading', location: 'Auto (Charles)' },
+      { id: 2, title: 'Trading Session', time: '6:20 AM', duration: '6h 40m', category: 'trading', location: 'Alpaca Live' },
+      { id: 3, title: 'Buffer Tweet Post', time: '9:00 AM', duration: '1 min', category: 'content', location: 'Buffer → Twitter' },
+      { id: 4, title: 'Agent Intelligence Center deployed', time: '5:42 PM', duration: 'Event', category: 'automation', location: 'Mission Control' },
+      { id: 5, title: 'Full Integrations audit (27)', time: '3:26 PM', duration: 'Event', category: 'automation', location: 'Mission Control' },
     ],
     10: [
-      {
-        id: 4,
-        title: 'Market Analysis Review',
-        time: '9:00 AM',
-        duration: '45 min',
-        category: 'trading',
-        location: 'Zoom',
-      },
+      { id: 6, title: 'Pre-Market Brief', time: '6:00 AM', duration: '20 min', category: 'trading', location: 'Auto (Charles)' },
+      { id: 7, title: 'Trading Session', time: '6:20 AM', duration: '6h 40m', category: 'trading', location: 'Alpaca Live' },
+      { id: 8, title: 'Buffer Tweet Post', time: '9:00 AM', duration: '1 min', category: 'content', location: 'Buffer → Twitter' },
+      { id: 9, title: 'Supabase tables created & seeded', time: '8:46 AM', duration: 'Event', category: 'automation', location: 'Supabase' },
+      { id: 10, title: 'Bennett\'s Brief #7 target publish', time: '3:00 PM', duration: '15 min', category: 'content', location: 'Substack' },
     ],
     11: [
-      {
-        id: 5,
-        title: 'NVCC Member Event',
-        time: '6:00 PM',
-        duration: '3 hours',
-        category: 'business',
-        location: 'Napa Valley',
-      },
+      { id: 11, title: 'Pre-Market Brief', time: '6:00 AM', duration: '20 min', category: 'trading', location: 'Auto (Charles)' },
+      { id: 12, title: 'Trading Session', time: '6:20 AM', duration: '6h 40m', category: 'trading', location: 'Alpaca Live' },
+      { id: 13, title: 'Hotel Oxbow bid deadline', time: '5:00 PM', duration: 'Deadline', category: 'business', location: 'RLM' },
+    ],
+    13: [
+      { id: 14, title: 'Weekly cost review', time: '5:00 PM', duration: '30 min', category: 'automation', location: 'Mission Control' },
+      { id: 15, title: 'Weekly Scorecard generated', time: '6:00 PM', duration: '5 min', category: 'automation', location: 'Auto (Charles)' },
+    ],
+    14: [
+      { id: 16, title: 'Pre-Market Brief', time: '6:00 AM', duration: '20 min', category: 'trading', location: 'Auto (Charles)' },
+      { id: 17, title: 'Trading Session', time: '6:20 AM', duration: '6h 40m', category: 'trading', location: 'Alpaca Live' },
     ],
     15: [
-      {
-        id: 6,
-        title: 'Trading Strategy Adjustment',
-        time: '4:00 PM',
-        duration: '1 hour',
-        category: 'trading',
-        location: 'Home',
-      },
+      { id: 18, title: 'NVCC membership renewals due (8 members)', time: '9:00 AM', duration: 'All day', category: 'business', location: 'NVCC CRM' },
     ],
     20: [
-      {
-        id: 7,
-        title: 'The Napa Event Planning',
-        time: '2:00 PM',
-        duration: '2 hours',
-        category: 'business',
-        location: 'RLM HQ',
-      },
+      { id: 19, title: 'Sunday Operational Review', time: '6:00 PM', duration: '30 min', category: 'automation', location: 'Auto (Charles)' },
+      { id: 20, title: 'Weekly Scorecard', time: '6:00 PM', duration: '5 min', category: 'automation', location: 'Mission Control' },
+    ],
+    30: [
+      { id: 21, title: 'AI Support — $5K MRR target deadline', time: '11:59 PM', duration: 'Deadline', category: 'business', location: 'ai-support-self.vercel.app' },
+      { id: 22, title: 'Monthly budget review ($200 limit)', time: '5:00 PM', duration: '30 min', category: 'automation', location: 'Mission Control' },
     ],
   };
 
   const getCategoryColor = (category) => {
     switch (category) {
       case 'trading':
-        return 'from-green-500 to-green-600';
+        return 'from-purple-500 to-purple-600';
       case 'business':
         return 'from-blue-500 to-blue-600';
       case 'content':
-        return 'from-purple-500 to-purple-600';
+        return 'from-orange-500 to-orange-600';
+      case 'automation':
+        return 'from-gray-500 to-gray-600';
       default:
         return 'from-cyan-500 to-cyan-600';
     }
