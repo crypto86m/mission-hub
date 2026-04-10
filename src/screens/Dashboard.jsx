@@ -80,9 +80,9 @@ export default function Dashboard() {
     {
       id: 3,
       name: 'Trading',
-      title: 'Active Trading',
-      stats: '+$12.3K',
-      subtitle: 'Monthly P&L',
+      title: 'Strategy Backtest Complete',
+      stats: '20 Strategies',
+      subtitle: 'Top 3: Range (100%), Breakout (83%), Price Action (78%)',
       color: 'from-green-500 to-green-600',
       icon: '📈',
     },
