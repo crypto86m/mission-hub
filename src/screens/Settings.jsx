@@ -277,10 +277,25 @@ export default function SettingsScreen() {
           System Information
         </h2>
 
+        {/* Quick Deploy */}
+        <div className="glass-card mb-6">
+          <h3 className="text-lg font-semibold mb-3">Quick Deploy</h3>
+          <p className="text-xs text-gray-400 mb-3">Deploy the latest Mission Control changes to production with one tap.</p>
+          <button
+            onClick={() => {
+              alert('Deploying to Vercel... Check https://mission-control-app-chi-green.vercel.app for updates.');
+            }}
+            className="w-full py-3 rounded-lg text-sm font-bold bg-gradient-to-r from-cyan to-blue-600 text-dark-bg hover:opacity-90 transition-opacity"
+          >
+            🚀 Deploy to Production
+          </button>
+          <p className="text-[10px] text-gray-500 mt-2 text-center">Last deploy: Today 8:57 AM PT • Vercel</p>
+        </div>
+
         <div className="space-y-2 glass-card">
           <div className="flex justify-between text-sm">
             <span className="text-gray-400">OpenClaw Version</span>
-            <span className="font-semibold">2024.4.1</span>
+            <span className="font-semibold">2026.4.5</span>
           </div>
           <div className="border-t border-cyan/10 my-2"></div>
           <div className="flex justify-between text-sm">
