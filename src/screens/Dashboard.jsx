@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { TrendingUp, Activity, Users, Zap } from 'lucide-react';
 import NotificationSystem from '../components/NotificationSystem';
 import AgentCommsLog from '../components/AgentCommsLog';
+import TimeTravelSlider from '../components/TimeTravelSlider';
+import SelfOptimization from '../components/SelfOptimization';
 import OrbitalRing from '../components/OrbitalRing';
 import ActivityFeed from '../components/ActivityFeed';
 import MasterConnect from '../components/MasterConnect';
@@ -263,6 +265,16 @@ export default function Dashboard() {
       {/* Agent Communications */}
       <div className="mb-8">
         <AgentCommsLog />
+      </div>
+
+      {/* Time Travel */}
+      <div className="mb-8">
+        <TimeTravelSlider />
+      </div>
+
+      {/* AI Optimization Recommendations */}
+      <div className="mb-8">
+        <SelfOptimization />
       </div>
     </div>
   );
