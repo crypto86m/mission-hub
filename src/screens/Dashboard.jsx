@@ -13,21 +13,32 @@ import SystemHealthWidget from '../components/SystemHealthWidget';
 export default function Dashboard() {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [approvals, setApprovals] = useState([]);
+  const [recentActions, setRecentActions] = useState([]);
   const [approvalsLoading, setApprovalsLoading] = useState(true);
 
   const fetchApprovals = useCallback(async () => {
-    const { data, error } = await supabase
+    // Fetch pending
+    const { data: pending, error: e1 } = await supabase
       .from('approvals')
       .select('*')
       .eq('status', 'pending')
       .order('created_at', { ascending: false });
-    if (!error && data) setApprovals(data);
+    if (!e1 && pending) setApprovals(pending);
+
+    // Fetch recently decided (approved/denied) — last 20
+    const { data: decided, error: e2 } = await supabase
+      .from('approvals')
+      .select('*')
+      .neq('status', 'pending')
+      .order('decided_at', { ascending: false })
+      .limit(20);
+    if (!e2 && decided) setRecentActions(decided);
+
     setApprovalsLoading(false);
   }, []);
 
   useEffect(() => {
     fetchApprovals();
-    // realtime subscription
     const channel = supabase
       .channel('approvals-changes')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'approvals' }, () => fetchApprovals())
@@ -147,6 +158,53 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
+
+      {/* Recent Execution Log */}
+      {recentActions.length > 0 && (
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold">Recent Decisions</h2>
+            <span className="text-xs font-mono text-gray-400">{recentActions.length} ACTIONS</span>
+          </div>
+          <div className="space-y-1.5">
+            {recentActions.slice(0, 5).map(item => {
+              const isApproved = item.status === 'approved';
+              const isDenied = item.status === 'denied';
+              const execStatus = item.icon_type;
+              const execLog = item.color || '';
+              return (
+                <div key={item.id} className="glass-card flex items-center gap-3 opacity-80">
+                  <div className={`w-2 h-2 rounded-full shrink-0 ${
+                    execStatus === 'executed' ? 'bg-green-400' :
+                    execStatus === 'manual_required' ? 'bg-yellow-400' :
+                    execStatus === 'failed' ? 'bg-red-400' :
+                    isDenied ? 'bg-red-400' :
+                    'bg-gray-400'
+                  }`} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-gray-300 truncate">{item.title}</span>
+                      <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono border ${
+                        isApproved ? 'text-green-400 border-green-400/30 bg-green-400/10' :
+                        'text-red-400 border-red-400/30 bg-red-400/10'
+                      }`}>{isApproved ? 'APPROVED' : 'DENIED'}</span>
+                      {execStatus && execStatus !== 'denied_logged' && (
+                        <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono border ${
+                          execStatus === 'executed' ? 'text-green-400 border-green-400/30 bg-green-400/10' :
+                          execStatus === 'manual_required' ? 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10' :
+                          'text-red-400 border-red-400/30 bg-red-400/10'
+                        }`}>{execStatus === 'executed' ? '✅ EXECUTED' : execStatus === 'manual_required' ? '⚠️ MANUAL' : '❌ FAILED'}</span>
+                      )}
+                    </div>
+                    {execLog && <p className="text-[10px] text-gray-500 mt-0.5 truncate">{execLog}</p>}
+                    <p className="text-[10px] text-gray-500">{item.agent} • {item.decided_at ? new Date(item.decided_at).toLocaleString() : ''}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Real-Time P&L Widget */}
       <div className="mb-6">
