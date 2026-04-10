@@ -4,55 +4,30 @@ import { ChevronDown, Trash2 } from 'lucide-react';
 export default function Tasks() {
   const [tasks, setTasks] = useState({
     backlog: [
-      {
-        id: '1',
-        title: 'Implement trading dashboard',
-        priority: 'high',
-        dueDate: '2026-04-15',
-        assignee: 'Codex',
-      },
-      {
-        id: '2',
-        title: 'Update RLM estimating system',
-        priority: 'high',
-        dueDate: '2026-04-12',
-        assignee: 'Claude Code',
-      },
+      { id: '1', title: 'NVCC membership renewal campaign', priority: 'high', dueDate: '2026-04-15', assignee: 'Benjamin', project: 'NVCC' },
+      { id: '2', title: 'RLM bid follow-up automation', priority: 'medium', dueDate: '2026-04-18', assignee: 'Charles (CBV2)', project: 'RLM' },
+      { id: '3', title: 'Mission Control — mobile optimization', priority: 'low', dueDate: '2026-04-20', assignee: 'Charles (CBV2)', project: 'Mission Control' },
+      { id: '4', title: 'Twitter API upgrade (Basic plan $100/mo)', priority: 'low', dueDate: '2026-04-30', assignee: 'Benjamin', project: 'Content' },
+      { id: '5', title: 'TradingView webhook integration', priority: 'medium', dueDate: '2026-04-22', assignee: 'Trading Bot', project: 'Trading' },
     ],
     inProgress: [
-      {
-        id: '3',
-        title: 'Write Bennett\'s Brief newsletter',
-        priority: 'medium',
-        dueDate: '2026-04-10',
-        assignee: 'Writer Agent',
-      },
-      {
-        id: '4',
-        title: 'Analyze Q1 trading performance',
-        priority: 'high',
-        dueDate: '2026-04-11',
-        assignee: 'Research Agent',
-      },
+      { id: '6', title: 'Bennett\'s Brief Issue #7 — AI Automation Lessons', priority: 'medium', dueDate: '2026-04-10', assignee: 'Content Agent', project: 'Content' },
+      { id: '7', title: 'AI Support — onboard first 3 customers', priority: 'urgent', dueDate: '2026-04-30', assignee: 'Benjamin', project: 'AI Support' },
+      { id: '8', title: 'Hotel Oxbow bid — $410K estimate', priority: 'high', dueDate: '2026-04-11', assignee: 'RLM Estimator', project: 'RLM' },
+      { id: '9', title: 'Live trading strategies deployment', priority: 'high', dueDate: '2026-04-10', assignee: 'Trading Bot', project: 'Trading' },
+      { id: '10', title: 'Supabase real data integration', priority: 'high', dueDate: '2026-04-10', assignee: 'Charles (CBV2)', project: 'Mission Control' },
     ],
     blocked: [
-      {
-        id: '5',
-        title: 'Integrate Superhuman API',
-        priority: 'medium',
-        dueDate: '2026-04-13',
-        assignee: 'Operations',
-        blocker: 'Waiting for API key from Benjamin',
-      },
+      { id: '11', title: 'Prospect Research — AI Support lead gen', priority: 'medium', dueDate: '2026-04-15', assignee: 'Prospect Research', project: 'AI Support', blocker: 'Agent idle 24h+ — needs reassignment or new strategy' },
+      { id: '12', title: 'Social Media auto-distribution', priority: 'low', dueDate: '2026-04-12', assignee: 'Social Media Agent', project: 'Content', blocker: 'Waiting on Content Agent to finish Issue #7' },
     ],
     done: [
-      {
-        id: '6',
-        title: 'Deploy Mission Control dashboard',
-        priority: 'high',
-        dueDate: '2026-04-09',
-        assignee: 'Charles (CBV2)',
-      },
+      { id: '13', title: 'Deploy Mission Control dashboard', priority: 'high', dueDate: '2026-04-09', assignee: 'Charles (CBV2)', project: 'Mission Control' },
+      { id: '14', title: 'Operational Excellence Standard', priority: 'high', dueDate: '2026-04-07', assignee: 'Charles (CBV2)', project: 'Operations' },
+      { id: '15', title: 'Full Integrations audit (27 integrations)', priority: 'medium', dueDate: '2026-04-09', assignee: 'Charles (CBV2)', project: 'Mission Control' },
+      { id: '16', title: 'Agent Intelligence Command Center', priority: 'high', dueDate: '2026-04-09', assignee: 'Charles (CBV2)', project: 'Mission Control' },
+      { id: '17', title: 'Buffer tweet queue loaded (90 tweets)', priority: 'medium', dueDate: '2026-04-06', assignee: 'Social Media Agent', project: 'Content' },
+      { id: '18', title: 'Email responder deployed', priority: 'high', dueDate: '2026-04-03', assignee: 'Email Responder', project: 'Operations' },
     ],
   });
 
@@ -101,14 +76,16 @@ export default function Tasks() {
 
   const getPriorityColor = (priority) => {
     switch (priority) {
+      case 'urgent':
+        return 'text-red-400 border-red-400/30 bg-red-400/10';
       case 'high':
-        return 'priority-high';
+        return 'text-orange-400 border-orange-400/30 bg-orange-400/10';
       case 'medium':
-        return 'priority-medium';
+        return 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10';
       case 'low':
-        return 'priority-low';
+        return 'text-green-400 border-green-400/30 bg-green-400/10';
       default:
-        return 'priority-low';
+        return 'text-gray-400 border-gray-400/30 bg-gray-400/10';
     }
   };
 
@@ -174,9 +151,16 @@ export default function Tasks() {
                     <span className="text-xs text-gray-400">{task.dueDate}</span>
                   </div>
 
-                  {/* Assignee */}
-                  <div className="text-xs text-gray-300 bg-dark-bg/50 px-2 py-1 rounded">
-                    {task.assignee}
+                  {/* Assignee + Project */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs text-gray-300 bg-dark-bg/50 px-2 py-1 rounded">
+                      {task.assignee}
+                    </div>
+                    {task.project && (
+                      <span className="text-[9px] text-cyan px-1.5 py-0.5 rounded border border-cyan/20 bg-cyan/5 font-mono">
+                        {task.project}
+                      </span>
+                    )}
                   </div>
 
                   {/* Expanded Details */}
