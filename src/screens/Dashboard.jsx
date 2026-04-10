@@ -86,6 +86,7 @@ export default function Dashboard() {
       subtitle: `${rlm.activeProjects || 0} active projects · ${rlm.margin || 0}% margin`,
       color: 'from-blue-500 to-blue-600',
       icon: '🏢',
+      logo: '/logos/rlm-logo.jpg',
     },
     {
       id: 2,
@@ -95,6 +96,7 @@ export default function Dashboard() {
       subtitle: `${nvcc.members || 0} members · $${(nvcc.fleetValue / 1000000).toFixed(1)}M fleet · ${nvcc.rating}★`,
       color: 'from-green-500 to-green-600',
       icon: '🏎️',
+      logo: '/logos/nvcc-logo.jpg',
     },
     {
       id: 3,
