@@ -13,26 +13,31 @@ const CLUSTERS = {
   automation: { label: 'Automation', color: '#3B82F6', x: 600, y: 450 },
 };
 
-const agents = [
-  { id: 'charles', label: 'Charles (CBV2)', type: 'core', status: 'active', cluster: null, role: 'Primary AI Agent', model: 'Opus 4.6', objective: 'Orchestrate all agents, maximize revenue, minimize cost', tasks: 4521, successRate: 94, efficiency: 92, revenue: 2800000, cost: 142, apiCalls: 12847, latency: 1.2, throughput: 226, reliability: 97, x: 400, y: 320, size: 65 },
+// Agent positions for visualization (layout only — data comes from Supabase)
+const AGENT_LAYOUT = {
+  'charles': { cluster: null, x: 400, y: 320, size: 65, type: 'core', label: 'Charles (CBV2)' },
+  'trading-bot': { cluster: 'trading', x: 150, y: 160, size: 42, type: 'agent', label: 'Trading Bot' },
+  'market-research': { cluster: 'trading', x: 120, y: 260, size: 36, type: 'agent', label: 'Market Research' },
+  'content-agent': { cluster: 'content', x: 620, y: 160, size: 42, type: 'agent', label: 'Content Agent' },
+  'social-agent': { cluster: 'content', x: 700, y: 250, size: 34, type: 'agent', label: 'Social Media' },
+  'email-responder': { cluster: 'operations', x: 180, y: 420, size: 42, type: 'agent', label: 'Email Responder' },
+  'discord-bot': { cluster: 'operations', x: 120, y: 500, size: 36, type: 'agent', label: 'Discord Bot' },
+  'cost-monitor': { cluster: 'operations', x: 260, y: 520, size: 34, type: 'agent', label: 'Cost Monitor' },
+  'rlm-estimator': { cluster: 'automation', x: 580, y: 420, size: 42, type: 'agent', label: 'RLM Estimator' },
+  'prospect-research': { cluster: 'automation', x: 680, y: 500, size: 34, type: 'agent', label: 'Prospect Research' },
+};
 
-  // Trading cluster
-  { id: 'trading-bot', label: 'Trading Bot', type: 'agent', status: 'active', cluster: 'trading', role: 'Live Trading Executor', model: 'GPT-4o', objective: 'Execute Bollinger Squeeze, ORB, RSI strategies', tasks: 892, successRate: 52, efficiency: 78, revenue: 500, cost: 18, apiCalls: 3421, latency: 0.8, throughput: 45, reliability: 88, x: 150, y: 160, size: 42 },
-  { id: 'market-research', label: 'Market Research', type: 'agent', status: 'active', cluster: 'trading', role: 'Pre-Market Analysis', model: 'Perplexity', objective: 'Scan gaps, identify setups, sector analysis', tasks: 365, successRate: 89, efficiency: 95, revenue: 0, cost: 8, apiCalls: 1820, latency: 2.1, throughput: 18, reliability: 96, x: 120, y: 260, size: 36 },
+// Fallback data if Supabase is unreachable
+const agents = Object.entries(AGENT_LAYOUT).map(([id, layout]) => ({
+  id, ...layout, status: 'active', role: '', model: '', objective: '', task: '',
+  tasks: 0, successRate: 0, efficiency: 0, reliability: 0, revenue: 0, cost: 0,
+  apiCalls: 0, latency: 0, throughput: 0,
+}));
 
-  // Content cluster
-  { id: 'content-agent', label: 'Content Agent', type: 'agent', status: 'active', cluster: 'content', role: 'Newsletter Writer', model: 'Sonnet', objective: 'Draft Bennett\'s Brief Issue #7', tasks: 287, successRate: 96, efficiency: 88, revenue: 3400, cost: 12, apiCalls: 574, latency: 3.2, throughput: 14, reliability: 98, x: 620, y: 160, size: 42 },
-  { id: 'social-agent', label: 'Social Media', type: 'agent', status: 'idle', cluster: 'content', role: 'Distribution', model: 'GPT-4o', objective: 'Queue tweets, LinkedIn posts, Instagram', tasks: 90, successRate: 100, efficiency: 70, revenue: 0, cost: 2, apiCalls: 180, latency: 1.0, throughput: 5, reliability: 100, x: 700, y: 250, size: 34 },
-
-  // Operations cluster
-  { id: 'email-responder', label: 'Email Responder', type: 'agent', status: 'active', cluster: 'operations', role: 'Auto-Reply System', model: 'Haiku', objective: 'Reply non-sensitive emails, flag urgent', tasks: 1247, successRate: 91, efficiency: 97, revenue: 80000, cost: 5, apiCalls: 2494, latency: 0.3, throughput: 62, reliability: 99, x: 180, y: 420, size: 42 },
-  { id: 'discord-bot', label: 'Discord Bot', type: 'agent', status: 'active', cluster: 'operations', role: '14-Channel Monitor', model: 'Haiku', objective: 'Monitor all channels, auto-respond, log activity', tasks: 4521, successRate: 99, efficiency: 99, revenue: 0, cost: 3, apiCalls: 9042, latency: 0.1, throughput: 226, reliability: 100, x: 120, y: 500, size: 36 },
-  { id: 'cost-monitor', label: 'Cost Monitor', type: 'agent', status: 'active', cluster: 'operations', role: 'Budget Guardian', model: 'Custom', objective: 'Track spend, alert thresholds, optimize routing', tasks: 730, successRate: 100, efficiency: 100, revenue: 0, cost: 0, apiCalls: 2190, latency: 0.1, throughput: 37, reliability: 100, x: 260, y: 520, size: 34 },
-
-  // Automation cluster
-  { id: 'rlm-estimator', label: 'RLM Estimator', type: 'agent', status: 'processing', cluster: 'automation', role: 'Bid Generator', model: 'GPT-4o', objective: 'Generate Hotel Oxbow bid — $410K', tasks: 354, successRate: 87, efficiency: 82, revenue: 410000, cost: 22, apiCalls: 708, latency: 4.5, throughput: 18, reliability: 90, x: 580, y: 420, size: 42 },
-  { id: 'prospect-research', label: 'Prospect Research', type: 'agent', status: 'idle', cluster: 'automation', role: 'Lead Generation', model: 'Perplexity', objective: 'Find AI Support customers', tasks: 42, successRate: 76, efficiency: 60, revenue: 0, cost: 4, apiCalls: 84, latency: 3.8, throughput: 2, reliability: 80, x: 680, y: 480, size: 34 },
-];
+// NOTE: This component will be enhanced to fetch from Supabase agent_status table.
+// For now it uses the layout + whatever data was last synced.
+// The supabase-sync.py script updates agent_status every heartbeat.
+// TODO: Add useEffect to fetch from supabase.from('agent_status').select('*')
 
 const integrations = [
   { id: 'alpaca', label: 'Alpaca', type: 'integration', status: 'active', x: 60, y: 120, size: 22 },
