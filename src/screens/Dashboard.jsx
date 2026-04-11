@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { TrendingUp, Activity, Users, Zap, Wifi, WifiOff, Clock } from 'lucide-react';
+import { TrendingUp, Activity, Users, Zap, Wifi, WifiOff, Clock, RefreshCw } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import NotificationSystem from '../components/NotificationSystem';
 import AgentCommsLog from '../components/AgentCommsLog';
@@ -16,6 +16,24 @@ export default function Dashboard() {
   const [approvals, setApprovals] = useState([]);
   const [recentActions, setRecentActions] = useState([]);
   const [approvalsLoading, setApprovalsLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchLiveData = useCallback(async () => {
+    try {
+      const r = await fetch('/api/status.json?t=' + Date.now());
+      const d = await r.json();
+      setLiveData(d);
+    } catch { setLiveData(null); }
+  }, []);
+
+  const refreshAll = useCallback(async () => {
+    setRefreshing(true);
+    await Promise.all([
+      fetchLiveData(),
+      fetchApprovals(),
+    ]);
+    setTimeout(() => setRefreshing(false), 600);
+  }, [fetchLiveData]);
 
   const fetchApprovals = useCallback(async () => {
     // Fetch pending
@@ -49,11 +67,8 @@ export default function Dashboard() {
 
   // Fetch live data from status.json
   useEffect(() => {
-    fetch('/api/status.json')
-      .then(r => r.json())
-      .then(d => setLiveData(d))
-      .catch(() => setLiveData(null));
-  }, []);
+    fetchLiveData();
+  }, [fetchLiveData]);
 
   const handleApproval = async (id, newStatus) => {
     const { error } = await supabase
@@ -136,8 +151,13 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="w-full h-full overflow-y-auto pb-24 px-4 pt-6">
-      {/* Header + Connection Status */}
+    <div className="w-full h-full overflow-y-auto pb-24 px-4 pt-4">
+      {/* Master Connection Status — TOP */}
+      <div className="mb-3">
+        <MasterConnect />
+      </div>
+
+      {/* Header + Refresh */}
       <div className="mb-6 flex items-start justify-between">
         <div>
           <h1 className="text-3xl font-bold glow-text mb-1">Mission Control</h1>
@@ -157,7 +177,21 @@ export default function Dashboard() {
           })()}
           {!liveData && <p className="text-gray-400 text-xs">Loading...</p>}
         </div>
-        <NotificationSystem />
+        <div className="flex items-center gap-2">
+          <button
+            onClick={refreshAll}
+            disabled={refreshing}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all border ${
+              refreshing
+                ? 'bg-cyan/20 text-cyan border-cyan/40'
+                : 'bg-dark-card/50 text-gray-300 border-gray-600/30 hover:text-cyan hover:border-cyan/40 hover:bg-cyan/10'
+            }`}
+          >
+            <RefreshCw size={16} className={refreshing ? 'animate-spin text-cyan' : ''} />
+            {refreshing ? 'Refreshing...' : 'Refresh'}
+          </button>
+          <NotificationSystem />
+        </div>
       </div>
 
       {/* Morning Briefing */}
@@ -337,10 +371,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Master Connect */}
-      <div className="mb-8">
-        <MasterConnect />
-      </div>
+      {/* Master Connect moved to top */}
 
       {/* System Health Widget */}
       <div className="mb-8">
