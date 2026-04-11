@@ -3,8 +3,8 @@ import { Trophy, TrendingUp, TrendingDown, DollarSign, AlertTriangle, CheckCircl
 
 const weekData = {
   period: 'April 3 – April 9, 2026',
-  topPerformer: { name: 'Email Responder', score: 97, reason: '1,247 tasks, 91% success, $80K pipeline influenced' },
-  worstPerformer: { name: 'Prospect Research', score: 32, reason: 'Idle 24h+, only 42 tasks, 76% success rate' },
+  topPerformer: { name: 'Email Responder', score: 98, reason: '655 emails auto-replied, reply loops fixed, sensitivity filters active' },
+  worstPerformer: { name: 'Social Media (Twitter)', score: 10, reason: 'Blocked since April 1 — 401 auth error, 89 tweets queued' },
   revenue: { total: '$3.29M', change: '+18%', breakdown: [
     { source: 'RLM Pipeline', amount: '$2.8M', status: 'up' },
     { source: 'Trading', amount: '$500', status: 'neutral' },
@@ -12,11 +12,11 @@ const weekData = {
     { source: 'NVCC Memberships', amount: '$145K YTD', status: 'up' },
     { source: 'AI Support', amount: '$0', status: 'neutral' },
   ]},
-  costs: { total: '$187', budget: '$200', daily: '$26.7/day avg', breakdown: [
-    { item: 'Anthropic (Claude)', amount: '$89', pct: '48%' },
-    { item: 'OpenAI (GPT-4o)', amount: '$52', pct: '28%' },
-    { item: 'Perplexity', amount: '$18', pct: '10%' },
-    { item: 'Other', amount: '$28', pct: '15%' },
+  costs: { total: '$48', budget: '$200', daily: '$3-5/day normal ($48 on heavy Opus day)', breakdown: [
+    { item: 'Anthropic (Claude)', amount: '$40', pct: '83%' },
+    { item: 'OpenAI (GPT-4o)', amount: '$5', pct: '10%' },
+    { item: 'Perplexity', amount: '$2', pct: '4%' },
+    { item: 'Other', amount: '$1', pct: '2%' },
   ]},
   agentScores: [
     { name: 'Discord Bot', score: 100, tasks: 4521, trend: 'stable' },

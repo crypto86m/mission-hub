@@ -35,8 +35,14 @@ export default function CalendarScreen() {
     11: [
       { id: 11, title: 'Pre-Market Brief', time: '6:00 AM', duration: '20 min', category: 'trading', location: 'Auto (Charles)' },
       { id: 12, title: 'Trading Session', time: '6:20 AM', duration: '6h 40m', category: 'trading', location: 'Alpaca Live' },
-      { id: 13, title: 'Hotel Oxbow bid deadline', time: '5:00 PM', duration: 'Deadline', category: 'business', location: 'RLM' },
+      { id: 50, title: '🎬 IG Reel: Weekend Mindset', time: '9:00 AM', duration: '1 min', category: 'content', location: 'Instagram @benjamin86m' },
+      { id: 51, title: 'Morning Briefing', time: '7:00 AM', duration: '5 min', category: 'automation', location: 'Discord #general' },
     ],
+    12: [
+      { id: 52, title: '🎬 IG Reel: My Fleet (NVCC)', time: '9:00 AM', duration: '1 min', category: 'content', location: 'Instagram @benjamin86m' },
+    ],
+    // Sunday
+    // 13 already has weekly review
     13: [
       { id: 14, title: 'Weekly cost review', time: '5:00 PM', duration: '30 min', category: 'automation', location: 'Mission Control' },
       { id: 15, title: 'Weekly Scorecard generated', time: '6:00 PM', duration: '5 min', category: 'automation', location: 'Auto (Charles)' },
@@ -44,6 +50,8 @@ export default function CalendarScreen() {
     14: [
       { id: 16, title: 'Pre-Market Brief', time: '6:00 AM', duration: '20 min', category: 'trading', location: 'Auto (Charles)' },
       { id: 17, title: 'Trading Session', time: '6:20 AM', duration: '6h 40m', category: 'trading', location: 'Alpaca Live' },
+      { id: 53, title: '🎬 IG Reel: No Excuses', time: '9:00 AM', duration: '1 min', category: 'content', location: 'Instagram @benjamin86m' },
+      { id: 54, title: 'Morning Briefing', time: '7:00 AM', duration: '5 min', category: 'automation', location: 'Discord #general' },
     ],
     15: [
       { id: 18, title: 'NVCC membership renewals due (8 members)', time: '9:00 AM', duration: 'All day', category: 'business', location: 'NVCC CRM' },
