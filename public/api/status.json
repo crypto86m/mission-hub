@@ -1,73 +1,24 @@
 {
-  "generated": "2026-04-10T22:32:35.517147",
+  "generated": "2026-04-11T10:38:05.459336",
   "trading": {
-    "accountValue": 96301.56,
-    "unrealizedPnl": -1281.51,
-    "openPositions": 8,
-    "todayTrades": 14,
-    "todayPnl": 0.0,
+    "accountValue": 0,
+    "unrealizedPnl": 0,
+    "openPositions": 0,
+    "todayTrades": 0,
+    "todayPnl": 0,
     "strategiesLoaded": 20,
     "dailyLimit": 120,
     "phase": "Paper Trading (Phase 3) \u2014 BLOCKED",
-    "positions": [
-      {
-        "symbol": "AAPL",
-        "qty": 78.0,
-        "side": "long",
-        "unrealized": 134.45
-      },
-      {
-        "symbol": "AMD",
-        "qty": 2.0,
-        "side": "long",
-        "unrealized": 5.71
-      },
-      {
-        "symbol": "AMZN",
-        "qty": -82.0,
-        "side": "short",
-        "unrealized": -962.0
-      },
-      {
-        "symbol": "COIN",
-        "qty": -188.0,
-        "side": "short",
-        "unrealized": 1436.72
-      },
-      {
-        "symbol": "MSFT",
-        "qty": -40.0,
-        "side": "short",
-        "unrealized": 244.47
-      },
-      {
-        "symbol": "NFLX",
-        "qty": -356.0,
-        "side": "short",
-        "unrealized": -949.55
-      },
-      {
-        "symbol": "NVDA",
-        "qty": -197.0,
-        "side": "short",
-        "unrealized": -933.53
-      },
-      {
-        "symbol": "QQQ",
-        "qty": -40.0,
-        "side": "short",
-        "unrealized": -257.78
-      }
-    ]
+    "positions": []
   },
   "costs": {
-    "today": 47.52,
+    "today": 9.04,
     "dailyLimit": 20,
     "monthlyBudget": 200,
-    "monthTotal": 47.52
+    "monthTotal": 71.75
   },
   "email": {
-    "totalReplies": 659,
+    "totalReplies": 662,
     "unread": 0,
     "flagged": 0
   },
@@ -91,8 +42,8 @@
     "error": "401 Unauthorized \u2014 credentials expired"
   },
   "agents": {
-    "cronJobs": 18,
-    "cronHealthy": 18,
+    "cronJobs": 10,
+    "cronHealthy": 10,
     "cronErrors": 0
   },
   "companies": {
