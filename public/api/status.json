@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-11T10:38:05.459336",
+  "generated": "2026-04-11T14:43:45.649960",
   "trading": {
     "accountValue": 0,
     "unrealizedPnl": 0,
@@ -12,13 +12,13 @@
     "positions": []
   },
   "costs": {
-    "today": 9.04,
+    "today": 46.88,
     "dailyLimit": 20,
     "monthlyBudget": 200,
-    "monthTotal": 71.75
+    "monthTotal": 109.58
   },
   "email": {
-    "totalReplies": 662,
+    "totalReplies": 663,
     "unread": 0,
     "flagged": 0
   },
@@ -37,13 +37,13 @@
   },
   "twitter": {
     "queued": 89,
-    "lastPosted": "2026-04-01T10:09:00Z",
+    "lastPosted": "2026-04-11T13:24:39.642996",
     "status": "blocked",
     "error": "401 Unauthorized \u2014 credentials expired"
   },
   "agents": {
-    "cronJobs": 10,
-    "cronHealthy": 10,
+    "cronJobs": 11,
+    "cronHealthy": 11,
     "cronErrors": 0
   },
   "companies": {

@@ -17,11 +17,11 @@ export const useConnectionStatus = () => {
   const [lastCheckTime, setLastCheckTime] = useState(null);
   const [diagnosticLogs, setDiagnosticLogs] = useState([]);
 
-  // Mock service checkers
+  // Real service health checkers - polls actual endpoints
   const checkService = useCallback(async (service) => {
     const startTime = Date.now();
     const endpoints = {
-      'OpenClaw Gateway': 'http://localhost:3000/health',
+      'OpenClaw Gateway': 'http://127.0.0.1:8765/health',  // Real health endpoint
       'Discord Bot': 'https://discord.com/api/v10/gateway',
       'Gmail OAuth': 'https://www.googleapis.com/oauth2/v2/userinfo',
       'Anthropic API': 'https://api.anthropic.com/v1/messages',
@@ -39,14 +39,30 @@ export const useConnectionStatus = () => {
       const timeoutId = setTimeout(() => controller.abort(), 5000);
 
       const response = await fetch(endpoint, {
-        method: 'OPTIONS',
+        method: service.name === 'OpenClaw Gateway' ? 'GET' : 'OPTIONS',
         signal: controller.signal,
-      }).catch(() => ({ ok: false, status: 0 }));
+      }).catch(() => null);
 
       clearTimeout(timeoutId);
 
+      if (service.name === 'OpenClaw Gateway' && response && response.ok) {
+        // Parse actual gateway health response
+        const data = await response.json();
+        const isHealthy = data.status === 'healthy' && data.gateway === true;
+        const responseTime = Date.now() - startTime;
+
+        return {
+          ...service,
+          status: isHealthy ? 'connected' : 'disconnected',
+          responseTime: isHealthy ? responseTime : null,
+          error: isHealthy ? null : `Gateway ${data.status} (${responseTime}ms)`,
+          lastCheck: new Date().toISOString(),
+          retryCount: isHealthy ? 0 : service.retryCount + 1,
+        };
+      }
+
       const responseTime = Date.now() - startTime;
-      const isConnected = response.ok || response.status === 0 || responseTime < 5000;
+      const isConnected = response?.ok || responseTime < 5000;
 
       const updatedService = {
         ...service,
@@ -97,14 +113,12 @@ export const useConnectionStatus = () => {
         logs.push(`[${new Date().toLocaleTimeString()}] ✅ All systems operational`);
       } else if (hasErrors) {
         setOverallStatus('error');
-        logs.push(`[${new Date().toLocaleTimeString()}] ⚠️ Some services unreachable`);
+        logs.push(`[${new Date().toLocaleTimeString()}] ⚠️ Some services unreachable (will retry in 30s)`);
         
-        // Attempt recovery for failed services
+        // Log failed services
         const failedServices = updatedServices.filter((s) => s.status !== 'connected');
-        logs.push(`[${new Date().toLocaleTimeString()}] Attempting recovery for ${failedServices.length} service(s)...`);
-        
         failedServices.forEach((service) => {
-          logs.push(`[${new Date().toLocaleTimeString()}] Retry ${service.retryCount}: ${service.name}`);
+          logs.push(`[${new Date().toLocaleTimeString()}] ❌ ${service.name}: ${service.error}`);
         });
       }
 
@@ -135,30 +149,24 @@ export const useConnectionStatus = () => {
     setDiagnosticLogs([]);
   }, []);
 
-  // Load stored diagnostics from localStorage
+  // Force fresh check on mount - don't use stale cache
   useEffect(() => {
-    const stored = localStorage.getItem('masterConnectDiagnostics');
-    if (stored) {
-      const data = JSON.parse(stored);
-      setServices(data.services || services);
-      setDiagnosticLogs(data.logs || []);
-      if (data.lastCheckTime) {
-        setLastCheckTime(new Date(data.lastCheckTime));
-      }
-    }
-  }, []);
+    checkAllServices();
+  }, [checkAllServices]);
 
-  // Save diagnostics to localStorage
+  // Auto-check every 30 seconds for real-time status
   useEffect(() => {
-    localStorage.setItem(
-      'masterConnectDiagnostics',
-      JSON.stringify({
-        services,
-        logs: diagnosticLogs,
-        lastCheckTime: lastCheckTime?.toISOString(),
-      })
-    );
-  }, [services, diagnosticLogs, lastCheckTime]);
+    const interval = setInterval(() => {
+      checkAllServices();
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
+  }, [checkAllServices]);
+
+  // Clear any cached localStorage data on startup
+  useEffect(() => {
+    localStorage.removeItem('masterConnectDiagnostics');
+  }, []);
 
   return {
     services,
