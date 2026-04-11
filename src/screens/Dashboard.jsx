@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { TrendingUp, Activity, Users, Zap } from 'lucide-react';
+import { TrendingUp, Activity, Users, Zap, Wifi, WifiOff, Clock } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import NotificationSystem from '../components/NotificationSystem';
 import AgentCommsLog from '../components/AgentCommsLog';
@@ -137,14 +137,45 @@ export default function Dashboard() {
 
   return (
     <div className="w-full h-full overflow-y-auto pb-24 px-4 pt-6">
-      {/* Header */}
-      <div className="mb-8 flex items-start justify-between">
+      {/* Header + Connection Status */}
+      <div className="mb-6 flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold glow-text mb-2">Mission Control</h1>
-          <p className="text-gray-400">Command center for Benjamin's empire</p>
+          <h1 className="text-3xl font-bold glow-text mb-1">Mission Control</h1>
+          {liveData && (() => {
+            const gen = new Date(liveData.generated || 0);
+            const age = (Date.now() - gen.getTime()) / 60000;
+            const isLive = age < 60;
+            const isStale = age >= 60 && age < 240;
+            return (
+              <div className="flex items-center gap-1.5">
+                <div className={`w-2 h-2 rounded-full ${isLive ? 'bg-green-400' : isStale ? 'bg-yellow-400' : 'bg-red-400'}`} />
+                <span className={`text-xs ${isLive ? 'text-green-400' : isStale ? 'text-yellow-400' : 'text-red-400'}`}>
+                  {isLive ? 'Live' : isStale ? 'Stale' : 'Offline'} — {age < 60 ? `${Math.round(age)}m ago` : `${Math.round(age/60)}h ago`}
+                </span>
+              </div>
+            );
+          })()}
+          {!liveData && <p className="text-gray-400 text-xs">Loading...</p>}
         </div>
         <NotificationSystem />
       </div>
+
+      {/* Morning Briefing */}
+      {liveData && (
+        <div className="mb-6 glass-card border-cyan/20">
+          <div className="flex items-center gap-2 mb-2">
+            <Clock size={14} className="text-cyan" />
+            <span className="text-xs font-semibold text-cyan">Today's Briefing</span>
+          </div>
+          <p className="text-sm text-gray-300">
+            Trading: {t.openPositions || 0} positions, ${(t.unrealizedPnl || 0) >= 0 ? '+' : ''}{(t.unrealizedPnl || 0).toLocaleString(undefined, {maximumFractionDigits: 0})} unrealized · 
+            Email: {em.totalReplies || 0} processed · 
+            Cost: ${(c.today || 0).toFixed(2)} today · 
+            Crons: {ag.cronHealthy || 0}/{ag.cronJobs || 0} healthy · 
+            IG: {ig.followers || 0} followers
+          </p>
+        </div>
+      )}
 
       {/* Pending Approvals — Quick Access */}
       <div className="mb-6">

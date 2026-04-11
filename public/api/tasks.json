@@ -1,206 +1,139 @@
 {
-  "lastUpdated": "2026-04-10T23:25:00Z",
+  "lastUpdated": "2026-04-10T22:30:00",
   "summary": {
-    "total": 28,
-    "completed": 14,
-    "inProgress": 8,
-    "blocked": 4,
-    "pending": 2
+    "total": 14,
+    "completed": 10,
+    "inProgress": 2,
+    "blocked": 1,
+    "pending": 1
   },
+  "blockers": [
+    {
+      "id": "twitter-auth",
+      "system": "Twitter API",
+      "description": "401 Unauthorized — API credentials expired since April 1. 89 tweets queued in Buffer, zero posted in 9 days.",
+      "impact": "Zero social media presence on Twitter since April 1",
+      "daysSinceRaised": 9,
+      "needsFromBenjamin": "Regenerate API keys at developer.twitter.com or decide to drop Twitter"
+    }
+  ],
   "projects": [
     {
       "id": "mission-control",
       "name": "Mission Control Dashboard",
+      "description": "Central command dashboard for all operations",
       "status": "in_progress",
       "priority": "HIGH",
       "progress": 75,
-      "description": "Full rebuild of AI command center with real data, live approvals, and all business tabs",
       "tasks": [
-        {"id": "mc-1", "title": "Dashboard deployed to Vercel (Benjamin's account)", "status": "done", "completedAt": "2026-04-10", "proof": "https://mission-hub-iota.vercel.app"},
-        {"id": "mc-2", "title": "Approval system — live approve/deny with Supabase", "status": "done", "completedAt": "2026-04-10", "proof": "commit 359f038"},
-        {"id": "mc-3", "title": "Approval execution engine — auto-routes to handlers", "status": "done", "completedAt": "2026-04-10", "proof": "scripts/approval-executor.py"},
-        {"id": "mc-4", "title": "Company logos (RLM + NVCC) restored", "status": "done", "completedAt": "2026-04-10", "proof": "commit 427c8a9"},
-        {"id": "mc-5", "title": "Instagram tab with real analytics", "status": "done", "completedAt": "2026-04-10", "proof": "3 sub-tabs: Calendar, Analytics, Audience"},
-        {"id": "mc-6", "title": "Real data pipeline (status.json auto-updates)", "status": "done", "completedAt": "2026-04-10", "proof": "scripts/update-dashboard-data.py"},
-        {"id": "mc-7", "title": "Tasks/Projects tab — this view", "status": "in_progress", "assignee": "Charles"},
-        {"id": "mc-8", "title": "Wire remaining tabs to real data (Calendar, Memory, Scorecard)", "status": "pending", "assignee": "Charles"},
-        {"id": "mc-9", "title": "Mobile responsiveness fixes", "status": "pending", "assignee": "Charles"}
-      ]
-    },
-    {
-      "id": "ai-support",
-      "name": "AI Support Platform",
-      "status": "in_progress",
-      "priority": "HIGH",
-      "progress": 85,
-      "description": "SaaS customer support AI — live at ai-support-self.vercel.app. Target: $5K MRR by April 30.",
-      "tasks": [
-        {"id": "ai-1", "title": "Platform built — 12 pages, 33 API endpoints, Stripe payments", "status": "done", "completedAt": "2026-04-03", "proof": "https://ai-support-self.vercel.app"},
-        {"id": "ai-2", "title": "Cold outreach — 60 prospects emailed (Batch 1+2)", "status": "done", "completedAt": "2026-04-09", "proof": "automation/zapier-integration/blitz-log"},
-        {"id": "ai-3", "title": "Demo request pipeline with auto-reply + SMS alerts", "status": "done", "completedAt": "2026-04-09", "proof": "demo-request-pipeline.py"},
-        {"id": "ai-4", "title": "Discord auto-responder for #ai-customer-support", "status": "done", "completedAt": "2026-04-09"},
-        {"id": "ai-5", "title": "Awaiting first demo/paid customer", "status": "in_progress", "note": "60 emails sent, 48h reply window — expect first replies by April 14"},
-        {"id": "ai-6", "title": "Batch 3 outreach (50 more prospects)", "status": "pending", "assignee": "Charles", "note": "Ready to send when approved"}
-      ]
-    },
-    {
-      "id": "bennetts-brief",
-      "name": "Bennett's Brief Newsletter",
-      "status": "in_progress",
-      "priority": "MEDIUM",
-      "progress": 60,
-      "description": "Daily newsletter on Substack. Target: 100 real subscribers by May 1.",
-      "tasks": [
-        {"id": "bb-1", "title": "Auto-generation pipeline (Claude → Substack)", "status": "done", "completedAt": "2026-04-04", "proof": "Phase 2 live, 6+ issues published"},
-        {"id": "bb-2", "title": "Buffer integration for social distribution", "status": "done", "completedAt": "2026-04-05", "proof": "90 tweets queued in Buffer"},
-        {"id": "bb-3", "title": "LinkedIn daily thought leadership posts", "status": "done", "completedAt": "2026-04-07"},
-        {"id": "bb-4", "title": "Real subscriber growth (currently 6 real, 287 reported)", "status": "in_progress", "note": "Need to audit real vs reported subscriber count"},
-        {"id": "bb-5", "title": "Reddit distribution (r/entrepreneurship, r/stocks)", "status": "pending", "assignee": "Charles"},
-        {"id": "bb-6", "title": "Referral incentive program", "status": "pending", "assignee": "Charles"}
+        {"id": "mc-1", "title": "Deploy to Benjamin's Vercel account", "status": "done", "completedAt": "2026-04-10", "proof": "https://mission-hub-iota.vercel.app", "assignee": "Charles"},
+        {"id": "mc-2", "title": "Wire all tabs to real data (replace hardcoded)", "status": "in_progress", "note": "Home + Instagram done, other tabs in progress overnight", "assignee": "Charles"},
+        {"id": "mc-3", "title": "Supabase real-time integration", "status": "done", "completedAt": "2026-04-10", "proof": "trading_pnl, cost_tracking, agent_status tables updated", "assignee": "Charles"},
+        {"id": "mc-4", "title": "Instagram tab with real analytics", "status": "done", "completedAt": "2026-04-10", "proof": "7 screenshots processed, content calendar built", "assignee": "Charles"}
       ]
     },
     {
       "id": "trading",
       "name": "Trading System",
+      "description": "Paper trading with 6 strategies, tightened parameters",
       "status": "in_progress",
       "priority": "HIGH",
       "progress": 70,
-      "description": "Paper trading on Alpaca with 20 strategies. Target: consistent profitability before live.",
       "tasks": [
-        {"id": "tr-1", "title": "Paper trader running (Alpaca, 20 strategies)", "status": "done", "completedAt": "2026-04-05", "proof": "paper-trader.py active since April 5"},
-        {"id": "tr-2", "title": "Master orchestrator (60s cycles, multi-strategy)", "status": "done", "completedAt": "2026-04-08"},
-        {"id": "tr-3", "title": "Stop-loss watchdog", "status": "done", "completedAt": "2026-04-08", "proof": "stop_loss_watchdog.py"},
-        {"id": "tr-4", "title": "Backtest all 20 strategies", "status": "done", "completedAt": "2026-04-10"},
-        {"id": "tr-5", "title": "Parameters tightened (quality 7.5, max loss $120)", "status": "done", "completedAt": "2026-04-10", "proof": "commit 7595d58"},
-        {"id": "tr-6", "title": "Stop-loss enforcement broken — positions exceeding limits", "status": "blocked", "blocker": "AMZN -5.18%, NVDA -3.05% should have been stopped out. Need to debug paper-trader.py stop-loss logic.", "assignee": "Charles"},
-        {"id": "tr-7", "title": "Live trading deployment ($500 account)", "status": "blocked", "blocker": "Need consistent paper results first. Account 215596978 approved."},
-        {"id": "tr-8", "title": "ThinkorSwim API integration", "status": "pending", "note": "Benjamin asked to add — TD Ameritrade data feeds for live data"}
-      ]
-    },
-    {
-      "id": "twitter",
-      "name": "Twitter/X Automation",
-      "status": "blocked",
-      "priority": "MEDIUM",
-      "progress": 30,
-      "description": "@bennett_ch10631 — 90 tweets queued, posting stalled since April 1.",
-      "tasks": [
-        {"id": "tw-1", "title": "90 tweets written and queued", "status": "done", "completedAt": "2026-04-01"},
-        {"id": "tw-2", "title": "Buffer integration connected", "status": "done", "completedAt": "2026-04-01"},
-        {"id": "tw-3", "title": "OAuth 1.0a posting script", "status": "done", "completedAt": "2026-04-01"},
-        {"id": "tw-4", "title": "API credentials expired — 401 Unauthorized", "status": "blocked", "blocker": "Both credential sets return 401. Benjamin needs to regenerate keys at developer.twitter.com → App → Keys and Tokens. Blocked since April 1 (9 days).", "needsBenjamin": true},
-        {"id": "tw-5", "title": "Twitter Basic plan upgrade ($100/mo)", "status": "blocked", "blocker": "Needed for higher API limits. Benjamin decision required.", "needsBenjamin": true}
+        {"id": "tr-1", "title": "Build & deploy 20 strategies", "status": "done", "completedAt": "2026-04-08", "proof": "trading/strategies/DEPLOYMENT-STATUS.md", "assignee": "Charles"},
+        {"id": "tr-2", "title": "Backtest all 20 strategies (rolling window)", "status": "done", "completedAt": "2026-04-10", "proof": "backtest-results/COMPREHENSIVE-BACKTEST-2026-04-10.json", "assignee": "Charles"},
+        {"id": "tr-3", "title": "Kill 14 losing strategies, keep 6 winners", "status": "done", "completedAt": "2026-04-10", "proof": "Commit 74f0472 — moved to strategies/disabled/", "assignee": "Charles"},
+        {"id": "tr-4", "title": "Tighten parameters (quality 7.5, regime filter)", "status": "done", "completedAt": "2026-04-10", "proof": "Commit 7595d58", "assignee": "Charles"},
+        {"id": "tr-5", "title": "Build stop-loss watchdog", "status": "done", "completedAt": "2026-04-10", "proof": "stop_loss_watchdog.py + launchd plist deployed", "assignee": "Charles"},
+        {"id": "tr-6", "title": "Fix orchestrator launch script (wrong filename + missing --loop)", "status": "done", "completedAt": "2026-04-10", "proof": "launch-orchestrator.sh fixed", "assignee": "Charles"},
+        {"id": "tr-7", "title": "Paper trade 6 strategies to 30+ trades each", "status": "in_progress", "note": "Need 2-4 weeks of market data. Auto-starts weekdays 6:20 AM.", "assignee": "Charles"},
+        {"id": "tr-8", "title": "Go live with real money ($500 account)", "status": "pending", "note": "Waiting on profitable paper results", "assignee": "Benjamin + Charles"}
       ]
     },
     {
       "id": "instagram",
       "name": "Instagram Growth (@benjamin86m)",
+      "description": "682 followers, targeting 1 Reel/day",
       "status": "in_progress",
       "priority": "MEDIUM",
-      "progress": 45,
-      "description": "682 followers, 2.54% engagement. Strategy: 1 Reel/day, CTAs for saves/shares.",
+      "progress": 40,
       "tasks": [
-        {"id": "ig-1", "title": "Full analytics deep dive (screenshots analyzed)", "status": "done", "completedAt": "2026-04-10", "proof": "instagram/analytics/2026-04-10-metrics.md"},
-        {"id": "ig-2", "title": "7-day content calendar (Apr 11-17)", "status": "done", "completedAt": "2026-04-10", "proof": "instagram/content-calendar/WEEK-APR-11-17.md"},
-        {"id": "ig-3", "title": "Mission Control Instagram tab", "status": "done", "completedAt": "2026-04-10"},
-        {"id": "ig-4", "title": "Daily Reel publishing workflow", "status": "in_progress", "note": "Calendar ready, Benjamin needs to film Reels from scripts"},
-        {"id": "ig-5", "title": "Engagement automation (likes, comments, follows in niche)", "status": "pending", "assignee": "Charles"},
-        {"id": "ig-6", "title": "Carousel post templates", "status": "pending", "assignee": "Charles"}
+        {"id": "ig-1", "title": "Deep analytics from 7 screenshots", "status": "done", "completedAt": "2026-04-10", "proof": "instagram/analytics/2026-04-10-metrics.md", "assignee": "Charles"},
+        {"id": "ig-2", "title": "Build 7-day content calendar (Apr 11-17)", "status": "done", "completedAt": "2026-04-10", "proof": "instagram/content-calendar/WEEK-APR-11-17.md", "assignee": "Charles"},
+        {"id": "ig-3", "title": "Add Instagram tab to dashboard", "status": "done", "completedAt": "2026-04-10", "proof": "https://mission-hub-iota.vercel.app (Instagram tab)", "assignee": "Charles"},
+        {"id": "ig-4", "title": "Film & post 7 Reels (Apr 11-17)", "status": "pending", "note": "Benjamin films, posts at 9 AM daily", "assignee": "Benjamin", "needsBenjamin": true}
       ]
     },
     {
-      "id": "email-system",
-      "name": "Email & Communications",
-      "status": "done",
-      "priority": "LOW",
-      "progress": 95,
-      "description": "Auto-reply to non-sensitive emails, SMS monitoring, Gmail OAuth.",
-      "tasks": [
-        {"id": "em-1", "title": "Email responder — 640+ emails auto-replied", "status": "done", "completedAt": "2026-04-04"},
-        {"id": "em-2", "title": "Sensitivity filter (contracts, bids, payments → flagged)", "status": "done"},
-        {"id": "em-3", "title": "SMS monitoring via Verizon email-to-SMS", "status": "done"},
-        {"id": "em-4", "title": "Email reply loop bug (Re: Re: Re: chains)", "status": "done", "completedAt": "2026-04-07", "note": "Fixed duplicate reply detection"},
-        {"id": "em-5", "title": "SMS approval in #email-approval not executing replies", "status": "blocked", "blocker": "Thumbs up/down in Discord doesn't trigger reply sending. Approval-executor now handles this via Supabase instead."}
-      ]
-    },
-    {
-      "id": "rlm",
-      "name": "RLM Enterprises",
+      "id": "ai-support",
+      "name": "AI Support Platform",
+      "description": "Customer acquisition — target 3 beta customers",
       "status": "in_progress",
+      "priority": "HIGH",
+      "progress": 30,
+      "tasks": [
+        {"id": "ai-1", "title": "Platform deployed", "status": "done", "completedAt": "2026-04-08", "proof": "https://ai-support-self.vercel.app", "assignee": "Charles"},
+        {"id": "ai-2", "title": "Cold email batch 1 (30 emails)", "status": "done", "completedAt": "2026-04-08", "assignee": "Charles"},
+        {"id": "ai-3", "title": "Cold email batch 2 (30 emails)", "status": "done", "completedAt": "2026-04-09", "assignee": "Charles"},
+        {"id": "ai-4", "title": "Cold email batch 3 (23 emails)", "status": "done", "completedAt": "2026-04-10", "proof": "63 total companies emailed", "assignee": "Charles"},
+        {"id": "ai-5", "title": "Get first demo booking", "status": "in_progress", "note": "63 emails sent, 0 demos yet. 48-72hr response window.", "assignee": "Charles"},
+        {"id": "ai-6", "title": "Onboard 3 paying customers", "status": "pending", "note": "Target: $5K MRR by April 30", "assignee": "Charles"}
+      ]
+    },
+    {
+      "id": "newsletter",
+      "name": "Bennett's Brief",
+      "description": "Daily newsletter — 287 subscribers, 38% open rate",
+      "status": "done",
       "priority": "MEDIUM",
-      "progress": 60,
-      "description": "Commercial painting. Bid tracker, takeoff training, project management.",
+      "progress": 90,
       "tasks": [
-        {"id": "rlm-1", "title": "Takeoff training system (6-phase, 2,243 lines)", "status": "done", "completedAt": "2026-03-30"},
-        {"id": "rlm-2", "title": "Bid tracker + pipeline monitoring", "status": "done", "completedAt": "2026-04-01"},
-        {"id": "rlm-3", "title": "Weekly bid review cron", "status": "done", "proof": "Cron: Mondays 8 AM PT"},
-        {"id": "rlm-4", "title": "Takeoff markup quality — Benjamin flagged bad output", "status": "blocked", "blocker": "Benjamin said markups highlighted wrong areas (everything instead of just paint scope). Needs rework of highlighting logic.", "note": "From April 4 #rlm channel"}
+        {"id": "nl-1", "title": "Auto-generation pipeline", "status": "done", "completedAt": "2026-04-06", "proof": "Cron: Bennett's Brief daily at 6 AM PT", "assignee": "Charles"},
+        {"id": "nl-2", "title": "6 issues published", "status": "done", "completedAt": "2026-04-09", "proof": "Issues #1-6 on Substack", "assignee": "Charles"},
+        {"id": "nl-3", "title": "Issue #7 drafted (AI Automation Lessons)", "status": "done", "completedAt": "2026-04-10", "proof": "newsletter/drafts/issue-7-ai-automation.md", "assignee": "Charles"},
+        {"id": "nl-4", "title": "Publish Issue #7 to Substack", "status": "pending", "note": "Manual publish needed — Benjamin copies to Substack", "assignee": "Benjamin", "needsBenjamin": true}
       ]
     },
     {
-      "id": "cost-ops",
-      "name": "Cost Optimization & Infrastructure",
+      "id": "email",
+      "name": "Email Automation",
+      "description": "Auto-responder with sensitivity filters",
       "status": "done",
-      "priority": "LOW",
-      "progress": 95,
-      "description": "Budget: $200/mo. Current: ~$3-5/day. All optimizations deployed.",
+      "priority": "MEDIUM",
+      "progress": 100,
       "tasks": [
-        {"id": "co-1", "title": "Model routing (Shell → Ollama → Haiku → Sonnet → Opus)", "status": "done"},
-        {"id": "co-2", "title": "Budget monitor (3x/day alerts)", "status": "done"},
-        {"id": "co-3", "title": "Default model fixed to Haiku (was Opus)", "status": "done", "completedAt": "2026-04-06"},
-        {"id": "co-4", "title": "Cost reduced from $502/7d to ~$3/day", "status": "done"},
-        {"id": "co-5", "title": "Grafana monitoring connected", "status": "done"}
+        {"id": "em-1", "title": "Email responder deployed", "status": "done", "completedAt": "2026-04-03", "proof": "655 emails replied", "assignee": "Charles"},
+        {"id": "em-2", "title": "Fix reply loop bug (89 Anthropic, 21 TradeZella)", "status": "done", "completedAt": "2026-04-10", "proof": "30+ auto-reply patterns, max 2/sender, Re: chain limit", "assignee": "Charles"},
+        {"id": "em-3", "title": "Block Vercel/GitHub notifications", "status": "done", "completedAt": "2026-04-10", "assignee": "Charles"}
       ]
     },
     {
-      "id": "integrations",
-      "name": "Integrations & Reminders",
-      "status": "in_progress",
-      "priority": "LOW",
-      "progress": 70,
-      "description": "Promise detection, commitment tracking, cross-channel context.",
+      "id": "twitter",
+      "name": "Twitter (@bennett_ch10631)",
+      "description": "89 tweets queued, posting blocked",
+      "status": "blocked",
+      "priority": "MEDIUM",
+      "progress": 10,
       "tasks": [
-        {"id": "int-1", "title": "Promise detection system (multi-channel)", "status": "done", "completedAt": "2026-04-05"},
-        {"id": "int-2", "title": "Commitment tracker (memory/commitments.json)", "status": "done"},
-        {"id": "int-3", "title": "Cross-channel context (BENJAMIN-DIRECTIVES.md)", "status": "done"},
-        {"id": "int-4", "title": "Discord nightly archive (13 channels)", "status": "done"},
-        {"id": "int-5", "title": "Make.com / Zapier automation", "status": "in_progress", "note": "Benjamin set up Make.com account April 4, partial setup"},
-        {"id": "int-6", "title": "Perplexity + Superhuman integration", "status": "done", "completedAt": "2026-04-09"}
+        {"id": "tw-1", "title": "90 tweets written and loaded in Buffer", "status": "done", "completedAt": "2026-04-06", "assignee": "Charles"},
+        {"id": "tw-2", "title": "Fix 401 Unauthorized", "status": "blocked", "blocker": "API credentials expired. Need Benjamin to regenerate at developer.twitter.com", "needsBenjamin": true, "assignee": "Benjamin"}
       ]
-    }
-  ],
-  "blockers": [
-    {
-      "id": "blocker-1",
-      "system": "Twitter/X",
-      "description": "OAuth credentials return 401. Keys need regeneration at developer.twitter.com",
-      "daysSinceRaised": 9,
-      "impact": "89 tweets sitting in queue, no social presence since April 1",
-      "needsFromBenjamin": "Go to developer.twitter.com → App → Keys and Tokens → Regenerate all 4 keys → Paste them to Charles"
     },
     {
-      "id": "blocker-2",
-      "system": "Trading",
-      "description": "Stop-loss enforcement not working — positions exceeding max loss limits",
-      "daysSinceRaised": 1,
-      "impact": "AMZN -$962, NVDA -$1,105, NFLX -$750 still open. Daily loss $1,206 vs $80 limit.",
-      "needsFromBenjamin": "Decision: fix stop-loss logic and continue, or pause paper trading?"
-    },
-    {
-      "id": "blocker-3",
-      "system": "RLM Takeoff",
-      "description": "Takeoff markup quality rejected by Benjamin — highlighted everything instead of just paint scope",
-      "daysSinceRaised": 6,
-      "impact": "Takeoff training system unusable for real bids until reworked",
-      "needsFromBenjamin": "Share example of correct markup so Charles can retrain the logic"
-    },
-    {
-      "id": "blocker-4",
-      "system": "SMS/Email Approval",
-      "description": "Discord thumbs up/down doesn't trigger reply execution",
-      "daysSinceRaised": 5,
-      "impact": "Benjamin approves in Discord but replies don't send. Now using dashboard approval system instead.",
-      "needsFromBenjamin": "None — workaround deployed via Mission Control approval buttons"
+      "id": "operational",
+      "name": "Operational Excellence",
+      "description": "6 systemic improvements implemented",
+      "status": "done",
+      "priority": "HIGH",
+      "progress": 100,
+      "tasks": [
+        {"id": "op-1", "title": "BENJAMIN-DIRECTIVES.md (never ask twice)", "status": "done", "completedAt": "2026-04-10", "proof": "memory/BENJAMIN-DIRECTIVES.md created", "assignee": "Charles"},
+        {"id": "op-2", "title": "Data Integrity Rule (no fake data)", "status": "done", "completedAt": "2026-04-10", "proof": "AGENTS.md + SOUL.md updated", "assignee": "Charles"},
+        {"id": "op-3", "title": "Trading Safety Rule (3 components)", "status": "done", "completedAt": "2026-04-10", "proof": "start-trading-system.sh + launchd jobs", "assignee": "Charles"},
+        {"id": "op-4", "title": "Blocker Escalation Rule (daily escalation)", "status": "done", "completedAt": "2026-04-10", "proof": "AGENTS.md + HEARTBEAT.md updated", "assignee": "Charles"},
+        {"id": "op-5", "title": "Cross-Channel Context Rule", "status": "done", "completedAt": "2026-04-10", "proof": "AGENTS.md: 5-point protocol + channel IDs", "assignee": "Charles"},
+        {"id": "op-6", "title": "Post-Completion Verification Checklist", "status": "done", "completedAt": "2026-04-10", "proof": "SOUL.md: 5-point checklist", "assignee": "Charles"}
+      ]
     }
   ]
 }

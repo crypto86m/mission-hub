@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-10T16:12:18.894335",
+  "generated": "2026-04-10T22:32:35.517147",
   "trading": {
     "accountValue": 96301.56,
     "unrealizedPnl": -1281.51,
@@ -61,13 +61,13 @@
     ]
   },
   "costs": {
-    "today": 47.95,
+    "today": 47.52,
     "dailyLimit": 20,
     "monthlyBudget": 200,
-    "monthTotal": 48.0
+    "monthTotal": 47.52
   },
   "email": {
-    "totalReplies": 654,
+    "totalReplies": 659,
     "unread": 0,
     "flagged": 0
   },
@@ -91,23 +91,9 @@
     "error": "401 Unauthorized \u2014 credentials expired"
   },
   "agents": {
-    "cronJobs": 16,
-    "cronHealthy": 16,
-    "cronErrors": 0,
-    "bennett-brief": {
-      "name": "Bennett's Brief (Phase 3 Test)",
-      "status": "ACTIVE",
-      "phase": 3,
-      "lastUpdate": "2026-04-10T20:23:00Z",
-      "nextRun": "2026-04-11T19:00:00Z",
-      "gitCommit": "8b30370",
-      "costToday": 0.6,
-      "metrics": {
-        "issuesPublished": 1,
-        "avgTimePerIssue": "10 min",
-        "qualityScore": 100
-      }
-    }
+    "cronJobs": 18,
+    "cronHealthy": 18,
+    "cronErrors": 0
   },
   "companies": {
     "rlm": {
