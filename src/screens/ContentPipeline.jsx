@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FileText, Copy, Check, ChevronDown, ChevronRight, Instagram, Twitter, BookOpen } from 'lucide-react';
+import { Copy, Check, ChevronDown, ChevronRight } from 'lucide-react';
 
 function CopyButton({ text, label }) {
   const [copied, setCopied] = useState(false);
@@ -29,7 +29,7 @@ function CopyButton({ text, label }) {
 export default function ContentPipeline() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('newsletters');
+  const [activeTab, setActiveTab] = useState('instagram');
   const [expanded, setExpanded] = useState(null);
 
   useEffect(() => {
@@ -52,9 +52,9 @@ export default function ContentPipeline() {
   );
 
   const tabs = [
-    { key: 'newsletters', label: "Bennett's Brief", icon: <BookOpen size={14} />, count: data.newsletters?.length || 0 },
-    { key: 'instagram', label: 'Instagram', icon: <Instagram size={14} />, count: data.instagram?.length || 0 },
-    { key: 'tweets', label: 'Tweets', icon: <Twitter size={14} />, count: data.tweets?.length || 0 },
+    { key: 'instagram', label: '📸 Instagram', count: data.instagram?.length || 0 },
+    { key: 'newsletters', label: "📰 Brief", count: data.newsletters?.length || 0 },
+    { key: 'tweets', label: '🐦 Tweets', count: data.tweets?.length || 0 },
   ];
 
   return (
@@ -67,18 +67,17 @@ export default function ContentPipeline() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 mb-6 border-b border-gray-700 pb-3">
+      <div className="flex gap-1 mb-6 overflow-x-auto pb-1">
         {tabs.map(tab => (
           <button
             key={tab.key}
-            onClick={() => setActiveTab(tab.key)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            onClick={() => { setActiveTab(tab.key); setExpanded(null); }}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-bold whitespace-nowrap transition-all ${
               activeTab === tab.key
                 ? 'bg-cyan/15 text-cyan border border-cyan/40'
-                : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                : 'bg-dark-card/50 text-gray-400 border border-gray-600/20 hover:text-white'
             }`}
           >
-            {tab.icon}
             {tab.label}
             <span className="text-[10px] bg-black/30 px-1.5 py-0.5 rounded">{tab.count}</span>
           </button>
@@ -138,10 +137,13 @@ export default function ContentPipeline() {
                   {isExpanded ? <ChevronDown size={16} className="text-pink-400 shrink-0" /> : <ChevronRight size={16} className="text-gray-400 shrink-0" />}
                   <div className="flex-1 min-w-0">
                     <span className="text-sm font-bold text-white">{post.title}</span>
-                    <p className="text-[10px] text-gray-400 mt-0.5">
-                      <span className="text-pink-400 border border-pink-400/30 bg-pink-400/10 px-1 py-0.5 rounded text-[9px] font-mono mr-1">{post.status?.toUpperCase()}</span>
-                      Reel • @benjamin86m
-                    </p>
+                    <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                      {post.type && <span className="text-[9px] px-1.5 py-0.5 rounded border border-pink-400/30 bg-pink-400/10 text-pink-400 font-mono">{post.type}</span>}
+                      <span className={`text-[9px] px-1.5 py-0.5 rounded border font-mono ${
+                        post.onCamera === 'NO' ? 'border-green-400/30 bg-green-400/10 text-green-400' : 'border-yellow-400/30 bg-yellow-400/10 text-yellow-400'
+                      }`}>{post.onCamera === 'NO' ? '📱 No camera' : post.onCamera === 'YES' ? '🎥 On camera' : '🎥 Brief'}</span>
+                      <span className="text-[9px] text-gray-500">@benjamin86m</span>
+                    </div>
                   </div>
                 </button>
 
