@@ -1,11 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, ChevronRight, AlertTriangle, CheckCircle, Clock, Ban, ExternalLink } from 'lucide-react';
+import { ChevronDown, ChevronRight, AlertTriangle, CheckCircle, Clock, Ban, ExternalLink, Play, X, ArrowUp } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 export default function Tasks() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expandedProject, setExpandedProject] = useState(null);
-  const [filter, setFilter] = useState('all'); // all, blocked, in_progress, done
+  const [filter, setFilter] = useState('all');
+  const [actionFeedback, setActionFeedback] = useState(null);
+
+  const handleTaskAction = async (task, project, action) => {
+    const title = `${project.name}: ${task.title}`;
+    let description = '';
+    let risk = 'LOW';
+    let status = 'pending';
+
+    if (action === 'approve') {
+      description = `Benjamin approved task: ${task.title}. ${task.blocker || task.note || ''}`;
+      status = 'approved';
+      risk = task.needsBenjamin ? 'MEDIUM' : 'LOW';
+    } else if (action === 'prioritize') {
+      description = `Benjamin prioritized: ${task.title}. Move to top of work queue.`;
+      status = 'approved';
+      risk = 'LOW';
+    } else if (action === 'dismiss') {
+      description = `Benjamin dismissed: ${task.title}. Remove from active tasks.`;
+      status = 'denied';
+      risk = 'LOW';
+    }
+
+    // Write to Supabase approvals table
+    const { error } = await supabase.from('approvals').insert({
+      agent: 'Task Manager',
+      title: title.slice(0, 200),
+      description,
+      risk,
+      value: project.name,
+      status,
+      decided_at: new Date().toISOString(),
+    });
+
+    if (!error) {
+      const emoji = action === 'approve' ? '✅' : action === 'prioritize' ? '📌' : '🚫';
+      setActionFeedback(`${emoji} ${action === 'approve' ? 'Approved' : action === 'prioritize' ? 'Prioritized' : 'Dismissed'}: ${task.title}`);
+      setTimeout(() => setActionFeedback(null), 3000);
+    }
+  };
 
   useEffect(() => {
     fetch('/api/tasks.json')
@@ -71,6 +111,13 @@ export default function Tasks() {
         <h1 className="text-3xl font-bold glow-text mb-2">Projects & Tasks</h1>
         <p className="text-gray-400 text-sm">Last updated: {new Date(data.lastUpdated).toLocaleString()}</p>
       </div>
+
+      {/* Action Feedback Toast */}
+      {actionFeedback && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-dark-card border border-cyan/40 rounded-lg px-4 py-2.5 shadow-lg animate-pulse-soft">
+          <p className="text-sm text-white font-medium">{actionFeedback}</p>
+        </div>
+      )}
 
       {/* Summary Cards */}
       <div className="grid grid-cols-5 gap-3 mb-6">
@@ -208,6 +255,33 @@ export default function Tasks() {
                           {task.assignee && <span className="text-[9px] text-gray-500">→ {task.assignee}</span>}
                           {task.needsBenjamin && <span className="text-[9px] text-yellow-400 font-semibold">⚠️ NEEDS BENJAMIN</span>}
                         </div>
+                        {/* Action buttons for non-done tasks */}
+                        {task.status !== 'done' && (
+                          <div className="flex gap-1.5 mt-2">
+                            {(task.status === 'pending' || task.status === 'blocked') && (
+                              <button
+                                onClick={(e) => { e.stopPropagation(); handleTaskAction(task, project, 'approve'); }}
+                                className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30 transition-colors"
+                              >
+                                <Play size={10} /> Approve
+                              </button>
+                            )}
+                            {task.status === 'in_progress' && (
+                              <button
+                                onClick={(e) => { e.stopPropagation(); handleTaskAction(task, project, 'prioritize'); }}
+                                className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold bg-cyan/20 text-cyan border border-cyan/30 hover:bg-cyan/30 transition-colors"
+                              >
+                                <ArrowUp size={10} /> Prioritize
+                              </button>
+                            )}
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleTaskAction(task, project, 'dismiss'); }}
+                              className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition-colors"
+                            >
+                              <X size={10} /> Dismiss
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
