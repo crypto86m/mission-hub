@@ -1,0 +1,60 @@
+{
+  "lastUpdated": "2026-04-10T22:07:00Z",
+  "videos": [
+    {
+      "id": "friday-drive",
+      "title": "Friday Drive — Napa POV",
+      "day": "Friday, April 11",
+      "description": "POV dashcam through Napa Valley vineyards. No camera. Music only.",
+      "caption": "Friday drives hit different in wine country. 🍷",
+      "hashtags": "#NapaValley #FridayVibes #CaliforniaLiving #ExoticCars #NapaLife #WineCountry #WeekendMode #CarLife #LuxuryLifestyle",
+      "url": "/videos/napa-friday-drive.mp4",
+      "onCamera": false,
+      "status": "ready"
+    },
+    {
+      "id": "monday-cars",
+      "title": "Monday Morning Lineup",
+      "day": "Monday, April 14",
+      "description": "Slow pan across exotic cars at sunrise. Golden hour. No people.",
+      "caption": "Monday motivation looks a little different around here. 🏎️",
+      "hashtags": "#MondayMotivation #ExoticCars #CarCollection #NapaValley #Lamborghini #Porsche #CarClub #LuxuryCars #NVCC",
+      "url": "/videos/monday-car-lineup.mp4",
+      "onCamera": false,
+      "status": "ready"
+    },
+    {
+      "id": "wednesday-sunset",
+      "title": "Golden Hour Napa",
+      "day": "Wednesday, April 16",
+      "description": "Aerial view of Napa Valley vineyards at golden hour sunset.",
+      "caption": "Home. 🌅",
+      "hashtags": "#NapaValley #GoldenHour #WineCountry #CaliforniaSunset #NapaLife #Vineyards #HomeSweetHome",
+      "url": "/videos/wednesday-napa-sunset.mp4",
+      "onCamera": false,
+      "status": "generating"
+    },
+    {
+      "id": "saturday-paint",
+      "title": "Paint Job Reveal — RLM BTS",
+      "day": "Saturday, April 12",
+      "description": "Walk through a current RLM paint job. Before/after, crew working, detail shots.",
+      "caption": "Some families pass down recipes. Ours passes down rollers. 🎨\n\n40 years of commercial painting across Northern California. RLM Enterprises — started by my parents, run by me.",
+      "hashtags": "#FamilyBusiness #CommercialPainting #RLMEnterprises #NapaValley #Entrepreneur #BlueCollar #GenerationalWealth",
+      "url": "/videos/saturday-paint-job.mp4",
+      "onCamera": false,
+      "status": "queued"
+    },
+    {
+      "id": "thursday-flex",
+      "title": "The Subtle Flex",
+      "day": "Thursday, April 17",
+      "description": "Getting into a nice car, pulling out of the driveway. No words. Let the visual talk.",
+      "caption": "Thursday. ✌️",
+      "hashtags": "#LuxuryLifestyle #ExoticCars #NapaValley #Lifestyle #Entrepreneur #CarLife #SilentFlex",
+      "url": "/videos/thursday-subtle-flex.mp4",
+      "onCamera": false,
+      "status": "queued"
+    }
+  ]
+}

@@ -77,6 +77,43 @@ const typeIcons = {
 };
 
 export default function SelfOptimization() {
+  const [applying, setApplying] = React.useState(null);
+
+  const handleApplyRecommendation = async (recommendation) => {
+    setApplying(recommendation.id);
+    try {
+      // Create approval request in Supabase
+      const response = await fetch('/api/approvals', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          agent: recommendation.agent,
+          title: recommendation.title,
+          description: recommendation.description,
+          recommendation_id: recommendation.id,
+          recommendation_type: recommendation.type,
+          recommended_action: recommendation.action,
+          potential_impact: recommendation.impact,
+          priority: recommendation.priority,
+          risk: recommendation.priority === 'high' ? 'HIGH' : recommendation.priority === 'medium' ? 'MEDIUM' : 'LOW',
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('✅ Recommendation submitted for approval:', recommendation.title);
+        // Show success feedback
+        setTimeout(() => setApplying(null), 2000);
+      } else {
+        console.error('Failed to submit recommendation');
+        setApplying(null);
+      }
+    } catch (error) {
+      console.error('Error applying recommendation:', error);
+      setApplying(null);
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center gap-2 mb-3">
@@ -103,8 +140,13 @@ export default function SelfOptimization() {
                 <span className="text-[9px] text-gray-500">Impact:</span>
                 <span className="text-[9px] text-cyan font-mono">{r.impact}</span>
               </div>
-              <button className="flex items-center gap-1 px-2.5 py-1 rounded text-[9px] font-semibold bg-cyan/10 text-cyan border border-cyan/20 hover:bg-cyan/20 transition-colors">
-                {r.action} <ArrowRight size={10} />
+              <button
+                onClick={() => handleApplyRecommendation(r)}
+                disabled={applying === r.id}
+                className="flex items-center gap-1 px-2.5 py-1 rounded text-[9px] font-semibold bg-cyan/10 text-cyan border border-cyan/20 hover:bg-cyan/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {applying === r.id ? '⏳ Submitting...' : `${r.action} `}
+                <ArrowRight size={10} />
               </button>
             </div>
           </div>

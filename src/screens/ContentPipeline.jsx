@@ -28,15 +28,20 @@ function CopyButton({ text, label }) {
 
 export default function ContentPipeline() {
   const [data, setData] = useState(null);
+  const [videos, setVideos] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('instagram');
+  const [activeTab, setActiveTab] = useState('videos');
   const [expanded, setExpanded] = useState(null);
 
   useEffect(() => {
-    fetch('/api/content.json')
-      .then(r => r.json())
-      .then(d => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
+    Promise.all([
+      fetch('/api/content.json').then(r => r.json()).catch(() => null),
+      fetch('/api/videos.json').then(r => r.json()).catch(() => null),
+    ]).then(([content, vids]) => {
+      setData(content);
+      setVideos(vids);
+      setLoading(false);
+    });
   }, []);
 
   if (loading) return (
@@ -51,10 +56,12 @@ export default function ContentPipeline() {
     </div>
   );
 
+  const videoCount = videos?.videos?.length || 0;
   const tabs = [
-    { key: 'instagram', label: '📸 Instagram', count: data.instagram?.length || 0 },
-    { key: 'newsletters', label: "📰 Brief", count: data.newsletters?.length || 0 },
-    { key: 'tweets', label: '🐦 Tweets', count: data.tweets?.length || 0 },
+    { key: 'videos', label: '🎥 Videos', count: videoCount },
+    { key: 'instagram', label: '📸 IG Posts', count: data?.instagram?.length || 0 },
+    { key: 'newsletters', label: "📰 Brief", count: data?.newsletters?.length || 0 },
+    { key: 'tweets', label: '🐦 Tweets', count: data?.tweets?.length || 0 },
   ];
 
   return (
@@ -62,7 +69,7 @@ export default function ContentPipeline() {
       <div className="mb-6">
         <h1 className="text-3xl font-bold glow-text mb-2">Content Hub</h1>
         <p className="text-gray-400 text-sm">
-          {data.newsletters?.length || 0} articles • {data.instagram?.length || 0} IG posts • {data.tweets?.length || 0} tweets
+          {videoCount} videos • {data?.instagram?.length || 0} IG posts • {data?.newsletters?.length || 0} articles • {data?.tweets?.length || 0} tweets
         </p>
       </div>
 
@@ -84,8 +91,77 @@ export default function ContentPipeline() {
         ))}
       </div>
 
+      {/* Videos Gallery */}
+      {activeTab === 'videos' && videos && (
+        <div className="space-y-4">
+          {(videos.videos || []).map(video => (
+            <div key={video.id} className="glass-card">
+              <div className="flex items-center justify-between mb-2">
+                <div>
+                  <h3 className="text-sm font-bold text-white">{video.title}</h3>
+                  <p className="text-[10px] text-gray-400">{video.day} • {video.onCamera ? '🎥 On camera' : '📱 No camera'}</p>
+                </div>
+                <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono border ${
+                  video.status === 'ready' ? 'text-green-400 border-green-400/30 bg-green-400/10' :
+                  video.status === 'generating' ? 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10 animate-pulse' :
+                  'text-gray-400 border-gray-400/30 bg-gray-400/10'
+                }`}>{video.status === 'ready' ? '✅ READY' : video.status === 'generating' ? '⏳ GENERATING' : '📋 QUEUED'}</span>
+              </div>
+
+              {/* Video Player */}
+              {video.status === 'ready' && (
+                <div className="mb-3">
+                  <video
+                    src={video.url}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full rounded-lg bg-black max-h-80"
+                    style={{ aspectRatio: '9/16', maxHeight: '320px', objectFit: 'contain' }}
+                  />
+                  <div className="flex gap-2 mt-2">
+                    <a
+                      href={video.url}
+                      download
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-cyan/10 text-cyan border border-cyan/30 hover:bg-cyan/20 transition-all"
+                    >
+                      ⬇️ Download Video
+                    </a>
+                  </div>
+                </div>
+              )}
+
+              {/* Caption */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-pink-400">📝 Caption</span>
+                  <CopyButton text={video.caption} label="Copy Caption" />
+                </div>
+                <p className="text-xs text-gray-300 bg-black/20 rounded-lg p-2 whitespace-pre-wrap">{video.caption}</p>
+              </div>
+
+              {/* Hashtags */}
+              <div className="mt-2 space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-blue-400"># Hashtags</span>
+                  <CopyButton text={video.hashtags} label="Copy Hashtags" />
+                </div>
+                <p className="text-[10px] text-blue-300 bg-black/20 rounded-lg p-2">{video.hashtags}</p>
+              </div>
+
+              {/* Copy everything */}
+              <div className="mt-2 flex gap-2">
+                <CopyButton text={`${video.caption}\n\n${video.hashtags}`} label="Copy Caption + Hashtags" />
+              </div>
+
+              <p className="text-[10px] text-gray-500 mt-2">{video.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Newsletter Content */}
-      {activeTab === 'newsletters' && (
+      {activeTab === 'newsletters' && data && (
         <div className="space-y-3">
           {(data.newsletters || []).map(article => {
             const isExpanded = expanded === article.id;
@@ -124,7 +200,7 @@ export default function ContentPipeline() {
       )}
 
       {/* Instagram Content */}
-      {activeTab === 'instagram' && (
+      {activeTab === 'instagram' && data && (
         <div className="space-y-3">
           {(data.instagram || []).map(post => {
             const isExpanded = expanded === post.id;
@@ -188,7 +264,7 @@ export default function ContentPipeline() {
       )}
 
       {/* Tweets */}
-      {activeTab === 'tweets' && (
+      {activeTab === 'tweets' && data && (
         <div className="space-y-2">
           <div className="glass-card mb-4 border-yellow-500/20 bg-yellow-500/5">
             <p className="text-xs text-yellow-300">⚠️ Twitter API blocked — 89 tweets queued but can't post. Waiting on API key regeneration.</p>
