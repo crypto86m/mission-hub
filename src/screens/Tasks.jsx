@@ -17,17 +17,27 @@ export default function Tasks() {
     const text = `✅ TASK ${label}: ${projectName}: ${taskTitle}`;
     
     try {
-      const { error } = await supabase.from('activity_feed').insert({
+      // 1. Log to activity_feed (history/audit)
+      await supabase.from('activity_feed').insert({
         text: text.slice(0, 250),
         agent_id: 'task_manager',
         type: action === 'dismiss' ? 'warning' : 'execution',
       });
       
-      if (error) throw error;
+      // 2. Create approval entry so the executor picks it up and ACTS on it
+      const status = action === 'approve' ? 'approved' : action === 'prioritize' ? 'approved' : 'denied';
+      const { error: approvalError } = await supabase.from('approvals').insert({
+        agent_type: `Task: ${projectName}`,
+        description: `[${label}] ${taskTitle}`,
+        status: status,
+        decided_at: new Date().toISOString(),
+      });
+      
+      if (approvalError) console.error('Approval insert error:', approvalError);
       
       const emoji = action === 'approve' ? '✅' : action === 'prioritize' ? '📌' : '🚫';
-      setActionFeedback(`${emoji} ${label}: ${taskTitle}`);
-      setTimeout(() => setActionFeedback(null), 3000);
+      setActionFeedback(`${emoji} ${label}: ${taskTitle} — Charles will execute within 5 min`);
+      setTimeout(() => setActionFeedback(null), 5000);
     } catch (err) {
       setActionFeedback(`❌ Failed: ${err.message || 'Unknown error'}`);
       setTimeout(() => setActionFeedback(null), 3000);
