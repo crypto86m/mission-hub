@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain, Trophy, Database, Instagram, Share2 } from 'lucide-react';
+import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain, Trophy, Database, Instagram, Share2, Film } from 'lucide-react';
 import Dashboard from './screens/Dashboard';
 import Tasks from './screens/Tasks';
 import CalendarScreen from './screens/Calendar';
@@ -13,6 +13,8 @@ import ContentPipeline from './screens/ContentPipeline';
 import MemoryBank from './screens/MemoryBank';
 import InstagramCalendar from './screens/InstagramCalendar';
 import SocialPublisher from './screens/SocialPublisher';
+import EditingBriefs from './screens/EditingBriefs';
+import ReelsManager from './screens/ReelsManager';
 import './index.css';
 
 export default function App() {
@@ -46,6 +48,10 @@ export default function App() {
         return <InstagramCalendar />;
       case 'social':
         return <SocialPublisher />;
+      case 'editing':
+        return <EditingBriefs />;
+      case 'reels':
+        return <ReelsManager />;
       default:
         return <Dashboard />;
     }
@@ -122,6 +128,18 @@ export default function App() {
             onClick={() => setActiveTab('social')}
           />
           <TabButton
+            icon={<Film size={24} />}
+            label="Editing"
+            active={activeTab === 'editing'}
+            onClick={() => setActiveTab('editing')}
+          />
+          <TabButton
+            icon={<Film size={24} />}
+            label="Reels"
+            active={activeTab === 'reels'}
+            onClick={() => setActiveTab('reels')}
+          />
+          <TabButton
             icon={<Trophy size={24} />}
             label="Scorecard"
             active={activeTab === 'scorecard'}
@@ -155,3 +173,4 @@ function TabButton({ icon, label, active, onClick }) {
   );
 }
 /* Force rebuild */
+// Force rebuild Sun Apr 12 10:05:59 PDT 2026
