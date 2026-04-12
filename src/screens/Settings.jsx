@@ -6,7 +6,7 @@ export default function SettingsScreen() {
   const [budget, setBudget] = useState({
     monthly: 200,
     daily: 20,
-    current: 67.38,
+    current: 23.42,
   });
 
   const [cronJobs] = useState([

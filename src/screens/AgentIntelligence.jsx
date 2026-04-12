@@ -93,7 +93,7 @@ const edges = [
 const activityFeed = [
   { time: 'Now', text: 'Trading Bot: QQQ Bollinger squeeze signal detected', type: 'trade', color: '#A855F7' },
   { time: '2m', text: 'Email Responder: Auto-replied to vendor inquiry', type: 'action', color: '#22C55E' },
-  { time: '5m', text: 'Cost Monitor: Daily spend $142 / $200 budget', type: 'alert', color: '#F59E0B' },
+  { time: '5m', text: 'Cost Monitor: Daily spend $23 / $200 budget', type: 'info', color: '#22C55E' },
   { time: '15m', text: 'Content Agent: Issue #7 draft at 80% (1,247 words)', type: 'action', color: '#F97316' },
   { time: '30m', text: 'Discord Bot: 28 messages logged in #general', type: 'action', color: '#3B82F6' },
   { time: '1h', text: 'RLM Estimator: Hotel Oxbow bid processing — $410K', type: 'action', color: '#22C55E' },

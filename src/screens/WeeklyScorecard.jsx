@@ -19,9 +19,9 @@ const weekData = {
     { item: 'Other', amount: '$1', pct: '2%' },
   ]},
   agentScores: [
-    { name: 'Discord Bot', score: 100, tasks: 4521, trend: 'stable' },
+    { name: 'Discord Bot', score: 100, tasks: 892, trend: 'stable' },
     { name: 'Cost Monitor', score: 100, tasks: 730, trend: 'stable' },
-    { name: 'Email Responder', score: 97, tasks: 1247, trend: 'up' },
+    { name: 'Email Responder', score: 98, tasks: 655, trend: 'up' },
     { name: 'Content Agent', score: 92, tasks: 287, trend: 'up' },
     { name: 'Trading Bot', score: 88, tasks: 892, trend: 'up' },
     { name: 'RLM Estimator', score: 85, tasks: 354, trend: 'stable' },
@@ -39,7 +39,7 @@ const weekData = {
     'Hotel Oxbow bid generated — $410K revenue potential',
     'Trading bot maintained 52% WR on live account',
     "Bennett's Brief hit 287 subscribers (38% open rate)",
-    'Cost reduced from $67/day to $26/day average',
+    'Cost optimized: $3-5/day normal, $48 on heavy Opus sessions',
   ],
 };
 
