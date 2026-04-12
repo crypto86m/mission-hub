@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-11T15:07:31.018299",
+  "generated": "2026-04-11T17:37:22.241796",
   "trading": {
     "accountValue": 0,
     "unrealizedPnl": 0,
@@ -12,10 +12,10 @@
     "positions": []
   },
   "costs": {
-    "today": 63.91,
+    "today": 11.2,
     "dailyLimit": 20,
     "monthlyBudget": 200,
-    "monthTotal": 126.61
+    "monthTotal": 11.2
   },
   "email": {
     "totalReplies": 663,

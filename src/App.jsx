@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain, Trophy, Database, Instagram } from 'lucide-react';
+import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain, Trophy, Database, Instagram, Share2 } from 'lucide-react';
 import Dashboard from './screens/Dashboard';
 import Tasks from './screens/Tasks';
 import CalendarScreen from './screens/Calendar';
@@ -12,6 +12,7 @@ import WeeklyScorecard from './screens/WeeklyScorecard';
 import ContentPipeline from './screens/ContentPipeline';
 import MemoryBank from './screens/MemoryBank';
 import InstagramCalendar from './screens/InstagramCalendar';
+import SocialPublisher from './screens/SocialPublisher';
 import './index.css';
 
 export default function App() {
@@ -43,6 +44,8 @@ export default function App() {
         return <MemoryBank />;
       case 'instagram':
         return <InstagramCalendar />;
+      case 'social':
+        return <SocialPublisher />;
       default:
         return <Dashboard />;
     }
@@ -111,6 +114,12 @@ export default function App() {
             label="Instagram"
             active={activeTab === 'instagram'}
             onClick={() => setActiveTab('instagram')}
+          />
+          <TabButton
+            icon={<Share2 size={24} />}
+            label="Social"
+            active={activeTab === 'social'}
+            onClick={() => setActiveTab('social')}
           />
           <TabButton
             icon={<Trophy size={24} />}
