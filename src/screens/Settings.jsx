@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AlertCircle, Zap, Lock, Database, Bell, WifiOff } from 'lucide-react';
 import MasterConnect from '../components/MasterConnect';
 
 export default function SettingsScreen() {
+  const [liveData, setLiveData] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/status.json')
+      .then(r => r.json())
+      .then(d => setLiveData(d))
+      .catch(() => {});
+  }, []);
+
+  const c = liveData?.costs || {};
   const [budget, setBudget] = useState({
     monthly: 200,
     daily: 20,
-    current: 23.42,
+    current: 0,
   });
+
+  useEffect(() => {
+    if (c.today !== undefined) setBudget(prev => ({ ...prev, current: c.today || 0 }));
+  }, [liveData]);
 
   const [cronJobs] = useState([
     {
