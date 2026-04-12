@@ -29,15 +29,11 @@ export default function Tasks() {
       risk = 'LOW';
     }
 
-    // Write to Supabase approvals table
-    const { error } = await supabase.from('approvals').insert({
-      agent: 'Task Manager',
-      title: title.slice(0, 200),
-      description,
-      risk,
-      value: project.name,
-      status,
-      decided_at: new Date().toISOString(),
+    // Write to activity_feed (approvals table has schema cache issue)
+    const { error } = await supabase.from('activity_feed').insert({
+      text: `✅ TASK ${action.toUpperCase()}: ${title.slice(0, 180)} | ${description.slice(0, 200)}`,
+      agent_id: 'task_manager',
+      type: action === 'dismiss' ? 'warning' : 'execution',
     });
 
     if (!error) {
