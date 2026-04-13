@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Home, CheckSquare, Calendar, Users, Workflow, Settings } from 'lucide-react';
+import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Building2, Brain } from 'lucide-react';
 import Dashboard from './screens/Dashboard';
 import Tasks from './screens/Tasks';
 import CalendarScreen from './screens/Calendar';
 import Agents from './screens/Agents';
 import WorkflowIntelligence from './screens/WorkflowIntelligence';
+import Intelligence from './screens/Intelligence';
 import SettingsScreen from './screens/Settings';
+import RLMDashboard from './screens/RLMDashboard';
 import './index.css';
 
 export default function App() {
@@ -21,8 +23,12 @@ export default function App() {
         return <CalendarScreen />;
       case 'agents':
         return <Agents />;
+      case 'intelligence':
+        return <Intelligence />;
       case 'workflows':
         return <WorkflowIntelligence />;
+      case 'rlm':
+        return <RLMDashboard />;
       case 'settings':
         return <SettingsScreen />;
       default:
@@ -63,6 +69,18 @@ export default function App() {
             label="Agents"
             active={activeTab === 'agents'}
             onClick={() => setActiveTab('agents')}
+          />
+          <TabButton
+            icon={<Brain size={24} />}
+            label="Intelligence"
+            active={activeTab === 'intelligence'}
+            onClick={() => setActiveTab('intelligence')}
+          />
+          <TabButton
+            icon={<Building2 size={24} />}
+            label="RLM"
+            active={activeTab === 'rlm'}
+            onClick={() => setActiveTab('rlm')}
           />
           <TabButton
             icon={<Workflow size={24} />}

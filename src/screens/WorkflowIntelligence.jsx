@@ -1,242 +1,241 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { AlertCircle, BarChart3, Play, Pause, RotateCcw, Search } from 'lucide-react';
-import WorkflowGraph from '../components/WorkflowGraph';
-import TimelineView from '../components/TimelineView';
-import OptimizationPanel from '../components/OptimizationPanel';
-import SystemHealthWidget from '../components/SystemHealthWidget';
-import FlowReplay from '../components/FlowReplay';
-import { useWorkflowStore } from '../store/workflowStore';
-import { generateMockWorkflows } from '../data/mockWorkflows';
+import React, { useState, useCallback, useMemo } from 'react';
+import { Search, LayoutGrid, Network, ChevronDown } from 'lucide-react';
+import WorkflowCardGrid from '../components/WorkflowCardGrid';
+import WorkflowGraphView from '../components/WorkflowGraphView';
+
+const WORKFLOWS_DATA = [
+  {
+    id: 'trading-deploy',
+    name: 'Trading Strategy Deploy',
+    stage: 'Model Testing',
+    completion: 65,
+    status: 'in-progress',
+    statusColor: '#3B82F6',
+    agents: ['Opus', 'Haiku', 'Perplexity'],
+    duration: '2h 45m',
+    cost: '$12.50',
+    startTime: '2026-04-09 10:15',
+    lastUpdate: 'Just now',
+    description: 'Deploying new trading model with backtesting validation'
+  },
+  {
+    id: 'bennett-brief',
+    name: "Bennett's Brief Issue #49",
+    stage: 'Distribution',
+    completion: 92,
+    status: 'in-progress',
+    statusColor: '#3B82F6',
+    agents: ['Claude', 'Perplexity', 'Superhuman'],
+    duration: '1h 20m',
+    cost: '$3.20',
+    startTime: '2026-04-09 12:30',
+    lastUpdate: '2 mins ago',
+    description: 'Newsletter generation and distribution workflow'
+  },
+  {
+    id: 'rlm-analysis',
+    name: 'RLM Analysis',
+    stage: 'Awaiting Review',
+    completion: 40,
+    status: 'waiting',
+    statusColor: '#EAB308',
+    agents: ['Opus', 'Sonnet'],
+    duration: '45m',
+    cost: '$8.75',
+    startTime: '2026-04-09 08:00',
+    lastUpdate: '30 mins ago',
+    description: 'Monthly business performance analysis and reporting'
+  },
+  {
+    id: 'nvcc-campaign',
+    name: 'NVCC Campaign',
+    stage: 'Complete',
+    completion: 100,
+    status: 'completed',
+    statusColor: '#22C55E',
+    agents: ['Growth Agent', 'Content Agent'],
+    duration: '3h 15m',
+    cost: '$15.40',
+    startTime: '2026-04-08 14:20',
+    lastUpdate: '22 hours ago',
+    description: 'Napa Valley Car Club social media campaign execution'
+  },
+  {
+    id: 'ai-support',
+    name: 'AI Support Onboarding',
+    stage: 'Blocked',
+    completion: 25,
+    status: 'blocked',
+    statusColor: '#EF4444',
+    agents: ['Claude', 'Haiku'],
+    duration: '1h 10m',
+    cost: '$5.60',
+    startTime: '2026-04-09 09:45',
+    lastUpdate: '5 mins ago',
+    description: 'AI Support platform customer onboarding workflow - missing API credentials'
+  }
+];
 
 export default function WorkflowIntelligence() {
-  const [viewMode, setViewMode] = useState('graph'); // 'graph' or 'timeline'
+  const [viewMode, setViewMode] = useState('cards'); // 'cards' or 'graph'
   const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all'); // all, in-progress, completed, blocked, waiting
+  const [statusFilter, setStatusFilter] = useState('all');
   const [selectedWorkflow, setSelectedWorkflow] = useState(null);
-  const [isReplayMode, setIsReplayMode] = useState(false);
-  const [replayWorkflow, setReplayWorkflow] = useState(null);
-  
-  const { 
-    workflows, 
-    agents, 
-    setWorkflows, 
-    setAgents, 
-    alerts,
-    updateWorkflowProgress,
-  } = useWorkflowStore();
+  const [expandedWorkflow, setExpandedWorkflow] = useState(null);
 
-  // Initialize mock data
-  useEffect(() => {
-    if (workflows.length === 0) {
-      const { workflows: mockWf, agents: mockAgents } = generateMockWorkflows();
-      setWorkflows(mockWf);
-      setAgents(mockAgents);
-    }
-  }, []);
-
-  // Simulate real-time updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      workflows.forEach(wf => {
-        if (wf.status === 'in-progress' && wf.completion < 100) {
-          const increment = Math.random() * 5;
-          updateWorkflowProgress(wf.id, Math.min(wf.completion + increment, 100));
-        }
-      });
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [workflows, updateWorkflowProgress]);
+  const statusOptions = [
+    { value: 'all', label: 'All Status' },
+    { value: 'in-progress', label: 'In Progress' },
+    { value: 'completed', label: 'Completed' },
+    { value: 'waiting', label: 'Waiting' },
+    { value: 'blocked', label: 'Blocked' }
+  ];
 
   // Filter workflows
-  const filteredWorkflows = workflows.filter(wf => {
-    const matchesSearch = 
-      wf.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      wf.agents.some(a => a.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    const matchesStatus = statusFilter === 'all' || wf.status === statusFilter;
-    
-    return matchesSearch && matchesStatus;
-  });
+  const filteredWorkflows = useMemo(() => {
+    return WORKFLOWS_DATA.filter(workflow => {
+      const matchesSearch =
+        workflow.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        workflow.stage.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        workflow.agents.some(a => a.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  const startReplay = useCallback((workflow) => {
-    setReplayWorkflow(workflow);
-    setIsReplayMode(true);
-  }, []);
+      const matchesStatus = statusFilter === 'all' || workflow.status === statusFilter;
 
-  const closeReplay = useCallback(() => {
-    setIsReplayMode(false);
-    setReplayWorkflow(null);
-  }, []);
+      return matchesSearch && matchesStatus;
+    });
+  }, [searchQuery, statusFilter]);
+
+  const getStatusBadge = (status) => {
+    const configs = {
+      'completed': { bg: 'bg-green-500/20', text: 'text-green-400', label: 'Complete' },
+      'in-progress': { bg: 'bg-blue-500/20', text: 'text-blue-400', label: 'In Progress' },
+      'waiting': { bg: 'bg-yellow-500/20', text: 'text-yellow-400', label: 'Waiting' },
+      'blocked': { bg: 'bg-red-500/20', text: 'text-red-400', label: 'Blocked' }
+    };
+    return configs[status] || configs['waiting'];
+  };
 
   return (
-    <div className="w-full h-full overflow-hidden flex flex-col bg-dark-bg">
-      {/* Header */}
-      <div className="p-6 border-b border-cyan/20 bg-dark-card/50 backdrop-blur">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-3xl font-bold glow-text">Workflow Intelligence</h1>
-            <p className="text-gray-400 text-sm mt-1">Real-time orchestration & optimization</p>
-          </div>
-          <SystemHealthWidget alerts={alerts} />
-        </div>
-
-        {/* Controls */}
-        <div className="flex gap-3 flex-wrap">
-          {/* Search */}
-          <div className="flex-1 min-w-[200px] relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
-            <input
-              type="text"
-              placeholder="Search workflows, agents..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-dark-bg border border-cyan/30 rounded-lg text-white placeholder-gray-500 focus:border-cyan focus:outline-none"
-            />
+    <div className="w-full h-full flex flex-col bg-gradient-to-br from-[#0A0A0A] via-[#0F0F0F] to-[#0A0A0A] overflow-hidden">
+      {/* Header Section */}
+      <div className="border-b border-[#00D4FF]/10 bg-[#0A0A0A]/80 backdrop-blur-sm">
+        <div className="px-6 py-6">
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold text-white mb-2">Workflows</h1>
+            <p className="text-gray-400 text-sm">Real-time orchestration & execution monitoring</p>
           </div>
 
-          {/* View Toggle */}
-          <div className="flex gap-2 bg-dark-bg border border-cyan/30 rounded-lg p-1">
-            <button
-              onClick={() => setViewMode('graph')}
-              className={`px-3 py-1 rounded transition-colors text-sm ${
-                viewMode === 'graph'
-                  ? 'bg-cyan text-dark-bg font-semibold'
-                  : 'text-gray-400 hover:text-cyan'
-              }`}
-            >
-              Graph
-            </button>
-            <button
-              onClick={() => setViewMode('timeline')}
-              className={`px-3 py-1 rounded transition-colors text-sm ${
-                viewMode === 'timeline'
-                  ? 'bg-cyan text-dark-bg font-semibold'
-                  : 'text-gray-400 hover:text-cyan'
-              }`}
-            >
-              Timeline
-            </button>
-          </div>
+          {/* Controls Bar */}
+          <div className="flex gap-3 items-center flex-wrap">
+            {/* Search */}
+            <div className="flex-1 min-w-[250px] relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
+              <input
+                type="text"
+                placeholder="Search workflows, stages, agents..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 bg-[#1A1A1A] border border-[#00D4FF]/20 rounded-lg text-white placeholder-gray-600 focus:border-[#00D4FF] focus:outline-none transition-colors text-sm"
+              />
+            </div>
 
-          {/* Status Filter */}
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 bg-dark-bg border border-cyan/30 rounded-lg text-white text-sm focus:border-cyan focus:outline-none"
-          >
-            <option value="all">All Status</option>
-            <option value="in-progress">In Progress</option>
-            <option value="completed">Completed</option>
-            <option value="blocked">Blocked</option>
-            <option value="waiting">Waiting</option>
-          </select>
+            {/* View Toggle */}
+            <div className="flex gap-1 bg-[#1A1A1A] border border-[#00D4FF]/20 rounded-lg p-1">
+              <button
+                onClick={() => setViewMode('cards')}
+                className={`px-3 py-2 rounded transition-all text-sm font-medium flex items-center gap-2 ${
+                  viewMode === 'cards'
+                    ? 'bg-[#00D4FF] text-[#0A0A0A]'
+                    : 'text-gray-400 hover:text-[#00D4FF]'
+                }`}
+              >
+                <LayoutGrid size={16} /> Cards
+              </button>
+              <button
+                onClick={() => setViewMode('graph')}
+                className={`px-3 py-2 rounded transition-all text-sm font-medium flex items-center gap-2 ${
+                  viewMode === 'graph'
+                    ? 'bg-[#00D4FF] text-[#0A0A0A]'
+                    : 'text-gray-400 hover:text-[#00D4FF]'
+                }`}
+              >
+                <Network size={16} /> Graph
+              </button>
+            </div>
+
+            {/* Status Filter */}
+            <div className="relative">
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-3 py-2.5 bg-[#1A1A1A] border border-[#00D4FF]/20 rounded-lg text-white text-sm focus:border-[#00D4FF] focus:outline-none appearance-none cursor-pointer pr-8"
+              >
+                {statusOptions.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" size={16} />
+            </div>
+
+            {/* Results Count */}
+            <div className="px-3 py-2 text-sm text-gray-400">
+              {filteredWorkflows.length} of {WORKFLOWS_DATA.length}
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Alerts Banner */}
-      {alerts.length > 0 && (
-        <div className="px-6 py-3 bg-red-500/10 border-b border-red-500/30 flex items-center gap-3">
-          <AlertCircle className="text-red-400" size={20} />
-          <div className="flex-1">
-            <p className="text-red-400 text-sm font-semibold">
-              {alerts.length} {alerts.length === 1 ? 'Alert' : 'Alerts'}
-            </p>
-            <p className="text-red-300/80 text-xs">
-              {alerts.map(a => a.message).join(' • ')}
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Main Content */}
-      <div className="flex-1 overflow-hidden flex">
-        {/* Visualization Area */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {viewMode === 'graph' ? (
-            <WorkflowGraph 
-              workflows={filteredWorkflows} 
-              agents={agents}
-              onSelectWorkflow={setSelectedWorkflow}
-              onStartReplay={startReplay}
-            />
-          ) : (
-            <TimelineView 
-              workflows={filteredWorkflows}
-              onSelectWorkflow={setSelectedWorkflow}
-              onStartReplay={startReplay}
-            />
-          )}
-        </div>
-
-        {/* Side Panel - Optimization */}
-        <div className="w-80 border-l border-cyan/20 overflow-y-auto">
-          {selectedWorkflow ? (
-            <div className="p-4">
-              <h3 className="font-semibold text-cyan mb-3">Workflow Details</h3>
-              <div className="space-y-3 text-sm mb-4">
-                <div>
-                  <p className="text-gray-400">Name</p>
-                  <p className="font-semibold">{selectedWorkflow.name}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Status</p>
-                  <p className="font-semibold capitalize">{selectedWorkflow.status}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Completion</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="flex-1 bg-dark-bg rounded h-2">
-                      <div 
-                        className="bg-cyan h-2 rounded transition-all duration-300"
-                        style={{ width: `${selectedWorkflow.completion}%` }}
-                      ></div>
-                    </div>
-                    <span>{Math.round(selectedWorkflow.completion)}%</span>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-gray-400">Duration</p>
-                  <p className="font-semibold">{selectedWorkflow.duration}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Cost</p>
-                  <p className="font-semibold text-green-400">{selectedWorkflow.cost}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Agents ({selectedWorkflow.agents.length})</p>
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {selectedWorkflow.agents.map((agent, idx) => (
-                      <span key={idx} className="px-2 py-1 bg-cyan/20 text-cyan rounded text-xs">
-                        {agent}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <button
-                onClick={() => startReplay(selectedWorkflow)}
-                className="w-full px-4 py-2 bg-cyan/20 hover:bg-cyan/30 text-cyan rounded-lg transition-colors flex items-center justify-center gap-2 text-sm font-semibold mb-4"
-              >
-                <Play size={16} /> Start Replay
-              </button>
-
-              <div className="border-t border-cyan/20 pt-4">
-                <OptimizationPanel workflow={selectedWorkflow} />
-              </div>
-            </div>
-          ) : (
-            <div className="p-4 flex items-center justify-center h-full text-gray-500">
-              <p className="text-center text-sm">Select a workflow to view details</p>
-            </div>
-          )}
-        </div>
+      <div className="flex-1 overflow-hidden">
+        {viewMode === 'cards' ? (
+          <WorkflowCardGrid
+            workflows={filteredWorkflows}
+            selectedWorkflow={selectedWorkflow}
+            expandedWorkflow={expandedWorkflow}
+            onSelectWorkflow={setSelectedWorkflow}
+            onExpandWorkflow={setExpandedWorkflow}
+            getStatusBadge={getStatusBadge}
+          />
+        ) : (
+          <WorkflowGraphView
+            workflows={filteredWorkflows}
+            selectedWorkflow={selectedWorkflow}
+            onSelectWorkflow={setSelectedWorkflow}
+            getStatusBadge={getStatusBadge}
+          />
+        )}
       </div>
 
-      {/* Replay Mode Modal */}
-      {isReplayMode && replayWorkflow && (
-        <FlowReplay workflow={replayWorkflow} onClose={closeReplay} />
+      {/* Quick Stats Footer */}
+      {filteredWorkflows.length > 0 && (
+        <div className="border-t border-[#00D4FF]/10 bg-[#0A0A0A]/80 backdrop-blur-sm px-6 py-4">
+          <div className="flex gap-8 text-sm">
+            <div>
+              <p className="text-gray-500">Total Workflows</p>
+              <p className="text-xl font-semibold text-white">{filteredWorkflows.length}</p>
+            </div>
+            <div>
+              <p className="text-gray-500">In Progress</p>
+              <p className="text-xl font-semibold text-blue-400">
+                {filteredWorkflows.filter(w => w.status === 'in-progress').length}
+              </p>
+            </div>
+            <div>
+              <p className="text-gray-500">Completed</p>
+              <p className="text-xl font-semibold text-green-400">
+                {filteredWorkflows.filter(w => w.status === 'completed').length}
+              </p>
+            </div>
+            <div>
+              <p className="text-gray-500">Alerts</p>
+              <p className="text-xl font-semibold text-red-400">
+                {filteredWorkflows.filter(w => w.status === 'blocked').length}
+              </p>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

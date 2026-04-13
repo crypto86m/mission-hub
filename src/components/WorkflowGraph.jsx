@@ -10,17 +10,35 @@ export default function WorkflowGraph({ workflows, agents, onSelectWorkflow, onS
   useEffect(() => {
     const updateDimensions = () => {
       if (containerRef.current) {
+        const width = containerRef.current.offsetWidth || 1000;
+        const height = containerRef.current.offsetHeight || 600;
         setDimensions({
-          width: containerRef.current.offsetWidth,
-          height: containerRef.current.offsetHeight,
+          width: Math.max(width, 800),
+          height: Math.max(height, 600),
         });
       }
     };
 
-    updateDimensions();
+    // Initial update with small delay to ensure DOM is ready
+    const timer = setTimeout(updateDimensions, 100);
     window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateDimensions);
+    };
   }, []);
+
+  // Update dimensions when workflows change
+  useEffect(() => {
+    if (containerRef.current && dimensions.width === 0) {
+      const width = containerRef.current.offsetWidth || 1000;
+      const height = containerRef.current.offsetHeight || 600;
+      setDimensions({
+        width: Math.max(width, 800),
+        height: Math.max(height, 600),
+      });
+    }
+  }, [workflows]);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -54,8 +72,8 @@ export default function WorkflowGraph({ workflows, agents, onSelectWorkflow, onS
 
   // Layout workflows in a force-directed-like pattern
   const layoutWorkflows = () => {
-    const w = dimensions.width;
-    const h = dimensions.height;
+    const w = dimensions.width || 1000;
+    const h = dimensions.height || 600;
     const nodeWidth = 200;
     const nodeHeight = 140;
     const padding = 40;
@@ -72,14 +90,19 @@ export default function WorkflowGraph({ workflows, agents, onSelectWorkflow, onS
   };
 
   const layoutedWorkflows = layoutWorkflows();
+  
+  // Ensure we have valid dimensions
+  const displayWidth = dimensions.width || 1000;
+  const displayHeight = dimensions.height || 600;
 
   return (
-    <div ref={containerRef} className="w-full h-full bg-gradient-to-br from-dark-bg to-dark-bg/80 relative overflow-hidden">
+    <div ref={containerRef} className="w-full h-full bg-gradient-to-br from-dark-bg to-dark-bg/80 relative overflow-hidden" style={{ minHeight: '600px' }}>
       <svg
         ref={svgRef}
-        width={dimensions.width}
-        height={dimensions.height}
+        width={displayWidth}
+        height={displayHeight}
         className="absolute inset-0"
+        style={{ display: 'block' }}
       >
         <defs>
           <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
