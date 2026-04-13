@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>All Instagram Reels</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #fff; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { text-align: center; font-size: 28px; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        .card:hover { 
+            border-color: rgba(236, 72, 153, 0.5);
+            transform: translateY(-5px);
+        }
+        .card-thumb {
+            width: 100%;
+            aspect-ratio: 9/16;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        video { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { padding: 15px; }
+        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 10px; text-transform: capitalize; }
+        .card-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #ec4899;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .card-btn:active { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📹 All Instagram Reels (11)</h1>
+        <div class="grid" id="reels-grid"></div>
+    </div>
+
+    <script>
+        const reels = [
+            { name: 'Entrepreneur', file: 'entrepreneur.mp4' },
+            { name: 'Discipline', file: 'discipline.mp4' },
+            { name: 'Wealth Mindset', file: 'wealth_mindset.mp4' },
+            { name: 'Friday Mindset', file: 'friday_mindset.mp4' },
+            { name: 'Morning Routine', file: 'morning_routine.mp4' },
+            { name: 'Trading Skill', file: 'trading_skill.mp4' },
+            { name: 'Hustle Culture', file: 'hustle_culture.mp4' },
+            { name: 'Focus', file: 'focus.mp4' },
+            { name: 'Compound Effect', file: 'compound_effect.mp4' },
+            { name: 'Closing Power', file: 'closing_power.mp4' },
+            { name: 'Saturday Napa', file: 'SATURDAY_NAPA_DIFFERENCE.mp4' }
+        ];
+
+        const grid = document.getElementById('reels-grid');
+        reels.forEach((reel, idx) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-thumb">
+                    <video controls>
+                        <source src="/downloads/${reel.file}" type="video/mp4">
+                    </video>
+                </div>
+                <div class="card-content">
+                    <div class="card-title">${idx + 1}. ${reel.name}</div>
+                    <a href="/downloads/${reel.file}" download="${reel.file}" class="card-btn">⬇️ Download</a>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+</html>

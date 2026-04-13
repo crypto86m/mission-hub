@@ -84,21 +84,18 @@ export default function ReelsManager() {
           {/* Video Player */}
           <div className="bg-black rounded-lg overflow-hidden">
             <video
+              key={selectedReel.id}
               controls
+              width="100%"
               style={{
-                width: '100%',
-                maxHeight: '500px',
-                backgroundColor: '#000'
+                backgroundColor: '#000',
+                maxHeight: '500px'
               }}
             >
-              <source src={`http://100.65.157.30:5555/video/${selectedReel.id}`} type="video/mp4" />
               <source src={`/downloads/${selectedReel.id}.mp4`} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
-          <p className="text-xs text-gray-500 text-center">
-            Video streaming from Mac mini via Tailscale
-          </p>
           <h2 className="text-2xl font-bold text-white mt-4">{selectedReel.title}</h2>
 
           {/* Quick Stats */}
