@@ -6,6 +6,7 @@ import OptimizationPanel from '../components/OptimizationPanel';
 import SystemHealthWidget from '../components/SystemHealthWidget';
 import FlowReplay from '../components/FlowReplay';
 import { useWorkflowStore } from '../store/workflowStore';
+import { useTaskStore } from '../store/taskStore';
 import { generateMockWorkflows } from '../data/mockWorkflows';
 
 export default function WorkflowIntelligence() {
@@ -34,19 +35,25 @@ export default function WorkflowIntelligence() {
     }
   }, []);
 
-  // Simulate real-time updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      workflows.forEach(wf => {
-        if (wf.status === 'in-progress' && wf.completion < 100) {
-          const increment = Math.random() * 5;
-          updateWorkflowProgress(wf.id, Math.min(wf.completion + increment, 100));
-        }
-      });
-    }, 2000);
+  // Sync workflow node statuses from task store
+  const taskSummary = useTaskStore(s => s.summary);
+  const taskLoaded = useTaskStore(s => s.loaded);
+  const taskInit = useTaskStore(s => s.initialize);
+  useEffect(() => { if (!taskLoaded) taskInit(); }, [taskLoaded]);
 
-    return () => clearInterval(interval);
-  }, [workflows, updateWorkflowProgress]);
+  // Update workflow progress based on real task completion
+  useEffect(() => {
+    if (!taskLoaded || taskSummary.total === 0) return;
+    const overallProgress = Math.round((taskSummary.completed / taskSummary.total) * 100);
+    const overallStatus = taskSummary.blocked > 0 ? 'blocked' : taskSummary.inProgress > 0 ? 'in-progress' : overallProgress === 100 ? 'completed' : 'waiting';
+    // Update first workflow to reflect real task state
+    if (workflows.length > 0) {
+      const first = workflows[0];
+      if (first.completion !== overallProgress || first.status !== overallStatus) {
+        updateWorkflowProgress(first.id, overallProgress);
+      }
+    }
+  }, [taskSummary, taskLoaded, workflows]);
 
   // Filter workflows
   const filteredWorkflows = workflows.filter(wf => {

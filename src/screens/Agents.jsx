@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight, Wifi, WifiOff, AlertTriangle, Bot, Shield, Brain, Mail, BarChart3, MessageCircle, DollarSign, Search, Instagram, Twitter, Newspaper } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useTaskStore, STATE_COLORS, STATE_LABELS } from '../store/taskStore';
 
 const agentTree = {
   id: 'charles',
@@ -156,6 +157,38 @@ function AgentNode({ agent, depth = 0 }) {
   );
 }
 
+function AgentTaskPerformance() {
+  const { loaded, initialize, getAgentStats } = useTaskStore();
+  useEffect(() => { if (!loaded) initialize(); }, [loaded]);
+  const stats = getAgentStats();
+  if (!loaded || stats.length === 0) return null;
+  return (
+    <div className="mt-8">
+      <h2 className="text-lg font-bold mb-3">Task Performance by Agent</h2>
+      <div className="space-y-2">
+        {stats.map(s => (
+          <div key={s.agent} className="glass-card py-3">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-bold text-white">{s.agent}</span>
+              <span className={`text-sm font-mono font-bold ${s.efficiency >= 80 ? 'text-green-400' : s.efficiency >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>{s.efficiency}% eff</span>
+            </div>
+            <div className="w-full h-2 bg-gray-700 rounded-full mb-2">
+              <div className={`h-2 rounded-full transition-all ${s.efficiency >= 80 ? 'bg-green-400' : s.efficiency >= 50 ? 'bg-yellow-400' : 'bg-red-400'}`} style={{ width: `${s.efficiency}%` }} />
+            </div>
+            <div className="grid grid-cols-4 gap-2 text-center">
+              <div><p className="text-xs font-bold text-green-400">{s.completed}</p><p className="text-[9px] text-gray-500">Done</p></div>
+              <div><p className="text-xs font-bold text-blue-400">{s.inProgress}</p><p className="text-[9px] text-gray-500">Active</p></div>
+              <div><p className="text-xs font-bold text-orange-400">{s.delayed}</p><p className="text-[9px] text-gray-500">Delayed</p></div>
+              <div><p className="text-xs font-bold text-red-400">{s.blocked}</p><p className="text-[9px] text-gray-500">Blocked</p></div>
+            </div>
+            {s.avgTransitionHrs !== null && <p className="text-[10px] text-gray-500 mt-1 text-center">Avg transition: {s.avgTransitionHrs}h</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Agents() {
   const [supaAgents, setSupaAgents] = useState([]);
 
@@ -190,6 +223,9 @@ export default function Agents() {
 
       {/* Tree */}
       <AgentNode agent={agentTree} />
+
+      {/* Agent Task Performance (from shared Task Intelligence store) */}
+      <AgentTaskPerformance />
 
       {/* Supabase Agent Data (if available) */}
       {supaAgents.length > 0 && (
