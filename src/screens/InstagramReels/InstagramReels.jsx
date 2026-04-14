@@ -206,9 +206,21 @@ const InstagramReels = () => {
                 </div>
 
                 <div className="reel-actions">
-                  <a href={`/instagram/final_posts/${reel.file}`} target="_blank" rel="noopener noreferrer" className="btn-preview">
+                  <div
+                    onClick={() => {
+                      const videoMap = {
+                        'post_1_authority.mp4': '/videos/napa-friday-drive.mp4',
+                        'post_2_vulnerability.mp4': '/videos/monday-car-lineup.mp4',
+                        'post_3_lifestyle.mp4': '/videos/wednesday-napa-sunset.mp4',
+                        'post_4_process.mp4': '/videos/saturday-paint-job.mp4',
+                      };
+                      const url = videoMap[reel.file] || `/videos/${reel.file}`;
+                      window.open(url, '_blank');
+                    }}
+                    className="btn-preview" style={{cursor:'pointer'}}
+                  >
                     👁️ Preview Video
-                  </a>
+                  </div>
                 </div>
               </div>
             ))}
