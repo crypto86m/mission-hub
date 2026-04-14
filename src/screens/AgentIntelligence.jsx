@@ -443,7 +443,7 @@ function Header({ search, setSearch, filter, setFilter, viewMode, setViewMode, a
       <div className="flex items-center justify-between mb-1.5">
         <div>
           <h1 className="text-base font-bold text-white flex items-center gap-1.5"><Brain size={16} className="text-cyan-400" />Agent Intelligence</h1>
-          <p className="text-[9px] text-gray-400 font-mono">{activeCount}/10 ACTIVE • ${totalCost}/day • {totalRevenue > 0 ? `$${(totalRevenue/1000000).toFixed(1)}M influenced` : ''}</p>
+          <p className="text-[9px] text-gray-400 font-mono">{activeCount}/10 ACTIVE • $33/day • 10 crons</p>
         </div>
         <div className="flex gap-1">
           {[
