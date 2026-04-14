@@ -204,74 +204,74 @@ const HermesAgentsOverview = () => {
 
   const getPriorityColor = (p) => {
     switch(p) {
-      case 'Critical': return 'bg-red-100 text-red-800';
-      case 'High': return 'bg-orange-100 text-orange-800';
-      case 'Normal': return 'bg-blue-100 text-blue-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'Critical': return 'bg-red-500/20 text-red-400 border border-red-500/30';
+      case 'High': return 'bg-orange-500/20 text-orange-400 border border-orange-500/30';
+      case 'Normal': return 'bg-blue-500/20 text-blue-400 border border-blue-500/30';
+      default: return 'bg-gray-500/20 text-gray-400 border border-gray-500/30';
     }
   };
 
   return (
-    <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg p-8 mb-8">
-      <h2 className="text-3xl font-bold text-slate-900 mb-2">🤖 Hermes Multi-Agent System</h2>
-      <p className="text-slate-600 mb-6">8 autonomous agents, fully coordinated and monitored</p>
+    <div className="glass-card p-6 mb-8">
+      <h2 className="text-2xl font-bold text-white mb-1">🤖 Hermes Multi-Agent System</h2>
+      <p className="text-gray-400 text-sm mb-6">8 autonomous agents, fully coordinated and monitored</p>
       
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-lg p-4 border border-slate-200">
-          <div className="text-slate-600 text-sm font-semibold mb-1">Total Agents</div>
-          <div className="text-4xl font-bold text-green-600">8</div>
+      <div className="grid grid-cols-4 gap-3 mb-8">
+        <div className="glass-card p-3 text-center">
+          <div className="text-gray-400 text-[10px] font-semibold mb-1">Total Agents</div>
+          <div className="text-3xl font-bold text-green-400">8</div>
         </div>
-        <div className="bg-white rounded-lg p-4 border border-slate-200">
-          <div className="text-slate-600 text-sm font-semibold mb-1">Tasks Completed</div>
-          <div className="text-4xl font-bold text-blue-600">896</div>
+        <div className="glass-card p-3 text-center">
+          <div className="text-gray-400 text-[10px] font-semibold mb-1">Tasks Completed</div>
+          <div className="text-3xl font-bold text-blue-400">896</div>
         </div>
-        <div className="bg-white rounded-lg p-4 border border-slate-200">
-          <div className="text-slate-600 text-sm font-semibold mb-1">Success Rate</div>
-          <div className="text-4xl font-bold text-purple-600">95.4%</div>
+        <div className="glass-card p-3 text-center">
+          <div className="text-gray-400 text-[10px] font-semibold mb-1">Success Rate</div>
+          <div className="text-3xl font-bold text-purple-400">95.4%</div>
         </div>
-        <div className="bg-white rounded-lg p-4 border border-slate-200">
-          <div className="text-slate-600 text-sm font-semibold mb-1">System Status</div>
-          <div className="text-2xl font-bold text-green-600">🟢 Nominal</div>
+        <div className="glass-card p-3 text-center">
+          <div className="text-gray-400 text-[10px] font-semibold mb-1">System Status</div>
+          <div className="text-xl font-bold text-green-400">🟢 Nominal</div>
         </div>
       </div>
 
       {/* Specialized Agents */}
       <div className="mb-8">
-        <h3 className="text-xl font-bold text-slate-900 mb-4">🎯 Specialized Agents (4)</h3>
-        <div className="grid grid-cols-2 gap-4">
+        <h3 className="text-lg font-bold text-white mb-3">🎯 Specialized Agents (4)</h3>
+        <div className="grid grid-cols-2 gap-3">
           {agents.filter(a => a.category === 'Specialized').map(agent => {
             const Icon = agent.icon;
             return (
-              <div key={agent.id} className="bg-white rounded-lg p-4 border border-slate-200 hover:border-slate-300 transition">
-                <div className="flex items-start justify-between mb-3">
+              <div key={agent.id} className="glass-card p-3 hover:border-cyan/30 transition-all">
+                <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <Icon className="w-5 h-5 text-slate-600" />
+                    <Icon className="w-4 h-4 text-cyan" />
                     <div>
-                      <div className="font-semibold text-slate-900">{agent.name}</div>
-                      <div className="text-xs text-slate-500">{agent.id}</div>
+                      <div className="font-semibold text-white text-sm">{agent.name}</div>
+                      <div className="text-[10px] text-gray-500">{agent.id}</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 text-green-600">
-                    <CheckCircle className="w-4 h-4" />
-                    <span className="text-xs font-semibold">online</span>
+                  <div className="flex items-center gap-1 text-green-400">
+                    <CheckCircle className="w-3 h-3" />
+                    <span className="text-[10px] font-semibold">online</span>
                   </div>
                 </div>
-                <div className="grid grid-cols-3 gap-2 text-sm mb-3">
+                <div className="grid grid-cols-3 gap-2 text-sm mb-2">
                   <div>
-                    <div className="text-slate-500 text-xs">Priority</div>
-                    <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold mt-0.5 ${getPriorityColor(agent.priority)}`}>{agent.priority}</span>
+                    <div className="text-gray-500 text-[10px]">Priority</div>
+                    <span className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold mt-0.5 ${getPriorityColor(agent.priority)}`}>{agent.priority}</span>
                   </div>
                   <div>
-                    <div className="text-slate-500 text-xs">Success</div>
-                    <div className="font-semibold text-slate-900">{agent.success}%</div>
+                    <div className="text-gray-500 text-[10px]">Success</div>
+                    <div className="font-semibold text-white text-sm">{agent.success}%</div>
                   </div>
                   <div>
-                    <div className="text-slate-500 text-xs">Tasks</div>
-                    <div className="font-semibold text-slate-900">{agent.tasks}</div>
+                    <div className="text-gray-500 text-[10px]">Tasks</div>
+                    <div className="font-semibold text-white text-sm">{agent.tasks}</div>
                   </div>
                 </div>
-                <div className="pt-2 border-t border-slate-200 text-xs text-slate-600">{agent.action}</div>
+                <div className="pt-2 border-t border-cyan/10 text-[10px] text-gray-400">{agent.action}</div>
               </div>
             );
           })}
@@ -280,40 +280,40 @@ const HermesAgentsOverview = () => {
 
       {/* Background Workers */}
       <div>
-        <h3 className="text-xl font-bold text-slate-900 mb-4">⚙️ Background Workers (4)</h3>
-        <div className="grid grid-cols-2 gap-4">
+        <h3 className="text-lg font-bold text-white mb-3">⚙️ Background Workers (4)</h3>
+        <div className="grid grid-cols-2 gap-3">
           {agents.filter(a => a.category === 'Background').map(agent => {
             const Icon = agent.icon;
             return (
-              <div key={agent.id} className="bg-white rounded-lg p-4 border border-slate-200 hover:border-slate-300 transition">
-                <div className="flex items-start justify-between mb-3">
+              <div key={agent.id} className="glass-card p-3 hover:border-cyan/30 transition-all">
+                <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <Icon className="w-5 h-5 text-slate-600" />
+                    <Icon className="w-4 h-4 text-cyan" />
                     <div>
-                      <div className="font-semibold text-slate-900">{agent.name}</div>
-                      <div className="text-xs text-slate-500">{agent.id}</div>
+                      <div className="font-semibold text-white text-sm">{agent.name}</div>
+                      <div className="text-[10px] text-gray-500">{agent.id}</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 text-green-600">
+                  <div className="flex items-center gap-1 text-green-400">
                     <CheckCircle className="w-4 h-4" />
                     <span className="text-xs font-semibold">online</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-sm mb-3">
                   <div>
-                    <div className="text-slate-500 text-xs">Priority</div>
+                    <div className="text-gray-500 text-xs">Priority</div>
                     <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold mt-0.5 ${getPriorityColor(agent.priority)}`}>{agent.priority}</span>
                   </div>
                   <div>
-                    <div className="text-slate-500 text-xs">Success</div>
-                    <div className="font-semibold text-slate-900">{agent.success}%</div>
+                    <div className="text-gray-500 text-xs">Success</div>
+                    <div className="font-semibold text-white">{agent.success}%</div>
                   </div>
                   <div>
-                    <div className="text-slate-500 text-xs">Tasks</div>
-                    <div className="font-semibold text-slate-900">{agent.tasks}</div>
+                    <div className="text-gray-500 text-xs">Tasks</div>
+                    <div className="font-semibold text-white">{agent.tasks}</div>
                   </div>
                 </div>
-                <div className="pt-2 border-t border-slate-200 text-xs text-slate-600">{agent.action}</div>
+                <div className="pt-2 border-t border-cyan/10 text-xs text-gray-400">{agent.action}</div>
               </div>
             );
           })}
