@@ -394,21 +394,22 @@ export default function AgentIntelligence() {
           <div className="flex items-center gap-1.5 text-yellow-400/50">⬡ Gold = Revenue</div>
         </div>
 
-        {/* Bottleneck alerts */}
-        {bottlenecks.length > 0 && (
-          <div className="absolute bottom-2 left-2 right-2 z-20">
-            {bottlenecks.slice(0, 2).map((b, i) => (
-              <div key={i} className="bg-gray-900/90 backdrop-blur border border-yellow-500/20 rounded-lg p-2 mb-1 flex items-start gap-2">
-                <AlertTriangle size={12} className="text-yellow-400 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-[10px] text-white"><strong>{b.agent}:</strong> {b.issue}</p>
-                  <p className="text-[9px] text-gray-400">💡 {b.suggestion}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
+
+      {/* Bottleneck alerts — below graph, not overlapping */}
+      {bottlenecks.length > 0 && (
+        <div className="mt-3 space-y-2">
+          {bottlenecks.slice(0, 3).map((b, i) => (
+            <div key={i} className="glass-card flex items-start gap-2 p-2.5">
+              <AlertTriangle size={14} className="text-yellow-400 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-xs text-white"><strong>{b.agent}:</strong> {b.issue}</p>
+                <p className="text-[10px] text-gray-400">💡 {b.suggestion}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Activity Feed */}
       {showFeed && (

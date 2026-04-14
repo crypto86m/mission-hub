@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ReelsManager.css';
+import './InstagramReels.css';
 
 const InstagramReels = () => {
   const [activeTab, setActiveTab] = useState('phase1');
