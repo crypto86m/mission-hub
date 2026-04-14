@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain, Trophy, Database, Instagram, Share2, Film } from 'lucide-react';
+import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Plug, Brain, Trophy, Database, Instagram, Share2, Film, Zap } from 'lucide-react';
 import Dashboard from './screens/Dashboard';
 import Tasks from './screens/Tasks';
 import CalendarScreen from './screens/Calendar';
@@ -15,6 +15,7 @@ import InstagramCalendar from './screens/InstagramCalendar';
 import SocialPublisher from './screens/SocialPublisher';
 import EditingBriefs from './screens/EditingBriefs';
 import ReelsManager from './screens/ReelsManager';
+import Approvals from './screens/Approvals';
 import './index.css';
 
 export default function App() {
@@ -52,6 +53,8 @@ export default function App() {
         return <EditingBriefs />;
       case 'reels':
         return <ReelsManager />;
+      case 'approvals':
+        return <Approvals />;
       default:
         return <Dashboard />;
     }
@@ -144,6 +147,12 @@ export default function App() {
             label="Scorecard"
             active={activeTab === 'scorecard'}
             onClick={() => setActiveTab('scorecard')}
+          />
+          <TabButton
+            icon={<Zap size={24} />}
+            label="Approvals"
+            active={activeTab === 'approvals'}
+            onClick={() => setActiveTab('approvals')}
           />
           <TabButton
             icon={<Settings size={24} />}

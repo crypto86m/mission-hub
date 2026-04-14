@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-13T08:51:34.629955",
+  "generated": "2026-04-13T17:05:17.975165",
   "trading": {
     "accountValue": 0,
     "unrealizedPnl": 0,
@@ -12,10 +12,10 @@
     "positions": []
   },
   "costs": {
-    "today": 16.44,
+    "today": 14.25,
     "dailyLimit": 20,
     "monthlyBudget": 200,
-    "monthTotal": 53.65
+    "monthTotal": 14.25
   },
   "email": {
     "totalReplies": 721,
@@ -42,8 +42,8 @@
     "error": "401 Unauthorized \u2014 credentials expired"
   },
   "agents": {
-    "cronJobs": 13,
-    "cronHealthy": 13,
+    "cronJobs": 9,
+    "cronHealthy": 9,
     "cronErrors": 0
   },
   "companies": {
