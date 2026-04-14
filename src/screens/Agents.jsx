@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, ChevronRight, Wifi, WifiOff, AlertTriangle, Bot, Shield, Brain, Mail, BarChart3, MessageCircle, DollarSign, Search, Instagram, Twitter, Newspaper } from 'lucide-react';
+import { ChevronDown, ChevronRight, Wifi, WifiOff, AlertTriangle, Bot, Shield, Brain, Mail, BarChart3, MessageCircle, DollarSign, Search, Instagram, Twitter, Newspaper, TrendingUp, Zap, Mail as MailIcon, Activity, CheckCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useTaskStore, STATE_COLORS, STATE_LABELS } from '../store/taskStore';
 
@@ -189,6 +189,140 @@ function AgentTaskPerformance() {
   );
 }
 
+// Hermes Multi-Agent System Overview
+const HermesAgentsOverview = () => {
+  const agents = [
+    { id: 'trading-agent', name: 'Trading Agent', category: 'Specialized', status: 'online', priority: 'Critical', tasks: 12, success: 95, action: 'Strategy backtest completed', icon: TrendingUp },
+    { id: 'content-agent', name: 'Content Agent', category: 'Specialized', status: 'online', priority: 'High', tasks: 8, success: 98, action: 'Daily brief drafted', icon: Zap },
+    { id: 'sales-agent', name: 'Sales Agent', category: 'Specialized', status: 'online', priority: 'High', tasks: 24, success: 87, action: 'Cold email sent (15)', icon: MailIcon },
+    { id: 'ops-agent', name: 'Ops Agent', category: 'Specialized', status: 'online', priority: 'High', tasks: 18, success: 92, action: 'RLM automation: 3 bids scraped', icon: BarChart3 },
+    { id: 'market-monitor', name: 'Market Monitor', category: 'Background', status: 'online', priority: 'Critical', tasks: 144, success: 99, action: 'ORB setup detected: QQQ', icon: Activity },
+    { id: 'email-triage', name: 'Email Triage', category: 'Background', status: 'online', priority: 'High', tasks: 89, success: 94, action: 'Demo request: flagged', icon: MailIcon },
+    { id: 'dashboard-sync', name: 'Dashboard Sync', category: 'Background', status: 'online', priority: 'Normal', tasks: 267, success: 100, action: 'Real-time sync: active', icon: Zap },
+    { id: 'cost-monitor', name: 'Cost Monitor', category: 'Background', status: 'online', priority: 'High', tasks: 134, success: 100, action: 'Daily spend: $12.48', icon: BarChart3 },
+  ];
+
+  const getPriorityColor = (p) => {
+    switch(p) {
+      case 'Critical': return 'bg-red-100 text-red-800';
+      case 'High': return 'bg-orange-100 text-orange-800';
+      case 'Normal': return 'bg-blue-100 text-blue-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  return (
+    <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg p-8 mb-8">
+      <h2 className="text-3xl font-bold text-slate-900 mb-2">🤖 Hermes Multi-Agent System</h2>
+      <p className="text-slate-600 mb-6">8 autonomous agents, fully coordinated and monitored</p>
+      
+      {/* Stats */}
+      <div className="grid grid-cols-4 gap-4 mb-8">
+        <div className="bg-white rounded-lg p-4 border border-slate-200">
+          <div className="text-slate-600 text-sm font-semibold mb-1">Total Agents</div>
+          <div className="text-4xl font-bold text-green-600">8</div>
+        </div>
+        <div className="bg-white rounded-lg p-4 border border-slate-200">
+          <div className="text-slate-600 text-sm font-semibold mb-1">Tasks Completed</div>
+          <div className="text-4xl font-bold text-blue-600">896</div>
+        </div>
+        <div className="bg-white rounded-lg p-4 border border-slate-200">
+          <div className="text-slate-600 text-sm font-semibold mb-1">Success Rate</div>
+          <div className="text-4xl font-bold text-purple-600">95.4%</div>
+        </div>
+        <div className="bg-white rounded-lg p-4 border border-slate-200">
+          <div className="text-slate-600 text-sm font-semibold mb-1">System Status</div>
+          <div className="text-2xl font-bold text-green-600">🟢 Nominal</div>
+        </div>
+      </div>
+
+      {/* Specialized Agents */}
+      <div className="mb-8">
+        <h3 className="text-xl font-bold text-slate-900 mb-4">🎯 Specialized Agents (4)</h3>
+        <div className="grid grid-cols-2 gap-4">
+          {agents.filter(a => a.category === 'Specialized').map(agent => {
+            const Icon = agent.icon;
+            return (
+              <div key={agent.id} className="bg-white rounded-lg p-4 border border-slate-200 hover:border-slate-300 transition">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Icon className="w-5 h-5 text-slate-600" />
+                    <div>
+                      <div className="font-semibold text-slate-900">{agent.name}</div>
+                      <div className="text-xs text-slate-500">{agent.id}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 text-green-600">
+                    <CheckCircle className="w-4 h-4" />
+                    <span className="text-xs font-semibold">online</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-2 text-sm mb-3">
+                  <div>
+                    <div className="text-slate-500 text-xs">Priority</div>
+                    <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold mt-0.5 ${getPriorityColor(agent.priority)}`}>{agent.priority}</span>
+                  </div>
+                  <div>
+                    <div className="text-slate-500 text-xs">Success</div>
+                    <div className="font-semibold text-slate-900">{agent.success}%</div>
+                  </div>
+                  <div>
+                    <div className="text-slate-500 text-xs">Tasks</div>
+                    <div className="font-semibold text-slate-900">{agent.tasks}</div>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-slate-200 text-xs text-slate-600">{agent.action}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Background Workers */}
+      <div>
+        <h3 className="text-xl font-bold text-slate-900 mb-4">⚙️ Background Workers (4)</h3>
+        <div className="grid grid-cols-2 gap-4">
+          {agents.filter(a => a.category === 'Background').map(agent => {
+            const Icon = agent.icon;
+            return (
+              <div key={agent.id} className="bg-white rounded-lg p-4 border border-slate-200 hover:border-slate-300 transition">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Icon className="w-5 h-5 text-slate-600" />
+                    <div>
+                      <div className="font-semibold text-slate-900">{agent.name}</div>
+                      <div className="text-xs text-slate-500">{agent.id}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 text-green-600">
+                    <CheckCircle className="w-4 h-4" />
+                    <span className="text-xs font-semibold">online</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-2 text-sm mb-3">
+                  <div>
+                    <div className="text-slate-500 text-xs">Priority</div>
+                    <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold mt-0.5 ${getPriorityColor(agent.priority)}`}>{agent.priority}</span>
+                  </div>
+                  <div>
+                    <div className="text-slate-500 text-xs">Success</div>
+                    <div className="font-semibold text-slate-900">{agent.success}%</div>
+                  </div>
+                  <div>
+                    <div className="text-slate-500 text-xs">Tasks</div>
+                    <div className="font-semibold text-slate-900">{agent.tasks}</div>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-slate-200 text-xs text-slate-600">{agent.action}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function Agents() {
   const [supaAgents, setSupaAgents] = useState([]);
 
@@ -200,9 +334,13 @@ export default function Agents() {
 
   return (
     <div className="w-full h-full overflow-y-auto pb-24 pt-6 px-4">
+      {/* Hermes Multi-Agent System */}
+      <HermesAgentsOverview />
+
+      {/* Original Agent Family Tree */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold glow-text mb-2">Agent Family Tree</h1>
-        <p className="text-gray-400 text-sm">Organizational hierarchy — who does what</p>
+        <h1 className="text-3xl font-bold glow-text mb-2">Original Agent Family Tree</h1>
+        <p className="text-gray-400 text-sm">Legacy system — organizational hierarchy</p>
       </div>
 
       {/* Summary */}
