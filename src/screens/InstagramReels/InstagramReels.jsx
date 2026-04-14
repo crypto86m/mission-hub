@@ -4,6 +4,14 @@ import './InstagramReels.css';
 const InstagramReels = () => {
   const [activeTab, setActiveTab] = useState('phase1');
   const [copiedId, setCopiedId] = useState(null);
+  const [previewVideo, setPreviewVideo] = useState(null);
+
+  const VIDEO_MAP = {
+    'post_1_authority.mp4': '/videos/napa-friday-drive.mp4',
+    'post_2_vulnerability.mp4': '/videos/monday-car-lineup.mp4',
+    'post_3_lifestyle.mp4': '/videos/wednesday-napa-sunset.mp4',
+    'post_4_process.mp4': '/videos/saturday-paint-job.mp4',
+  };
 
   // Phase 1: Final 10 videos
   const phase1Reels = [
@@ -207,16 +215,7 @@ const InstagramReels = () => {
 
                 <div className="reel-actions">
                   <div
-                    onClick={() => {
-                      const videoMap = {
-                        'post_1_authority.mp4': '/videos/napa-friday-drive.mp4',
-                        'post_2_vulnerability.mp4': '/videos/monday-car-lineup.mp4',
-                        'post_3_lifestyle.mp4': '/videos/wednesday-napa-sunset.mp4',
-                        'post_4_process.mp4': '/videos/saturday-paint-job.mp4',
-                      };
-                      const url = videoMap[reel.file] || `/videos/${reel.file}`;
-                      window.open(url, '_blank');
-                    }}
+                    onClick={() => setPreviewVideo(VIDEO_MAP[reel.file] || `/videos/${reel.file}`)}
                     className="btn-preview" style={{cursor:'pointer'}}
                   >
                     👁️ Preview Video
@@ -263,6 +262,41 @@ const InstagramReels = () => {
               <li><code>/instagram/PHASE_2_COPYABLE.md</code> — Posts 1-20 (full detail)</li>
               <li><code>/instagram/PHASE_2_POSTS_21_100.md</code> — Posts 21-100 (copy-paste)</li>
             </ul>
+          </div>
+        </div>
+      )}
+      {/* Video Preview Modal */}
+      {previewVideo && (
+        <div
+          onClick={() => setPreviewVideo(null)}
+          style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.9)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexDirection: 'column', padding: '20px',
+          }}
+        >
+          <video
+            src={previewVideo}
+            controls
+            autoPlay
+            playsInline
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: '100%', maxHeight: '70vh',
+              borderRadius: '12px', background: '#000',
+            }}
+          />
+          <div
+            onClick={() => setPreviewVideo(null)}
+            style={{
+              marginTop: '16px', padding: '10px 24px',
+              background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '8px', color: 'white', fontSize: '14px',
+              fontWeight: 'bold', cursor: 'pointer',
+            }}
+          >
+            ✖ Close
           </div>
         </div>
       )}
