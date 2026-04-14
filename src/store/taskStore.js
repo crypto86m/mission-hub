@@ -135,6 +135,7 @@ export const useTaskStore = create((set, get) => ({
   debugMode: false,
   filter: 'all',
   errors: [],
+  lastSynced: null,
 
   // ── Getters ─────────────────────────────────────────────────
   getTask: (id) => get().tasks.find(t => t.id === id),
@@ -307,7 +308,7 @@ export const useTaskStore = create((set, get) => ({
   initialize: async () => {
     try {
       const [jsonResp, persisted] = await Promise.all([
-        fetch('/api/tasks.json').then(r => r.json()),
+        fetch('/api/tasks.json?t=' + Date.now()).then(r => r.json()),
         loadPersistedStates(),
       ]);
 
@@ -315,16 +316,22 @@ export const useTaskStore = create((set, get) => ({
       const projects = jsonResp.projects.map(p => {
         const tasks = p.tasks.map(t => {
           const overlay = persisted[t.id];
+          // Supabase state always wins over static JSON when newer
+          const supabaseIsNewer = overlay?.updatedAt && 
+            (!jsonResp.lastUpdated || new Date(overlay.updatedAt) > new Date(jsonResp.lastUpdated));
+          const resolvedStatus = supabaseIsNewer 
+            ? normalizeStatus(overlay.status) 
+            : normalizeStatus(overlay?.status || t.status);
           const base = {
             id: t.id,
             title: t.title,
-            status: normalizeStatus(overlay?.status || t.status),
+            status: resolvedStatus,
             projectId: p.id,
             projectName: p.name,
             priority: p.priority || 'MEDIUM',
             assignee: t.assignee || null,
-            note: t.note || null,
-            proof: t.proof || null,
+            note: overlay?.note || t.note || null,
+            proof: overlay?.proof || t.proof || null,
             blocker: t.blocker || null,
             completedAt: overlay?.completedAt || t.completedAt || null,
             startedAt: overlay?.startedAt || null,
@@ -343,8 +350,9 @@ export const useTaskStore = create((set, get) => ({
         return { ...p, tasks, progress: undefined }; // progress recalculated dynamically
       });
 
-      set({ tasks: allTasks, projects, blockers: jsonResp.blockers || [], loaded: true });
+      set({ tasks: allTasks, projects, blockers: jsonResp.blockers || [], loaded: true, lastSynced: new Date().toISOString() });
       get().recalcSummary();
+      console.log('[taskStore] Initialized:', allTasks.length, 'tasks,', Object.keys(persisted).length, 'Supabase overlays applied');
     } catch (e) {
       console.error('[taskStore] Init error:', e);
       set({ loaded: true, errors: [{ ts: Date.now(), msg: `Init failed: ${e.message}` }] });

@@ -39,7 +39,7 @@ function TaskSummaryWidget() {
           ))}
         </div>
       )}
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-4 gap-2 stagger-children">
         {[
           { label: 'Done', value: summary.completed, color: 'text-green-400' },
           { label: 'Active', value: summary.inProgress, color: 'text-blue-400' },
@@ -47,7 +47,7 @@ function TaskSummaryWidget() {
           { label: 'Blocked', value: summary.blocked + summary.delayed, color: 'text-red-400' },
         ].map((c, i) => (
           <div key={i} className="glass-card text-center py-2">
-            <p className={`text-xl font-bold ${c.color}`}>{c.value}</p>
+            <p className={`text-xl font-bold number-animate ${c.color}`}>{c.value}</p>
             <p className="text-[9px] text-gray-500">{c.label}</p>
           </div>
         ))}
@@ -209,7 +209,7 @@ export default function Dashboard() {
       </div>
 
       {/* Header + Refresh */}
-      <div className="mb-6 flex items-start justify-between">
+      <div className="mb-6 flex items-start justify-between animate-fade-in-up">
         <div>
           <h1 className="text-3xl font-bold glow-text mb-1">Mission Control</h1>
           {liveData && (() => {
@@ -247,7 +247,7 @@ export default function Dashboard() {
 
       {/* Morning Briefing */}
       {liveData && (
-        <div className="mb-6 glass-card border-cyan/20">
+        <div className="mb-6 glass-card border-cyan/20 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
           <div className="flex items-center gap-2 mb-2">
             <Clock size={14} className="text-cyan" />
             <span className="text-xs font-semibold text-cyan">Today's Briefing</span>
@@ -266,7 +266,7 @@ export default function Dashboard() {
       <TaskSummaryWidget />
 
       {/* Pending Approvals — Quick Access */}
-      <div className="mb-6">
+      <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold">Pending Approvals</h2>
           <span className="text-xs font-mono text-cyan">{approvals.length} AWAITING</span>
@@ -343,7 +343,7 @@ export default function Dashboard() {
       )}
 
       {/* Real-Time P&L Widget */}
-      <div className="mb-6">
+      <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
         <div className="glass-card">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-lg font-bold">Today's P&L</h2>
@@ -365,7 +365,7 @@ export default function Dashboard() {
           </div>
           <div className="mt-3 flex items-center gap-2">
             <div className="flex-1 bg-gray-800 rounded-full h-2">
-              <div className={`h-2 rounded-full ${Math.abs(t.todayPnl || 0) > (t.dailyLimit || 120) ? 'bg-red-500' : 'bg-green-500'}`} style={{ width: `${Math.min(Math.abs(t.todayPnl || 0) / (t.dailyLimit || 120) * 100, 100)}%` }} />
+              <div className={`h-2 rounded-full progress-bar-fill ${Math.abs(t.todayPnl || 0) > (t.dailyLimit || 120) ? 'bg-red-500' : 'bg-green-500'}`} style={{ width: `${Math.min(Math.abs(t.todayPnl || 0) / (t.dailyLimit || 120) * 100, 100)}%` }} />
             </div>
             <span className="text-[10px] text-gray-400 font-mono">${Math.abs(t.todayPnl || 0).toFixed(2)} / ${t.dailyLimit || 120} daily limit</span>
           </div>
@@ -373,9 +373,9 @@ export default function Dashboard() {
       </div>
 
       {/* System Status */}
-      <div className="mb-6">
+      <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
         <h2 className="text-lg font-bold mb-3">System Status</h2>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-2 stagger-children">
           {[
             { name: 'Trading', status: t.openPositions > 0 ? 'active' : 'idle', label: `${t.strategiesLoaded || 0} strats` },
             { name: 'Email', status: 'ok', label: `${em.totalReplies || 0} replies` },
@@ -397,7 +397,7 @@ export default function Dashboard() {
       </div>
 
       {/* Cost Monitor */}
-      <div className="mb-6">
+      <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
         <div className="glass-card">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-lg font-bold">Cost Monitor</h2>
@@ -416,7 +416,7 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="mt-2 bg-gray-800 rounded-full h-2">
-            <div className={`h-2 rounded-full ${(c.monthTotal || 0) / (c.monthlyBudget || 200) > 0.75 ? 'bg-yellow-500' : 'bg-green-500'}`} style={{ width: `${Math.min((c.monthTotal || 0) / (c.monthlyBudget || 200) * 100, 100)}%` }} />
+            <div className={`h-2 rounded-full progress-bar-fill ${(c.monthTotal || 0) / (c.monthlyBudget || 200) > 0.75 ? 'bg-yellow-500' : 'bg-green-500'}`} style={{ width: `${Math.min((c.monthTotal || 0) / (c.monthlyBudget || 200) * 100, 100)}%` }} />
           </div>
         </div>
       </div>

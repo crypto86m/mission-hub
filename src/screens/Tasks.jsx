@@ -322,7 +322,7 @@ export default function Tasks() {
   if (!loaded) {
     return (
       <div className="w-full h-full flex items-center justify-center">
-        <span className="text-5xl animate-pulse-soft">⚡</span>
+        <span className="text-5xl animate-pulse-glow">⚡</span>
       </div>
     );
   }
@@ -381,7 +381,7 @@ export default function Tasks() {
       {debugMode && <DebugPanel />}
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-4 gap-2 mb-4">
+      <div className="grid grid-cols-4 gap-2 mb-4 stagger-children">
         {[
           { label: 'Total', value: summary.total, color: 'text-white', bg: 'bg-gray-500/10' },
           { label: 'Done', value: summary.completed, color: 'text-green-400', bg: 'bg-green-500/10' },
@@ -389,19 +389,19 @@ export default function Tasks() {
           { label: 'Approval', value: summary.awaitingApproval, color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
         ].map((c, i) => (
           <div key={i} className={`${c.bg} border border-gray-700/30 rounded-xl text-center py-2.5`}>
-            <p className={`text-xl font-bold ${c.color}`}>{c.value}</p>
+            <p className={`text-xl font-bold number-animate ${c.color}`}>{c.value}</p>
             <p className="text-[9px] text-gray-500">{c.label}</p>
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-3 gap-2 mb-4">
+      <div className="grid grid-cols-3 gap-2 mb-4 stagger-children">
         {[
           { label: 'Pending', value: summary.pending, color: 'text-gray-400', bg: 'bg-gray-500/10' },
           { label: 'Delayed', value: summary.delayed, color: 'text-orange-400', bg: 'bg-orange-500/10' },
           { label: 'Blocked', value: summary.blocked, color: 'text-red-400', bg: 'bg-red-500/10' },
         ].map((c, i) => (
           <div key={i} className={`${c.bg} border border-gray-700/30 rounded-xl text-center py-2`}>
-            <p className={`text-lg font-bold ${c.color}`}>{c.value}</p>
+            <p className={`text-lg font-bold number-animate ${c.color}`}>{c.value}</p>
             <p className="text-[9px] text-gray-500">{c.label}</p>
           </div>
         ))}
@@ -470,7 +470,7 @@ export default function Tasks() {
               <div className="shrink-0 text-right">
                 <p className="text-sm font-mono text-cyan">{project.done}/{project.total}</p>
                 <div className="w-16 h-1.5 bg-gray-700 rounded-full mt-1">
-                  <div className={`h-1.5 rounded-full transition-all ${
+                  <div className={`h-1.5 rounded-full progress-bar-fill ${
                     project.progress >= 90 ? 'bg-green-400' : project.progress >= 50 ? 'bg-blue-400' : 'bg-yellow-400'
                   }`} style={{ width: `${project.progress}%` }} />
                 </div>
