@@ -11,6 +11,12 @@ const InstagramReels = () => {
     'post_2_vulnerability.mp4': '/videos/monday-car-lineup.mp4',
     'post_3_lifestyle.mp4': '/videos/wednesday-napa-sunset.mp4',
     'post_4_process.mp4': '/videos/saturday-paint-job.mp4',
+    'post_5.mp4': '/videos/reel_1_cinematic_lifestyle.mp4',
+    'post_6.mp4': '/videos/reel_2_day_in_moment.mp4',
+    'post_7.mp4': '/videos/reel_3_this_is_living.mp4',
+    'post_8.mp4': '/videos/napa-friday-drive.mp4',
+    'post_9.mp4': '/videos/monday-car-lineup.mp4',
+    'post_10.mp4': '/videos/wednesday-napa-sunset.mp4',
   };
 
   // Phase 1: Final 10 videos
@@ -280,6 +286,10 @@ const InstagramReels = () => {
             autoPlay
             playsInline
             onClick={(e) => e.stopPropagation()}
+            onError={() => {
+              setPreviewVideo(null);
+              alert('Video file not available yet — generating soon!');
+            }}
             style={{
               maxWidth: '90%', maxHeight: '65vh',
               borderRadius: '12px', background: '#000',
