@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, Zap, Lock, Database, Bell, WifiOff } from 'lucide-react';
 import MasterConnect from '../components/MasterConnect';
+import { GatewayControl } from '../components/GatewayControl';
 
 export default function SettingsScreen() {
   const [liveData, setLiveData] = useState(null);
@@ -34,12 +35,20 @@ export default function SettingsScreen() {
   const ig = liveData?.instagram || {};
   const tw = liveData?.twitter || {};
   const integrations = [
-    { id: 1, name: 'Discord', status: 'connected', lastSync: 'Active', icon: '💬' },
-    { id: 2, name: 'Supabase', status: 'connected', lastSync: 'Active', icon: '💾' },
-    { id: 3, name: 'Alpaca (Trading)', status: t.status === 'connected' ? 'connected' : 'not connected', lastSync: t.status === 'connected' ? `$${(t.accountValue || 0).toLocaleString()}` : 'Not connected', icon: '📈' },
-    { id: 4, name: 'Instagram', status: ig.status !== 'not_connected' ? 'connected' : 'not connected', lastSync: ig.status !== 'not_connected' ? 'Active' : 'Not connected', icon: '📸' },
-    { id: 5, name: 'Twitter/X', status: tw.status !== 'not_connected' ? (tw.status === 'blocked' ? 'error' : 'connected') : 'not connected', lastSync: tw.status === 'not_connected' ? 'Not connected' : tw.status === 'blocked' ? 'Auth error' : 'Active', icon: '🐦' },
-    { id: 6, name: 'Vercel', status: 'connected', lastSync: 'Hosting active', icon: '▲' },
+    { id: 1, name: 'Discord', status: 'connected', lastSync: 'Primary channel', icon: '💬' },
+    { id: 2, name: 'Telegram', status: 'connected', lastSync: 'Backup channel', icon: '📱' },
+    { id: 3, name: 'Supabase', status: 'connected', lastSync: 'Pro tier', icon: '💾' },
+    { id: 4, name: 'Alpaca (Trading)', status: t.status === 'connected' ? 'connected' : 'not connected', lastSync: t.status === 'connected' ? `$${(t.accountValue || 0).toLocaleString()}` : 'Not connected', icon: '📈' },
+    { id: 5, name: 'Instagram', status: ig.status !== 'not_connected' ? 'connected' : 'not connected', lastSync: ig.status !== 'not_connected' ? '@benjamin86m' : 'Not connected', icon: '📸' },
+    { id: 6, name: 'Twitter/X', status: tw.status !== 'not_connected' ? (tw.status === 'blocked' ? 'error' : 'connected') : 'not connected', lastSync: tw.status === 'not_connected' ? 'Not connected' : tw.status === 'blocked' ? 'Suspended' : 'Active', icon: '🐦' },
+    { id: 7, name: 'Upwork', status: 'connected', lastSync: 'Freelancer profile live', icon: '💼' },
+    { id: 8, name: 'Fiverr', status: 'connected', lastSync: '4 gigs live', icon: '🎯' },
+    { id: 9, name: 'LinkedIn', status: 'connected', lastSync: 'CTO outreach active', icon: '🔗' },
+    { id: 10, name: 'Gmail', status: 'connected', lastSync: 'Auto-responder active', icon: '📧' },
+    { id: 11, name: 'Substack (Newsletter)', status: 'connected', lastSync: 'Auto-publish daily', icon: '📰' },
+    { id: 12, name: 'Vercel', status: 'connected', lastSync: 'Auto-deploy enabled', icon: '▲' },
+    { id: 13, name: 'Tavily (Research)', status: 'connected', lastSync: 'API active', icon: '🔍' },
+    { id: 14, name: 'Firecrawl (Scraping)', status: 'connected', lastSync: 'API active', icon: '🔥' },
   ];
 
   const getStatusColor = (status) => {
@@ -71,6 +80,15 @@ export default function SettingsScreen() {
           Master Connection Control
         </h2>
         <MasterConnect />
+      </div>
+
+      {/* Gateway Control - Restart Button */}
+      <div className="mb-8">
+        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+          <Zap size={20} className="text-cyan" />
+          Gateway Control
+        </h2>
+        <GatewayControl />
       </div>
 
       {/* Budget Controls */}
