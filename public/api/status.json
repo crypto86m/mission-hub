@@ -1,11 +1,11 @@
 {
-  "generated": "2026-04-15T00:53:05.387988+00:00",
+  "generated": "2026-04-15T04:19:31.960519+00:00",
   "trading": {
-    "accountValue": 98693.79,
-    "unrealizedPnl": 193.01,
+    "accountValue": 98691.81,
+    "unrealizedPnl": 191.03,
     "openPositions": 4,
     "todayTrades": 0,
-    "todayPnl": 154.59,
+    "todayPnl": 152.61,
     "strategiesLoaded": 20,
     "dailyLimit": 120,
     "phase": "Paper Trading",
@@ -13,26 +13,26 @@
       {
         "symbol": "AAPL",
         "qty": -11.0,
-        "unrealizedPl": -7.03,
-        "currentPrice": 258.7
+        "unrealizedPl": -11.21,
+        "currentPrice": 259.08
       },
       {
         "symbol": "AMD",
         "qty": 12.0,
-        "unrealizedPl": 84.62,
-        "currentPrice": 253.13
+        "unrealizedPl": 84.38,
+        "currentPrice": 253.11
       },
       {
         "symbol": "QQQ",
         "qty": -4.0,
-        "unrealizedPl": -10.64,
-        "currentPrice": 628.85
+        "unrealizedPl": -11.48,
+        "currentPrice": 629.06
       },
       {
         "symbol": "TSLA",
         "qty": 8.0,
-        "unrealizedPl": 126.06,
-        "currentPrice": 367.32
+        "unrealizedPl": 129.34,
+        "currentPrice": 367.73
       }
     ],
     "status": "connected"
@@ -52,8 +52,8 @@
   "newsletter": {
     "subscribers": 7,
     "openRate": 0,
-    "issuesPublished": 6,
-    "lastIssue": "2026-04-09",
+    "issuesPublished": 9,
+    "lastIssue": "2026-04-14",
     "paidSubscribers": 0,
     "mrr": 0
   },

@@ -1,147 +1,165 @@
 {
-  "lastUpdated": "2026-04-13T18:08:00",
+  "lastUpdated": "2026-04-15T04:17:00",
   "summary": {
-    "total": 22,
-    "completed": 17,
-    "inProgress": 3,
-    "blocked": 1,
+    "total": 12,
+    "completed": 0,
+    "inProgress": 8,
+    "blocked": 3,
     "pending": 1
   },
   "blockers": [
     {
       "id": "twitter-auth",
       "system": "Twitter API",
-      "description": "401 Unauthorized — API credentials expired since April 1. 89 tweets queued in Buffer, zero posted in 12 days.",
+      "description": "Account suspended — needs manual key regeneration from Benjamin",
       "impact": "Zero social media presence on Twitter since April 1",
-      "daysSinceRaised": 12,
+      "daysSinceRaised": 14,
       "needsFromBenjamin": "Regenerate API keys at developer.twitter.com or decide to drop Twitter"
+    },
+    {
+      "id": "instagram-token",
+      "system": "Instagram API",
+      "description": "API token managed by Benjamin — not configured for automated posting",
+      "impact": "No automated Instagram analytics or posting",
+      "needsFromBenjamin": "Provide Instagram API token when ready"
+    },
+    {
+      "id": "substack-token",
+      "system": "Substack API",
+      "description": "Substack token managed by Benjamin — newsletter publishes manually",
+      "impact": "Auto-publish pipeline paused, manual publish only",
+      "needsFromBenjamin": "Provide Substack API token when ready"
     }
   ],
   "projects": [
     {
-      "id": "mission-control",
-      "name": "Mission Control Dashboard",
-      "description": "Central command dashboard for all operations",
-      "status": "in_progress",
-      "priority": "HIGH",
-      "progress": 85,
-      "tasks": [
-        {"id": "mc-1", "title": "Deploy to Benjamin's Vercel account", "status": "done", "completedAt": "2026-04-10", "proof": "https://mission-hub-iota.vercel.app", "assignee": "Charles"},
-        {"id": "mc-2", "title": "Wire all tabs to real data (replace hardcoded)", "status": "in_progress", "note": "Home + Instagram + Tasks done, remaining tabs in progress", "assignee": "Charles"},
-        {"id": "mc-3", "title": "Supabase real-time integration", "status": "done", "completedAt": "2026-04-10", "proof": "trading_pnl, cost_tracking, agent_status tables updated", "assignee": "Charles"},
-        {"id": "mc-4", "title": "Instagram tab with real analytics", "status": "done", "completedAt": "2026-04-10", "proof": "7 screenshots processed, content calendar built", "assignee": "Charles"},
-        {"id": "mc-5", "title": "Task Engine — Supabase-synced state machine", "status": "done", "completedAt": "2026-04-12", "proof": "taskStore.js with 6-state FSM, real-time sync, audit trail", "assignee": "Charles"},
-        {"id": "mc-6", "title": "Fix task sync — Zustand merges Supabase state on load", "status": "in_progress", "note": "Deploying fix for stale tasks.json vs Supabase drift", "assignee": "Charles"}
-      ]
-    },
-    {
       "id": "trading",
       "name": "Trading System",
-      "description": "$98,537 equity, stop-loss enforcer v2 live",
+      "description": "Paper trading via Alpaca — 9 strategies active, targeting 30-day consistency before live capital",
       "status": "in_progress",
       "priority": "HIGH",
-      "progress": 80,
       "tasks": [
-        {"id": "tr-1", "title": "Build & deploy 20 strategies", "status": "done", "completedAt": "2026-04-08", "proof": "trading/strategies/DEPLOYMENT-STATUS.md", "assignee": "Charles"},
-        {"id": "tr-2", "title": "Backtest all 20 strategies (rolling window)", "status": "done", "completedAt": "2026-04-10", "proof": "backtest-results/COMPREHENSIVE-BACKTEST-2026-04-10.json", "assignee": "Charles"},
-        {"id": "tr-3", "title": "Kill 14 losing strategies, keep 6 winners", "status": "done", "completedAt": "2026-04-10", "proof": "Commit 74f0472 — moved to strategies/disabled/", "assignee": "Charles"},
-        {"id": "tr-4", "title": "Tighten parameters (quality 7.5, regime filter)", "status": "done", "completedAt": "2026-04-10", "proof": "Commit 7595d58", "assignee": "Charles"},
-        {"id": "tr-5", "title": "Build stop-loss watchdog", "status": "done", "completedAt": "2026-04-10", "proof": "stop_loss_watchdog.py + launchd plist deployed", "assignee": "Charles"},
-        {"id": "tr-6", "title": "Fix orchestrator launch script (wrong filename + missing --loop)", "status": "done", "completedAt": "2026-04-10", "proof": "launch-orchestrator.sh fixed", "assignee": "Charles"},
-        {"id": "tr-7", "title": "Paper trade 6 strategies to 30+ trades each", "status": "done", "completedAt": "2026-04-13", "proof": "$98,537 equity, +$2,237 today, 2 open positions (AAPL, SPY)", "assignee": "Charles"},
-        {"id": "tr-8", "title": "Go live with real money ($500 account)", "status": "done", "completedAt": "2026-04-13", "note": "Benjamin approved — live trading active", "assignee": "Benjamin + Charles"},
-        {"id": "tr-9", "title": "Stop-loss enforcer v2 deployed (24/7 via launchd)", "status": "done", "completedAt": "2026-04-12", "proof": "launchd plist running, 30s position checks", "assignee": "Charles"}
-      ]
-    },
-    {
-      "id": "instagram",
-      "name": "Instagram Growth (@benjamin86m)",
-      "description": "682 followers, 7-day content calendar + 5 AI videos generated",
-      "status": "in_progress",
-      "priority": "MEDIUM",
-      "progress": 60,
-      "tasks": [
-        {"id": "ig-1", "title": "Deep analytics from 7 screenshots", "status": "done", "completedAt": "2026-04-10", "proof": "instagram/analytics/2026-04-10-metrics.md", "assignee": "Charles"},
-        {"id": "ig-2", "title": "Build 7-day content calendar (Apr 11-17)", "status": "done", "completedAt": "2026-04-10", "proof": "instagram/content-calendar/WEEK-APR-11-17.md", "assignee": "Charles"},
-        {"id": "ig-3", "title": "Add Instagram tab to dashboard", "status": "done", "completedAt": "2026-04-10", "proof": "https://mission-hub-iota.vercel.app (Instagram tab)", "assignee": "Charles"},
-        {"id": "ig-4", "title": "Generate 5 AI videos for Reels", "status": "done", "completedAt": "2026-04-12", "proof": "5 videos in /downloads/, ready for posting", "assignee": "Charles"},
-        {"id": "ig-5", "title": "Film & post 7 Reels (Apr 11-17)", "status": "in_progress", "note": "Benjamin filming + posting at optimal times", "assignee": "Benjamin", "needsBenjamin": true}
-      ]
-    },
-    {
-      "id": "ai-support",
-      "name": "AI Support Platform",
-      "description": "Customer acquisition — 118 companies contacted, 0 demos yet",
-      "status": "in_progress",
-      "priority": "HIGH",
-      "progress": 45,
-      "tasks": [
-        {"id": "ai-1", "title": "Platform deployed", "status": "done", "completedAt": "2026-04-08", "proof": "https://ai-support-self.vercel.app", "assignee": "Charles"},
-        {"id": "ai-2", "title": "Cold email batch 1 (30 emails)", "status": "done", "completedAt": "2026-04-08", "assignee": "Charles"},
-        {"id": "ai-3", "title": "Cold email batch 2 (30 emails)", "status": "done", "completedAt": "2026-04-09", "assignee": "Charles"},
-        {"id": "ai-4", "title": "Cold email batch 3 (23 emails)", "status": "done", "completedAt": "2026-04-10", "proof": "63 total companies emailed", "assignee": "Charles"},
-        {"id": "ai-5", "title": "Cold email batch 4 (50 more companies)", "status": "done", "completedAt": "2026-04-12", "proof": "113 total companies emailed", "assignee": "Charles"},
-        {"id": "ai-6", "title": "Personalized decision-maker outreach (8 emails)", "status": "done", "completedAt": "2026-04-13", "proof": "8 personalized emails to C-level contacts", "assignee": "Charles"},
-        {"id": "ai-7", "title": "Get first demo booking", "status": "in_progress", "note": "118 emails sent, 0 demos yet. Monitoring responses daily.", "assignee": "Charles"},
-        {"id": "ai-8", "title": "Onboard 3 paying customers", "status": "pending", "note": "Target: $5K MRR by April 30", "assignee": "Charles"}
+        {
+          "id": "tr-10",
+          "title": "30-day paper trading consistency window",
+          "status": "in_progress",
+          "note": "-$1,307 all-time P&L, 91 orders executed. 9 active strategies: ORB, VWAP, S/R, Earnings IV, Gap Fill, Vol Reversion, TQQQ, UPRO, SQQQ. Gap Fill bracket order bug fixed.",
+          "assignee": "Charles",
+          "deadline": "2026-05-14"
+        },
+        {
+          "id": "tr-11",
+          "title": "Strategy performance review & pruning",
+          "status": "in_progress",
+          "note": "Monitoring win rates per strategy. Will prune underperformers after sufficient sample size.",
+          "assignee": "Charles"
+        },
+        {
+          "id": "tr-12",
+          "title": "Go live with real capital ($500 account)",
+          "status": "pending",
+          "note": "Waiting for 30-day consistency proof. Benjamin approves final go-live.",
+          "assignee": "Benjamin + Charles",
+          "needsBenjamin": true
+        }
       ]
     },
     {
       "id": "newsletter",
       "name": "Bennett's Brief",
-      "description": "Daily newsletter — Issue #8 published Apr 11",
-      "status": "done",
+      "description": "7 real subscribers, $0 MRR, 9 issues published on Substack. Paid tier enabled.",
+      "status": "in_progress",
       "priority": "MEDIUM",
-      "progress": 95,
       "tasks": [
-        {"id": "nl-1", "title": "Auto-generation pipeline", "status": "done", "completedAt": "2026-04-06", "proof": "Cron: Bennett's Brief daily at 6 AM PT", "assignee": "Charles"},
-        {"id": "nl-2", "title": "6 issues published", "status": "done", "completedAt": "2026-04-09", "proof": "Issues #1-6 on Substack", "assignee": "Charles"},
-        {"id": "nl-3", "title": "Issue #7 drafted & published", "status": "done", "completedAt": "2026-04-10", "proof": "Issue #7 live on Substack", "assignee": "Charles"},
-        {"id": "nl-4", "title": "Issue #8 published (Apr 11)", "status": "done", "completedAt": "2026-04-11", "proof": "Issue #8 live on Substack", "assignee": "Charles"}
+        {
+          "id": "nl-5",
+          "title": "Grow subscriber base to 50",
+          "status": "in_progress",
+          "note": "7 subscribers currently. Cross-promoting via Instagram and trading content.",
+          "assignee": "Charles"
+        },
+        {
+          "id": "nl-6",
+          "title": "First paid subscriber",
+          "status": "in_progress",
+          "note": "Paid tier enabled but no paid subscribers yet. $0 MRR.",
+          "assignee": "Charles"
+        }
       ]
     },
     {
-      "id": "email",
-      "name": "Email Automation",
-      "description": "640+ auto-replies, signature finalized",
-      "status": "done",
+      "id": "dashboard",
+      "name": "Dashboard Rebuild",
+      "description": "Fake data purged, live Alpaca data connected. All tabs show real data or 'Not connected'.",
+      "status": "in_progress",
       "priority": "MEDIUM",
-      "progress": 100,
       "tasks": [
-        {"id": "em-1", "title": "Email responder deployed", "status": "done", "completedAt": "2026-04-03", "proof": "640+ emails replied", "assignee": "Charles"},
-        {"id": "em-2", "title": "Fix reply loop bug (89 Anthropic, 21 TradeZella)", "status": "done", "completedAt": "2026-04-10", "proof": "30+ auto-reply patterns, max 2/sender, Re: chain limit", "assignee": "Charles"},
-        {"id": "em-3", "title": "Block Vercel/GitHub notifications", "status": "done", "completedAt": "2026-04-10", "assignee": "Charles"},
-        {"id": "em-4", "title": "Email signature finalized", "status": "done", "completedAt": "2026-04-12", "proof": "Professional signature with Charles Bennett branding", "assignee": "Charles"}
+        {
+          "id": "db-1",
+          "title": "Auto-refresh status.json from live sources",
+          "status": "in_progress",
+          "note": "generate-status.py pulls live Alpaca data. Needs heartbeat integration for auto-refresh every 30min-2hr.",
+          "assignee": "Charles"
+        },
+        {
+          "id": "db-2",
+          "title": "Wire remaining tabs to real data",
+          "status": "in_progress",
+          "note": "Home + Trading live. Instagram, Twitter, Companies show 'Not connected' (accurate). Costs not tracked yet.",
+          "assignee": "Charles"
+        }
       ]
     },
     {
-      "id": "twitter",
-      "name": "Twitter (@bennett_ch10631)",
-      "description": "89 tweets queued, posting BLOCKED — needs key regen from Benjamin",
-      "status": "blocked",
-      "priority": "MEDIUM",
-      "progress": 10,
-      "tasks": [
-        {"id": "tw-1", "title": "90 tweets written and loaded in Buffer", "status": "done", "completedAt": "2026-04-06", "assignee": "Charles"},
-        {"id": "tw-2", "title": "Fix 401 Unauthorized", "status": "done", "completedAt": "2026-04-13", "note": "Benjamin acknowledged — needs to regenerate keys at developer.twitter.com", "needsBenjamin": true, "assignee": "Benjamin"}
-      ]
-    },
-    {
-      "id": "operational",
-      "name": "Operational Excellence",
-      "description": "Agent consolidation + systemic improvements",
-      "status": "done",
+      "id": "cost-mgmt",
+      "name": "Cost Management",
+      "description": "Model switched Opus → Haiku (80% savings). Non-critical crons disabled. Target: $15-18/day.",
+      "status": "in_progress",
       "priority": "HIGH",
-      "progress": 100,
       "tasks": [
-        {"id": "op-1", "title": "BENJAMIN-DIRECTIVES.md (never ask twice)", "status": "done", "completedAt": "2026-04-10", "proof": "memory/BENJAMIN-DIRECTIVES.md created", "assignee": "Charles"},
-        {"id": "op-2", "title": "Data Integrity Rule (no fake data)", "status": "done", "completedAt": "2026-04-10", "proof": "AGENTS.md + SOUL.md updated", "assignee": "Charles"},
-        {"id": "op-3", "title": "Trading Safety Rule (3 components)", "status": "done", "completedAt": "2026-04-10", "proof": "start-trading-system.sh + launchd jobs", "assignee": "Charles"},
-        {"id": "op-4", "title": "Blocker Escalation Rule (daily escalation)", "status": "done", "completedAt": "2026-04-10", "proof": "AGENTS.md + HEARTBEAT.md updated", "assignee": "Charles"},
-        {"id": "op-5", "title": "Cross-Channel Context Rule", "status": "done", "completedAt": "2026-04-10", "proof": "AGENTS.md: 5-point protocol + channel IDs", "assignee": "Charles"},
-        {"id": "op-6", "title": "Post-Completion Verification Checklist", "status": "done", "completedAt": "2026-04-10", "proof": "SOUL.md: 5-point checklist", "assignee": "Charles"},
-        {"id": "op-7", "title": "Cron consolidation (25 → 10 active)", "status": "done", "completedAt": "2026-04-12", "proof": "openclaw cron list shows 10 active jobs", "assignee": "Charles"},
-        {"id": "op-8", "title": "Agent consolidation & quality control", "status": "done", "completedAt": "2026-04-12", "proof": "Reduced agent sprawl, unified monitoring", "assignee": "Charles"}
+        {
+          "id": "cm-1",
+          "title": "Maintain $15-18/day API spend target",
+          "status": "in_progress",
+          "note": "Haiku default model. Monitoring daily spend. $200/month hard budget.",
+          "assignee": "Charles"
+        }
+      ]
+    },
+    {
+      "id": "blocked-items",
+      "name": "Blocked — Waiting on Benjamin",
+      "description": "Items that need Benjamin's manual action to unblock",
+      "status": "blocked",
+      "priority": "HIGH",
+      "tasks": [
+        {
+          "id": "blk-1",
+          "title": "Twitter API keys — account suspended",
+          "status": "blocked",
+          "note": "Account suspended since April 1. 89 tweets queued. Benjamin needs to regenerate keys at developer.twitter.com.",
+          "assignee": "Benjamin",
+          "needsBenjamin": true,
+          "blockedBy": "twitter-auth"
+        },
+        {
+          "id": "blk-2",
+          "title": "Instagram API token",
+          "status": "blocked",
+          "note": "Benjamin manages Instagram token. Needed for automated analytics and posting.",
+          "assignee": "Benjamin",
+          "needsBenjamin": true,
+          "blockedBy": "instagram-token"
+        },
+        {
+          "id": "blk-3",
+          "title": "Substack API token",
+          "status": "blocked",
+          "note": "Benjamin manages Substack token. Needed for auto-publish pipeline.",
+          "assignee": "Benjamin",
+          "needsBenjamin": true,
+          "blockedBy": "substack-token"
+        }
       ]
     }
   ]

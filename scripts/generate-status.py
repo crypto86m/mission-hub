@@ -157,8 +157,8 @@ def main():
         "newsletter": {
             "subscribers": 7,
             "openRate": 0,
-            "issuesPublished": 6,
-            "lastIssue": "2026-04-09",
+            "issuesPublished": 9,
+            "lastIssue": "2026-04-14",
             "paidSubscribers": 0,
             "mrr": 0,
         },

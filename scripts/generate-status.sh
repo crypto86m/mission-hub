@@ -51,7 +51,7 @@ CRON_HEALTHY=$CRON_TOTAL
 CRON_ERRORS=0
 
 # --- Newsletter (real confirmed numbers) ---
-NEWSLETTER_JSON='{"subscribers":7,"openRate":0,"issuesPublished":6,"lastIssue":"2026-04-09"}'
+NEWSLETTER_JSON='{"subscribers":7,"openRate":0,"issuesPublished":9,"lastIssue":"2026-04-14","paidSubscribers":0,"mrr":0}'
 
 # --- Instagram (from status.json cache or "not connected") ---
 INSTAGRAM_JSON='{"followers":0,"views30d":0,"interactions30d":0,"engagementRate":0,"netGrowth30d":0,"status":"not_connected"}'
