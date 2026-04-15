@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Dropshipping Opportunity - Business Pitch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --accent-light: #f472b6;
+            --light: #f8f9ff;
+            --dark: #1f2937;
+            --white: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --gradient-1: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --gradient-2: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+            --gradient-3: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating decorative dots */
+        .floating-dots {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .dot {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .dot:nth-child(1) { width: 60px; height: 60px; background: #2563eb; top: 10%; left: 5%; animation-delay: 0s; }
+        .dot:nth-child(2) { width: 40px; height: 40px; background: #7c3aed; top: 20%; right: 10%; animation-delay: 1s; }
+        .dot:nth-child(3) { width: 50px; height: 50px; background: #ec4899; top: 50%; left: 8%; animation-delay: 2s; }
+        .dot:nth-child(4) { width: 35px; height: 35px; background: #2563eb; top: 70%; right: 5%; animation-delay: 1.5s; }
+        .dot:nth-child(5) { width: 45px; height: 45px; background: #f472b6; top: 30%; right: 15%; animation-delay: 2.5s; }
+        .dot:nth-child(6) { width: 30px; height: 30px; background: #7c3aed; top: 80%; left: 12%; animation-delay: 0.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-40px) translateX(-10px); }
+            75% { transform: translateY(-20px) translateX(10px); }
+        }
+
+        .presentation-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .presentation-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide {
+            width: 95%;
+            max-width: 1200px;
+            height: 90vh;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .slide-header {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: clamp(12px, 2vw, 20px);
+            flex-shrink: 0;
+            text-align: center;
+            border-bottom: 5px solid var(--accent);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(20px, 4vw, 36px);
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .slide-header p {
+            font-size: clamp(14px, 2vw, 20px);
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: clamp(20px, 5vw, 40px);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        .content-section {
+            margin-bottom: 25px;
+        }
+
+        .content-section h2 {
+            color: var(--primary);
+            font-size: clamp(20px, 3vw, 32px);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .content-section h3 {
+            color: var(--secondary);
+            font-size: clamp(16px, 2.5vw, 22px);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .content-section p, .content-section li {
+            font-size: clamp(14px, 1.8vw, 18px);
+            line-height: 1.8;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .content-section ul {
+            margin-left: 20px;
+            list-style: none;
+        }
+
+        .content-section li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+            animation: slideInUp 0.5s ease-out both;
+        }
+
+        .content-section li:nth-child(1) { animation-delay: 0.1s; }
+        .content-section li:nth-child(2) { animation-delay: 0.2s; }
+        .content-section li:nth-child(3) { animation-delay: 0.3s; }
+        .content-section li:nth-child(4) { animation-delay: 0.4s; }
+        .content-section li:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section li:before {
+            content: "▸";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .key-metric {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: clamp(16px, 2vw, 24px);
+            font-weight: 700;
+            border: 2px solid var(--accent);
+            transition: all 0.3s ease;
+            animation: scaleIn 0.6s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .key-metric:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(26, 71, 42, 0.3);
+            border-color: var(--accent-light);
+        }
+
+        .metric-label {
+            font-size: clamp(12px, 1.5vw, 14px);
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            .slide-header {
+                padding: 20px;
+            }
+            .slide-content {
+                padding: 20px;
+            }
+        }
+
+        .chart-container {
+            background: linear-gradient(135deg, var(--light) 0%, #f5f9f7 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 5px solid var(--accent);
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 200px;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .bar-value {
+            background: var(--gradient-1);
+            color: var(--white);
+            border-radius: 8px 8px 0 0;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            padding-bottom: 5px;
+            transition: all 0.3s ease;
+            animation: growUp 0.8s ease-out both;
+        }
+
+        @keyframes growUp {
+            from {
+                height: 0;
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .bar:nth-child(1) .bar-value { animation-delay: 0.1s; }
+        .bar:nth-child(2) .bar-value { animation-delay: 0.2s; }
+        .bar:nth-child(3) .bar-value { animation-delay: 0.3s; }
+        .bar:nth-child(4) .bar-value { animation-delay: 0.4s; }
+        .bar:nth-child(5) .bar-value { animation-delay: 0.5s; }
+        .bar:nth-child(6) .bar-value { animation-delay: 0.6s; }
+
+        .bar-value:hover {
+            transform: scale(1.1) translateY(-10px);
+            filter: brightness(1.15);
+        }
+
+        .bar-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 20px 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 25px;
+            padding-left: 40px;
+            position: relative;
+            animation: slideInLeft 0.6s ease-out both;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.4s; }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover:before {
+            transform: scale(1.3);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .timeline-item:after {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 25px;
+            width: 4px;
+            height: 25px;
+            background: var(--secondary);
+        }
+
+        .timeline-item:last-child:after {
+            display: none;
+        }
+
+        .timeline-label {
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-description {
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .investment-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .investment-item {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            animation: scaleIn 0.6s ease-out both;
+        }
+
+        .investment-item:nth-child(1) { animation-delay: 0s; }
+        .investment-item:nth-child(2) { animation-delay: 0.1s; }
+        .investment-item:nth-child(3) { animation-delay: 0.2s; }
+        .investment-item:nth-child(4) { animation-delay: 0.3s; }
+        .investment-item:nth-child(5) { animation-delay: 0.4s; }
+        .investment-item:nth-child(6) { animation-delay: 0.5s; }
+
+        .investment-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(26, 71, 42, 0.25);
+            border-color: var(--accent);
+            background: var(--gradient-2);
+        }
+
+        .investment-item .amount {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .investment-item .label {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 107, 91, 0.08) 0%, rgba(42, 127, 98, 0.08) 100%);
+            border-left: 5px solid var(--accent);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .highlight-box:hover {
+            box-shadow: 0 8px 20px rgba(255, 107, 91, 0.1);
+            transform: translateX(5px);
+        }
+
+        .highlight-box h3 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .cta-section {
+            text-align: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: clamp(16px, 2vw, 20px);
+            font-weight: 700;
+            text-decoration: none;
+            margin: 15px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(26, 71, 42, 0.3);
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(26, 71, 42, 0.4);
+            background: var(--gradient-2);
+            border-color: var(--accent);
+        }
+
+        .cta-button:active {
+            transform: translateY(-2px);
+        }
+
+        .slide-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, var(--light) 0%, #f5f9f7 100%);
+            border-top: 2px solid #ddd;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .slide-number {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: clamp(12px, 1.5vw, 16px);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-button {
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(42, 127, 98, 0.2);
+        }
+
+        .nav-button:hover:not(:disabled) {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(255, 107, 91, 0.3);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+            margin: 0 20px;
+            overflow: hidden;
+            min-width: 100px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(26, 71, 42, 0.4);
+        }
+
+        .emoji-icon {
+            font-size: 32px;
+            display: inline-block;
+            margin-right: 10px;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .benefit-card {
+            background: linear-gradient(135deg, var(--light) 0%, #f5f9f7 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid var(--secondary);
+            transition: all 0.3s ease;
+            animation: scaleIn 0.6s ease-out both;
+        }
+
+        .benefit-card:nth-child(1) { animation-delay: 0s; }
+        .benefit-card:nth-child(2) { animation-delay: 0.1s; }
+        .benefit-card:nth-child(3) { animation-delay: 0.2s; }
+        .benefit-card:nth-child(4) { animation-delay: 0.3s; }
+
+        .benefit-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(42, 127, 98, 0.2);
+            background: var(--gradient-3);
+            color: var(--white);
+            border-color: var(--accent);
+        }
+
+        .benefit-card .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: rotate 0.6s ease-out;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotateY(-90deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotateY(0);
+                opacity: 1;
+            }
+        }
+
+        .benefit-card .title {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .benefit-card:hover .title {
+            color: var(--white);
+        }
+
+        @media (max-width: 480px) {
+            .slide-header h1 {
+                font-size: 28px;
+            }
+            .slide-content {
+                padding: 15px;
+            }
+            .slide-footer {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .progress-bar {
+                margin: 0;
+                order: 3;
+                width: 100%;
+            }
+            .nav-buttons {
+                width: 100%;
+            }
+            .nav-button {
+                flex: 1;
+            }
+        }
+
+        .presenter-notes {
+            display: none;
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: var(--dark);
+            color: var(--white);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            max-width: 300px;
+            z-index: 1000;
+            max-height: 150px;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .presenter-notes.show {
+            display: block;
+        }
+
+        .toggle-notes {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 999;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(42, 127, 98, 0.3);
+        }
+
+        .toggle-notes:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* Unit progression visualization */
+        .unit-progression {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .progression-card {
+            background: linear-gradient(135deg, var(--light) 0%, #f5f9f7 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--secondary);
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: slideInUp 0.6s ease-out both;
+        }
+
+        .progression-card:nth-child(1) { animation-delay: 0s; }
+        .progression-card:nth-child(2) { animation-delay: 0.1s; }
+        .progression-card:nth-child(3) { animation-delay: 0.2s; }
+        .progression-card:nth-child(4) { animation-delay: 0.3s; }
+        .progression-card:nth-child(5) { animation-delay: 0.4s; }
+
+        .progression-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(42, 127, 98, 0.25);
+            background: var(--gradient-3);
+            color: var(--white);
+            border-color: var(--accent);
+        }
+
+        .progression-card:hover .unit-number {
+            color: var(--white);
+        }
+
+        .progression-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .progression-card:hover .progression-label {
+            color: var(--accent);
+        }
+
+        .unit-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 10px 0;
+            transition: color 0.3s ease;
+        }
+
+        .unit-revenue {
+            font-size: 12px;
+            color: var(--dark);
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .progression-card:hover .unit-revenue {
+            color: var(--accent);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating decorative dots -->
+    <div class="floating-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-header">
+                <h1>💰 Amazon Dropshipping</h1>
+                <p>A Comprehensive Path to Building a Profitable Online Business</p>
+            </div>
+            <div class="slide-content">
+                <div style="text-align: center;">
+                    <h2 style="font-size: 36px; margin-bottom: 20px;">Your Gateway to E-Commerce Success</h2>
+                    <div class="key-metric">
+                        <div class="metric-label">Starting Investment</div>
+                        <div>$2,000 - $5,000</div>
+                    </div>
+                    <div class="key-metric">
+                        <div class="metric-label">Path to Profitability</div>
+                        <div>90-180 Days</div>
+                    </div>
+                    <div class="key-metric">
+                        <div class="metric-label">Monthly Revenue Target (Year 1)</div>
+                        <div>$5,000 - $15,000</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="slide-number">Slide 1 of 10</span>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="previousSlide()" disabled>← Previous</button>
+                    <button class="nav-button" onclick="nextSlide()">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Business Model -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>📊 The Business Model</h1>
+                <p>How Dropshipping Works</p>
+            </div>
+            <div class="slide-content">
+                <div class="content-section">
+                    <h2><span class="emoji-icon">🔄</span>The Dropshipping Flow</h2>
+                    <div class="highlight-box">
+                        <p><strong>Customer orders on your Amazon store</strong> → You purchase the same product from a supplier at wholesale → Supplier ships directly to customer → You keep the margin (typically 30-50%)</p>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="content-section">
+                        <h3><span class="emoji-icon">✅</span>Key Advantages</h3>
+                        <ul>
+                            <li>No upfront inventory costs</li>
+                            <li>Scalable without storage space</li>
+                            <li>Test products with minimal risk</li>
+                            <li>Focus on marketing, not logistics</li>
+                            <li>Passive income potential</li>
+                        </ul>
+                    </div>
+                    <div class="content-section">
+                        <h3><span class="emoji-icon">⚠️</span>Realistic Challenges</h3>
+                        <ul>
+                            <li>Lower margins than traditional retail</li>
+                            <li>Highly competitive market</li>
+                            <li>Amazon reviews critical to success</li>
+                            <li>Customer service demands</li>
+                            <li>Supplier reliability varies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="slide-number">Slide 2 of 10</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 20%;"></div></div>
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="previousSlide()">← Previous</button>
+                    <button class="nav-button" onclick="nextSlide()">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Product Strategy -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>🎯 Product Strategy</h1>
+                <p>Selecting Products That Sell</p>
+            </div>
+            <div class="slide-content">
+                <div class="content-section">
+                    <h2><span class="emoji-icon">🔍</span>Product Criteria</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Target Profile</h3>
+                            <ul>
+                                <li>Price: $20-80 (sweet spot)</li>
+                                <li>Demand: Monthly searches 1,000+</li>
+                                <li>Competition: Manageable (not oversaturated)</li>
+                                <li>Margin: 40%+ potential</li>
+                                <li>Weight: Light (cheaper shipping)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Categories to Target</h3>
+                            <ul>
+                                <li>Home & Kitchen gadgets</li>
+                                <li>Pet accessories</li>
+                                <li>Sports & outdoor gear</li>
+                                <li>Beauty & personal care</li>
+                                <li>Office/workspace products</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <h3><span class="emoji-icon">📈</span>Initial Launch Strategy</h3>
+                    <p><strong>Start with 5-10 core products</strong> to test and refine before expansion. This allows you to:</p>
+                    <ul>
+                        <li>Manage quality control with suppliers</li>
+                        <li>Build customer reviews quickly</li>
+                        <li>Iterate on marketing messaging</li>
+                        <li>Maintain realistic inventory tracking</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="slide-number">Slide 3 of 10</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 30%;"></div></div>
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="previousSlide()">← Previous</button>
+                    <button class="nav-button" onclick="nextSlide()">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Gaining Legitimacy -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>⭐ Gaining Legitimacy (THE KEY)</h1>
+                <p>How New Sellers Build Credibility on Amazon</p>
+            </div>
+            <div class="slide-content">
+                <div class="content-section">
+                    <p style="font-size: 16px; margin-bottom: 20px;"><strong>Problem:</strong> New sellers have zero reviews. No reviews = no sales. This playbook solves it.</p>
+
+                    <h3><span class="emoji-icon">🎁</span>Strategy 1: Strategic Discounting & Early Buyers</h3>
+                    <div class="highlight-box">
+                        <p><strong>First 30 days:</strong> Offer 30-40% discount to first 20-30 customers. Target: 15-20 verified purchases with reviews.</p>
+                        <ul style="margin-top: 10px;">
+                            <li>Use Amazon "Early Reviewer" program (incentivize honest reviews)</li>
+                            <li>Price competitively below incumbents temporarily</li>
+                            <li>Goal: 4.5+ star average with 15+ reviews in 30 days</li>
+                        </ul>
+                    </div>
+
+                    <h3><span class="emoji-icon">📱</span>Strategy 2: Influencer & Micro-Community Outreach</h3>
+                    <div class="highlight-box">
+                        <p><strong>Parallel to discount phase:</strong> Partner with micro-influencers (5K-50K followers) in relevant niches.</p>
+                        <ul style="margin-top: 10px;">
+                            <li>Offer free/discounted product for honest review (disclosed as such)</li>
+                            <li>Target TikTok, Instagram, YouTube reviewers in product category</li>
+                            <li>Expected cost: $200-500 for 5-10 influencer reviews + social amplification</li>
+                        </ul>
+                    </div>
+
+                    <h3><span class="emoji-icon">🌍</span>Strategy 3: Community Building & Social Proof</h3>
+                    <div class="highlight-box">
+                        <p><strong>Months 1-3:</strong> Create social channels and organic customer base.</p>
+                        <ul style="margin-top: 10px;">
+                            <li>Instagram/TikTok: Show product demos, customer unboxings, lifestyle content</li>
+                            <li>Email list: Capture customer emails for future launches and feedback</li>
+                            <li>Reddit/Facebook groups: Participate authentically, answer questions</li>
+                            <li>Goal: 500+ social followers + engaged email list by month 3</li>
+                        </ul>
+                    </div>
+
+                    <h3><span class="emoji-icon">✍️</span>Strategy 4: Authentic Review Requests</h3>
+                    <div class="highlight-box">
+                        <p><strong>Post-purchase follow-up:</strong> Professional, helpful communication.</p>
+                        <ul style="margin-top: 10px;">
+                            <li>Send personalized thank-you notes with QR code to leave review</li>
+                            <li>Include free bonus (guide, discount code) unrelated to review incentive</li>
+                            <li>Reply thoughtfully to every review (positive & negative) within 24 hours</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="slide-number">Slide 4 of 10</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 40%;"></div></div>
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="previousSlide()">← Previous</button>
+                    <button class="nav-button" onclick="nextSlide()">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: 90-Day Roadmap -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>📅 90-Day Legitimacy Roadmap</h1>
+                <p>First 90 Days: Building Credibility & Initial Sales</p>
+            </div>
+            <div class="slide-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-label">Days 1-7: Setup & Launch Prep</div>
+                        <div class="timeline-description">
+                            • Create seller account & listings (5 products)
+                            • Set up product photos & descriptions
+                            • Configure pricing (40% discount for early buyers)
+                            • Create Instagram/TikTok accounts
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-label">Days 8-21: Discount Launch Phase</div>
+                        <div class="timeline-description">
+                            • Launch discounted products (target 20-30 sales)
+                            • Activate "Early Reviewer" program on Amazon
+                            • Start influencer outreach (send 15-20 partnership offers)
+                            • Create first TikTok/Instagram content series
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-label">Days 22-45: Review Acceleration</div>
+                        <div class="timeline-description">
+                            • Expected reviews: 10-15 accumulated
+                            • Follow up with non-reviewers (professional requests)
+                            • Influencer partnerships launching (expect 3-5 reviews + social buzz)
+                            • Grow email list to 100+ subscribers
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-label">Days 46-60: Optimization Phase</div>
+                        <div class="timeline-description">
+                            • Adjust pricing (start reducing discount gradually)
+                            • Analyze best-performing products
+                            • Double down on winning products with PPC ads
+                            • Social following: 500-1000 across all platforms
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-label">Days 61-90: Scaling & Expansion</div>
+                        <div class="timeline-description">
+                            • Expected metrics: 20-30 reviews, 4.5+ stars, 50-100 monthly sales
+                            • Launch PPC advertising campaigns ($200-300/month)
+                            • Expand to 8-12 products
+                            • Target: $2,000-5,000 in monthly revenue
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="slide-number">Slide 5 of 10</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 50%;"></div></div>
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="previousSlide()">← Previous</button>
+                    <button class="nav-button" onclick="nextSlide()">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Unit Assumptions (NEW) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>📦 Unit Assumptions & Sales Progression</h1>
+                <p>How Unit Sales Drive Revenue & Profit</p>
+            </div>
+            <div class="slide-content">
+                <div class="content-section">
+                    <h2><span class="emoji-icon">📈</span>Financial Baseline Assumptions</h2>
+                    <div class="highlight-box">
+                        <p><strong>All financial projections are based on:</strong></p>
+                        <ul style="margin-top: 10px;">
+                            <li><strong>Unit Cost:</strong> $2-3 per unit (wholesale from supplier)</li>
+                            <li><strong>Selling Price:</strong> $30-50 per unit (on Amazon)</li>
+                            <li><strong>Gross Margin per Unit:</strong> $12-18 profit (40-50%)</li>
+                            <li><strong>Average Order Value:</strong> $35</li>
+                            <li><strong>Amazon Fees:</strong> 15% of selling price</li>
+                            <li><strong>Initial Inventory:</strong> 1,000 units @ $2-3 cost = $2,000-3,000</li>
+                        </ul>
+                    </div>
+
+                    <h3 style="margin-top: 25px;"><span class="emoji-icon">📊</span>Month-by-Month Unit Progression (Conservative)</h3>
+                    <div class="unit-progression">
+                        <div class="progression-card">
+                            <div class="progression-label">Month 1</div>
+                            <div class="unit-number">100</div>
+                            <div class="unit-revenue">units sold</div>
+                        </div>
+                        <div class="progression-card">
+                            <div class="progression-label">Month 2</div>
+                            <div class="unit-number">150</div>
+                            <div class="unit-revenue">units sold</div>
+                        </div>
+                        <div class="progression-card">
+                            <div class="progression-label">Month 3</div>
+                            <div class="unit-number">300</div>
+                            <div class="unit-revenue">units sold</div>
+                        </div>
+                        <div class="progression-card">
+                            <div class="progression-label">Month 6</div>
+                            <div class="unit-number">500</div>
+                            <div class="unit-revenue">units sold</div>
+                        </div>
+                        <div class="progression-card">
+                            <div class="progression-label">Month 12</div>
+                            <div class="unit-number">800</div>
+                            <div class="unit-revenue">units sold</div>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box" style="margin-top: 25px;">
+                        <h3 style="text-align: center; margin-bottom: 15px;">💰 Example: How 100 Units/Month Converts to Profit</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <p><strong style="color: var(--primary);">Units Sold:</strong> 100</p>
+                                <p><strong style="color: var(--secondary);">× Profit/Unit:</strong> $12</p>
+                                <p style="border-top: 2px solid var(--accent); padding-top: 10px; margin-top: 10px;"><strong style="color: var(--accent); font-size: 18px;">= $1,200/month</strong></p>
+                            </div>
+                            <div>
+                                <p><strong style="color: var(--primary);">After Amazon Fees:</strong> -$175</p>
+                                <p><strong style="color: var(--secondary);">After Other Costs:</strong> -$225</p>
+                                <p style="border-top: 2px solid var(--success); padding-top: 10px; margin-top: 10px;"><strong style="color: var(--success); font-size: 18px;">Net Profit: ~$800</strong></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <h3><span class="emoji-icon">🎯</span>Key Metrics by Milestone</h3>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px;">
+                            <tr style="background: linear-gradient(135deg, var(--light) 0%, #f5f9f7 100%); border-bottom: 2px solid var(--secondary);">
+                                <th style="padding: 10px; text-align: left; color: var(--primary);">Month</th>
+                                <th style="padding: 10px; text-align: center; color: var(--primary);">Units</th>
+                                <th style="padding: 10px; text-align: center; color: var(--primary);">Revenue</th>
+                                <th style="padding: 10px; text-align: center; color: var(--primary);">Net Profit</th>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px;">Month 1</td>
+                                <td style="padding: 10px; text-align: center;"><strong>100</strong></td>
+                                <td style="padding: 10px; text-align: center;">$3,500</td>
+                                <td style="padding: 10px; text-align: center;">~$500</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px;">Month 3</td>
+                                <td style="padding: 10px; text-align: center;"><strong>300</strong></td>
+                                <td style="padding: 10px; text-align: center;">$10,500</td>
+                                <td style="padding: 10px; text-align: center;">~$3,000</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px;">Month 12</td>
+                                <td style="padding: 10px; text-align: center;"><strong>800</strong></td>
+                                <td style="padding: 10px; text-align: center;">$28,000</td>
+                                <td style="padding: 10px; text-align: center;">~$10,000</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="slide-number">Slide 6 of 10</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div>
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="previousSlide()">← Previous</button>
+                    <button class="nav-button" onclick="nextSlide()">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Financial Projections -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>💹 Financial Projections</h1>
+                <p>Year 1 Revenue & Profitability Model</p>
+            </div>
+            <div class="slide-content">
+                <div class="content-section">
+                    <h2><span class="emoji-icon">📈</span>Conservative Year 1 Projections</h2>
+                    
+                    <div class="chart-container">
+                        <p style="text-align: center; font-weight: 700; margin-bottom: 15px;">Monthly Revenue Progression (Conservative)</p>
+                        <div class="bar-chart">
+                            <div class="bar">
+                                <div class="bar-value" style="height: 20px;">$500</div>
+                                <div class="bar-label">Month 1</div>
+                            </div>
+                            <div class="bar">
+                                <div class="bar-value" style="height: 40px;">$1.5K</div>
+                                <div class="bar-label">Month 2</div>
+                            </div>
+                            <div class="bar">
+                                <div class="bar-value" style="height: 60px;">$3K</div>
+                                <div class="bar-label">Month 3</div>
+                            </div>
+                            <div class="bar">
+                                <div class="bar-value" style="height: 80px;">$5K</div>
+                                <div class="bar-label">Month 4</div>
+                            </div>
+                            <div class="bar">
+                                <div class="bar-value" style="height: 100px;">$7K</div>
+                                <div class="bar-label">Month 6</div>
+                            </div>
+                            <div class="bar">
+                                <div class="bar-value" style="height: 140px;">$10K</div>
+                                <div class="bar-label">Month 12</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="two-column">
+                        <div>
+                            <h3><span class="emoji-icon">💵</span>Revenue Model</h3>
+                            <ul>
+                                <li><strong>Avg Order Value:</strong> $35</li>
+                                <li><strong>Gross Margin:</strong> 45%</li>
+                                <li><strong>Month 3:</strong> 3K revenue = 86 orders</li>
+                                <li><strong>Month 6:</strong> 7K revenue = 200 orders</li>
+                                <li><strong>Month 12:</strong> 10K revenue = 285 orders</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3><span class="emoji-icon">💰</span>Monthly Expenses (Year 1)</h3>
+                            <ul>
+                                <li><strong>Amazon Fees:</strong> 15% of revenue</li>
+                                <li><strong>PPC Advertising:</strong> $300-500</li>
+                                <li><strong>Software/Tools:</strong> $50-100</li>
+                                <li><strong>Influencer/Review Costs:</strong> $100-200 (early stage)</li>
+                                <li><strong>Total Month 6:</strong> $1,500-2,000</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3 style="color: var(--secondary);">Year 1 Profit Estimate</h3>
+                        <p><strong>Conservative path:</strong> $2,000-4,000 net profit in Year 1 after all expenses and reinvestment.</p>
+                        <p><strong>Aggressive path (with influencer growth):</strong> $5,000-8,000 net profit.</p>
+                        <p style="font-size: 14px; opacity: 0.9; margin-top: 10px;"><em>* Assumes reinvestment of 60-70% of gross profit into inventory, ads, and growth</em></p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="slide-number">Slide 7 of 10</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 70%;"></div></div>
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="previousSlide()">← Previous</button>
+                    <button class="nav-button" onclick="nextSlide()">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Investment Breakdown -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>💳 Investment Breakdown</h1>
+                <p>How Your Capital Gets Deployed</p>
+            </div>
+            <div class="slide-content">
+                <div class="content-section">
+                    <h2><span class="emoji-icon">📊</span>Initial Investment: $3,500</h2>
+
+                    <div class="investment-breakdown">
+                        <div class="investment-item">
+                            <div class="label">Amazon Setup & Inventory</div>
+                            <div class="amount">$1,200</div>
+                            <p style="font-size: 12px; margin-top: 10px;">Professional seller account ($40), initial inventory (20 units of 5 products)</p>
+                        </div>
+                        <div class="investment-item">
+                            <div class="label">Marketing & Reviews</div>
+                            <div class="amount">$800</div>
+                            <p style="font-size: 12px; margin-top: 10px;">Influencer partnerships ($300), early-buyer discounts ($400), Early Reviewer program ($100)</p>
+                        </div>
+                        <div class="investment-item">
+                            <div class="label">Tools & Software</div>
+                            <div class="amount">$350</div>
+                            <p style="font-size: 12px; margin-top: 10px;">Listing optimization software, review tracking, analytics tools (3-month subscriptions)</p>
+                        </div>
+                        <div class="investment-item">
+                            <div class="label">Content & Branding</div>
+                            <div class="amount">$400</div>
+                            <p style="font-size: 12px; margin-top: 10px;">Product photography, graphic design, TikTok/Instagram content creation</p>
+                        </div>
+                        <div class="investment-item">
+                            <div class="label">PPC Advertising</div>
+                            <div class="amount">$300</div>
+                            <p style="font-size: 12px; margin-top: 10px;">Initial Amazon PPC campaign budget for top products</p>
+                        </div>
+                        <div class="investment-item">
+                            <div class="label">Buffer & Contingency</div>
+                            <div class="amount">$450</div>
+                            <p style="font-size: 12px; margin-top: 10px;">Unexpected costs, refunds, quality issues, emergency restocking</p>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3><span class="emoji-icon">🎯</span>Why This Breakdown Matters</h3>
+                        <p><strong>Front-loaded investment in reviews & marketing</strong> is critical. Most new sellers fail because they launch with zero reviews and no budget for marketing. This allocation prioritizes legitimacy-building in the first 90 days.</p>
+                        <p style="margin-top: 10px;"><strong>Months 2-6:</strong> Revenue covers ongoing inventory and ads. No additional capital needed if managed properly.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="slide-number">Slide 8 of 10</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="previousSlide()">← Previous</button>
+                    <button class="nav-button" onclick="nextSlide()">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Team & Execution -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>👥 Team & Execution</h1>
+                <p>Who Does What & How We Win</p>
+            </div>
+            <div class="slide-content">
+                <div class="content-section">
+                    <h2><span class="emoji-icon">🤝</span>Your Partnership Structure</h2>
+
+                    <div class="two-column">
+                        <div>
+                            <h3><span class="emoji-icon">🎯</span>Operational Lead (Partner A)</h3>
+                            <p><strong>Responsibilities:</strong></p>
+                            <ul>
+                                <li>Product sourcing & supplier management</li>
+                                <li>Inventory & fulfillment logistics</li>
+                                <li>Quality control & customer service</li>
+                                <li>Amazon listing optimization</li>
+                                <li>Financial tracking & reporting</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3><span class="emoji-icon">📱</span>Marketing & Growth Lead (Partner B)</h3>
+                            <p><strong>Responsibilities:</strong></p>
+                            <ul>
+                                <li>Social media & content creation</li>
+                                <li>Influencer outreach & partnerships</li>
+                                <li>PPC advertising campaigns</li>
+                                <li>Community building & email marketing</li>
+                                <li>Brand strategy & messaging</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3>Success Metrics (Track Monthly)</h3>
+                        <ul>
+                            <li>✅ Amazon reviews (target: 20+ by month 3)</li>
+                            <li>✅ Average rating (target: 4.5+ stars)</li>
+                            <li>✅ Monthly revenue (target: $3K by month 3)</li>
+                            <li>✅ Social followers (target: 500+ by month 3)</li>
+                            <li>✅ Customer acquisition cost (target: <$15)</li>
+                            <li>✅ Repeat purchase rate (target: 15%+)</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-section" style="margin-top: 20px;">
+                        <h3><span class="emoji-icon">⚡</span>Quick Wins in First 90 Days</h3>
+                        <ul>
+                            <li>Week 2: First customer review</li>
+                            <li>Week 3: 5+ reviews posted</li>
+                            <li>Week 4: $1K+ monthly revenue run rate</li>
+                            <li>Week 8: 15+ reviews, 4.5+ rating</li>
+                            <li>Week 12: $3K+ monthly revenue, 500+ social followers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="slide-number">Slide 9 of 10</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="previousSlide()">← Previous</button>
+                    <button class="nav-button" onclick="nextSlide()">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Call to Action -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>🚀 Let's Build This Together</h1>
+                <p>Next Steps & Call to Action</p>
+            </div>
+            <div class="slide-content">
+                <div class="content-section" style="text-align: center;">
+                    <h2 style="margin-bottom: 30px;">The Opportunity is Clear</h2>
+
+                    <div class="benefit-grid">
+                        <div class="benefit-card">
+                            <div class="icon">💼</div>
+                            <div class="title">Low Capital Required</div>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="icon">🚀</div>
+                            <div class="title">Fast Time to Revenue</div>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="icon">📊</div>
+                            <div class="title">Scalable Model</div>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="icon">🛡️</div>
+                            <div class="title">Proven Playbook</div>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box" style="margin-top: 30px; text-align: left;">
+                        <h3 style="text-align: center;">What Happens Next</h3>
+                        <ol style="margin-left: 20px; font-size: 16px; line-height: 2;">
+                            <li><strong>Week 1:</strong> Confirm partnership terms & capital deployment</li>
+                            <li><strong>Week 2:</strong> Finalize product selection & supplier agreements</li>
+                            <li><strong>Week 3:</strong> Launch Amazon seller account & first 5 listings</li>
+                            <li><strong>Week 4:</strong> Begin marketing campaigns & influencer outreach</li>
+                            <li><strong>Month 2-3:</strong> Optimize based on real sales data & reviews</li>
+                            <li><strong>Month 3+:</strong> Scale winning products, expand to 10-15 SKUs</li>
+                        </ol>
+                    </div>
+
+                    <div class="cta-section" style="margin-top: 40px;">
+                        <p style="font-size: 18px; font-weight: 700; margin-bottom: 20px;">Ready to launch your Amazon empire?</p>
+                        <button class="cta-button" onclick="alert('Let\'s discuss the next steps. When are you available to meet?')">Let's Talk Business</button>
+                        <button class="cta-button" onclick="alert('Email Benjamin with questions: benjamin@rlmenterprisesinc.com')">Send Questions</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="slide-number">Slide 10 of 10</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+                <div class="nav-buttons">
+                    <button class="nav-button" onclick="previousSlide()">← Previous</button>
+                    <button class="nav-button" onclick="nextSlide()" disabled>Next →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="toggle-notes" onclick="toggleNotes()">📝 Notes</button>
+    <div class="presenter-notes" id="presenterNotes"></div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = [
+            {
+                title: "Executive Summary",
+                notes: "Set expectations: low capital ($3.5K), proven playbook, 90-day path to legitimacy. Emphasize that reviews are the biggest blocker for new sellers—this presentation solves that."
+            },
+            {
+                title: "Business Model",
+                notes: "Key takeaway: No inventory risk, low upfront cost, but highly competitive. Stress that the margin (30-50%) is healthy IF you can get reviews and drive consistent traffic."
+            },
+            {
+                title: "Product Strategy",
+                notes: "Help them understand the sweet spot: $20-80 products, reasonable monthly search volume, manageable competition. Start with 5-10, not 100. Test before scaling."
+            },
+            {
+                title: "Gaining Legitimacy",
+                notes: "THIS IS THE MAGIC SLIDE. New sellers fail because they have no reviews. Walk through each strategy: (1) discount early buyers, (2) micro-influencers, (3) community/social, (4) authentic follow-up. These work."
+            },
+            {
+                title: "90-Day Roadmap",
+                notes: "Timeline makes it real. Days 1-7 setup, 8-21 launch with discounts, 22-45 reviews coming in, 46-60 optimize, 61-90 scale. By day 90, they should hit 4.5+ stars + $2K-5K/month revenue."
+            },
+            {
+                title: "Unit Assumptions",
+                notes: "CRUCIAL SLIDE. Shows the math: 100 units/month @ $12 profit = $1,200/month. Walk them through Month 1 → Month 12 progression. 100 → 150 → 300 → 500 → 800 units. Explain this is conservative but proven achievable."
+            },
+            {
+                title: "Financial Projections",
+                notes: "Conservative numbers matter. Show Month 1 is tiny ($500), Month 3 is $3K, Month 6 is $7K, Month 12 is $10K. Explain expenses eat margins early, but by Month 6+ it's profitable."
+            },
+            {
+                title: "Investment Breakdown",
+                notes: "Allocate capital strategically: $1.2K inventory, $800 marketing/reviews (critical!), $350 software, $400 content, $300 PPC. $450 buffer. Total $3.5K to launch."
+            },
+            {
+                title: "Team & Execution",
+                notes: "Two-partner model: Ops lead (sourcing, inventory, customer service) and Marketing lead (social, influencers, ads). Monthly metrics: reviews, rating, revenue, social followers, CAC, repeat rate."
+            },
+            {
+                title: "Call to Action",
+                notes: "Close strong. Summarize the opportunity (low capital, fast revenue, scalable), next steps (partner agreement, product selection, launch, optimize), and ask for the meeting or decision."
+            }
+        ];
+
+        const presenterNotesData = [
+            "Set expectations: low capital ($3.5K), proven playbook, 90-day path to legitimacy. Emphasize that reviews are the biggest blocker for new sellers—this presentation solves that.",
+            "Key takeaway: No inventory risk, low upfront cost, but highly competitive. Stress that the margin (30-50%) is healthy IF you can get reviews and drive consistent traffic.",
+            "Help them understand the sweet spot: $20-80 products, reasonable monthly search volume, manageable competition. Start with 5-10, not 100. Test before scaling.",
+            "THIS IS THE MAGIC SLIDE. New sellers fail because they have no reviews. Walk through each strategy: (1) discount early buyers, (2) micro-influencers, (3) community/social, (4) authentic follow-up. These work.",
+            "Timeline makes it real. Days 1-7 setup, 8-21 launch with discounts, 22-45 reviews coming in, 46-60 optimize, 61-90 scale. By day 90, they should hit 4.5+ stars + $2K-5K/month revenue.",
+            "CRUCIAL SLIDE. Shows the math: 100 units/month @ $12 profit = $1,200/month. Walk them through Month 1 → Month 12 progression. 100 → 150 → 300 → 500 → 800 units. Explain this is conservative but proven achievable.",
+            "Conservative numbers matter. Show Month 1 is tiny ($500), Month 3 is $3K, Month 6 is $7K, Month 12 is $10K. Explain expenses eat margins early, but by Month 6+ it's profitable.",
+            "Allocate capital strategically: $1.2K inventory, $800 marketing/reviews (critical!), $350 software, $400 content, $300 PPC. $450 buffer. Total $3.5K to launch.",
+            "Two-partner model: Ops lead (sourcing, inventory, customer service) and Marketing lead (social, influencers, ads). Monthly metrics: reviews, rating, revenue, social followers, CAC, repeat rate.",
+            "Close strong. Summarize the opportunity (low capital, fast revenue, scalable), next steps (partner agreement, product selection, launch, optimize), and ask for the meeting or decision."
+        ];
+
+        function showSlide(n) {
+            const allSlides = document.querySelectorAll('.slide');
+            if (n >= allSlides.length) {
+                currentSlide = allSlides.length - 1;
+            }
+            if (n < 0) {
+                currentSlide = 0;
+            }
+
+            allSlides.forEach(slide => slide.classList.remove('active'));
+            allSlides[currentSlide].classList.add('active');
+
+            // Update progress bar
+            const progress = ((currentSlide + 1) / allSlides.length) * 100;
+            document.querySelector('.progress-fill').style.width = progress + '%';
+
+            // Update presenter notes
+            document.getElementById('presenterNotes').textContent = presenterNotesData[currentSlide];
+
+            // Update button states
+            const prevBtn = document.querySelectorAll('.nav-button')[0];
+            const nextBtn = document.querySelectorAll('.nav-button')[1];
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === allSlides.length - 1;
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        function toggleNotes() {
+            const notes = document.getElementById('presenterNotes');
+            notes.classList.toggle('show');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') nextSlide();
+            if (event.key === 'ArrowLeft') previousSlide();
+        });
+
+        // Initialize
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
