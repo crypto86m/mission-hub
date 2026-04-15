@@ -143,14 +143,17 @@ export default function Dashboard() {
   const ig = d.instagram || {};
   const tw = d.twitter || {};
 
+  const rlmConnected = rlm.status !== 'not_connected';
+  const nvccConnected = nvcc.status !== 'not_connected';
+
   const companies = [
     {
       id: 1,
       name: 'RLM',
       title: 'Commercial Painting',
-      stats: `$${(rlm.revenue / 1000000).toFixed(1)}M`,
-      subtitle: `${rlm.activeProjects || 0} active projects · ${rlm.margin || 0}% margin`,
-      color: 'from-blue-500 to-blue-600',
+      stats: rlmConnected ? `$${(rlm.revenue / 1000000).toFixed(1)}M` : 'Not connected',
+      subtitle: rlmConnected ? `${rlm.activeProjects || 0} active projects · ${rlm.margin || 0}% margin` : 'No data source configured',
+      color: rlmConnected ? 'from-blue-500 to-blue-600' : 'from-gray-500 to-gray-600',
       icon: '🏢',
       logo: '/logos/rlm-logo.jpg',
     },
@@ -158,9 +161,9 @@ export default function Dashboard() {
       id: 2,
       name: 'NVCC',
       title: 'Exotic Cars',
-      stats: `$${(nvcc.ytdRevenue / 1000).toFixed(0)}K`,
-      subtitle: `${nvcc.members || 0} members · $${(nvcc.fleetValue / 1000000).toFixed(1)}M fleet · ${nvcc.rating}★`,
-      color: 'from-green-500 to-green-600',
+      stats: nvccConnected ? `$${(nvcc.ytdRevenue / 1000).toFixed(0)}K` : 'Not connected',
+      subtitle: nvccConnected ? `${nvcc.members || 0} members · $${(nvcc.fleetValue / 1000000).toFixed(1)}M fleet · ${nvcc.rating}★` : 'No data source configured',
+      color: nvccConnected ? 'from-green-500 to-green-600' : 'from-gray-500 to-gray-600',
       icon: '🏎️',
       logo: '/logos/nvcc-logo.jpg',
     },
@@ -178,7 +181,8 @@ export default function Dashboard() {
       name: 'Brief',
       title: "Bennett's Brief",
       stats: `${nl.subscribers || 0}`,
-      subtitle: `${nl.openRate || 0}% open rate · ${nl.issuesPublished || 0} issues published`,
+      subtitle: `$${nl.mrr || 0} MRR · ${nl.paidSubscribers || 0} paid · ${nl.issuesPublished || 0} issues`,
+
       color: 'from-orange-500 to-orange-600',
       icon: '📰',
     },
@@ -196,8 +200,8 @@ export default function Dashboard() {
   const activityFeed = [
     { id: 1, action: 'Email Responder', details: `${em.totalReplies || 0} total replies · ${em.unread || 0} unread`, time: 'Running', status: em.unread > 0 ? 'active' : 'done' },
     { id: 2, action: 'Trading', details: `${t.todayTrades || 0} trades today · P&L: $${(t.todayPnl || 0).toFixed(2)}`, time: 'Live', status: 'active' },
-    { id: 3, action: 'Instagram', details: `${ig.followers || 0} followers · ${ig.engagementRate || 0}% ER`, time: '30d stats', status: 'active' },
-    { id: 4, action: 'Twitter', details: tw.status === 'blocked' ? `Blocked: ${tw.error}` : `${tw.queued || 0} queued`, time: tw.lastPosted || '', status: tw.status === 'blocked' ? 'pending' : 'done' },
+    { id: 3, action: 'Instagram', details: ig.status === 'not_connected' ? 'Not connected' : `${ig.followers || 0} followers · ${ig.engagementRate || 0}% ER`, time: ig.status === 'not_connected' ? '' : '30d stats', status: ig.status === 'not_connected' ? 'pending' : 'active' },
+    { id: 4, action: 'Twitter', details: tw.status === 'not_connected' ? 'Not connected' : tw.status === 'blocked' ? `Blocked: ${tw.error}` : `${tw.queued || 0} queued`, time: tw.lastPosted || '', status: tw.status === 'not_connected' ? 'pending' : tw.status === 'blocked' ? 'pending' : 'done' },
     { id: 5, action: 'Cron Jobs', details: `${ag.cronHealthy || 0}/${ag.cronJobs || 0} healthy`, time: 'Auto', status: ag.cronErrors > 0 ? 'pending' : 'done' },
   ];
 
@@ -255,7 +259,7 @@ export default function Dashboard() {
           <p className="text-sm text-gray-300">
             Trading: {t.openPositions || 0} positions, ${(t.unrealizedPnl || 0) >= 0 ? '+' : ''}{(t.unrealizedPnl || 0).toLocaleString(undefined, {maximumFractionDigits: 0})} unrealized · 
             Email: {em.totalReplies || 0} processed · 
-            Cost: ${(c.today || 0).toFixed(2)} today · 
+            Cost: ${c.status === 'not_tracked' ? 'Not tracked' : '$' + (c.today || 0).toFixed(2)} today · 
             Crons: {ag.cronHealthy || 0}/{ag.cronJobs || 0} healthy · 
             IG: {ig.followers || 0} followers
           </p>
@@ -380,12 +384,12 @@ export default function Dashboard() {
             { name: 'Trading', status: t.openPositions > 0 ? 'active' : 'idle', label: `${t.strategiesLoaded || 0} strats` },
             { name: 'Email', status: 'ok', label: `${em.totalReplies || 0} replies` },
             { name: 'Brief', status: 'ok', label: `${nl.subscribers || 0} subs` },
-            { name: 'Instagram', status: 'ok', label: `${ig.followers || 0} follows` },
-            { name: 'Twitter', status: tw.status === 'blocked' ? 'error' : 'ok', label: tw.status === 'blocked' ? 'AUTH ERR' : `${tw.queued} queued` },
+            { name: 'Instagram', status: ig.status === 'not_connected' ? 'warn' : 'ok', label: ig.status === 'not_connected' ? 'Not linked' : `${ig.followers || 0} follows` },
+            { name: 'Twitter', status: tw.status === 'not_connected' ? 'warn' : tw.status === 'blocked' ? 'error' : 'ok', label: tw.status === 'not_connected' ? 'Not linked' : tw.status === 'blocked' ? 'AUTH ERR' : `${tw.queued} queued` },
             { name: 'Crons', status: ag.cronErrors > 0 ? 'warn' : 'ok', label: `${ag.cronHealthy || 0}/${ag.cronJobs || 0}` },
             { name: 'AI Support', status: 'ok', label: 'Live' },
             { name: 'Booking', status: 'ok', label: 'Port 4344' },
-            { name: 'Costs', status: (c.today || 0) > 15 ? 'warn' : 'ok', label: `$${(c.today || 0).toFixed(2)}/day` },
+            { name: 'Costs', status: c.status === 'not_tracked' ? 'warn' : (c.today || 0) > 15 ? 'warn' : 'ok', label: c.status === 'not_tracked' ? 'Not tracked' : `$${(c.today || 0).toFixed(2)}/day` },
           ].map((a, i) => (
             <div key={i} className="glass-card text-center py-2">
               <div className={`w-2 h-2 rounded-full mx-auto mb-1 ${a.status === 'ok' ? 'bg-green-400' : a.status === 'active' ? 'bg-blue-400 animate-pulse' : a.status === 'warn' ? 'bg-yellow-400' : 'bg-red-400'}`} />

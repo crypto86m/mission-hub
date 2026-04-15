@@ -1,83 +1,93 @@
 {
-  "generated": "2026-04-13T19:06:01.040121",
+  "generated": "2026-04-15T00:53:05.387988+00:00",
   "trading": {
-    "accountValue": 0,
-    "unrealizedPnl": 0,
-    "openPositions": 0,
+    "accountValue": 98693.79,
+    "unrealizedPnl": 193.01,
+    "openPositions": 4,
     "todayTrades": 0,
-    "todayPnl": 0,
+    "todayPnl": 154.59,
     "strategiesLoaded": 20,
     "dailyLimit": 120,
-    "phase": "Paper Trading (Phase 3) \u2014 BLOCKED",
-    "positions": []
+    "phase": "Paper Trading",
+    "positions": [
+      {
+        "symbol": "AAPL",
+        "qty": -11.0,
+        "unrealizedPl": -7.03,
+        "currentPrice": 258.7
+      },
+      {
+        "symbol": "AMD",
+        "qty": 12.0,
+        "unrealizedPl": 84.62,
+        "currentPrice": 253.13
+      },
+      {
+        "symbol": "QQQ",
+        "qty": -4.0,
+        "unrealizedPl": -10.64,
+        "currentPrice": 628.85
+      },
+      {
+        "symbol": "TSLA",
+        "qty": 8.0,
+        "unrealizedPl": 126.06,
+        "currentPrice": 367.32
+      }
+    ],
+    "status": "connected"
   },
   "costs": {
-    "today": 70.92,
+    "today": 0,
     "dailyLimit": 20,
     "monthlyBudget": 200,
-    "monthTotal": 70.92
+    "monthTotal": 0,
+    "status": "not_tracked"
   },
   "email": {
-    "totalReplies": 727,
+    "totalReplies": 0,
     "unread": 0,
     "flagged": 0
   },
   "newsletter": {
-    "subscribers": 287,
-    "openRate": 38,
+    "subscribers": 7,
+    "openRate": 0,
     "issuesPublished": 6,
-    "lastIssue": "2026-04-09"
+    "lastIssue": "2026-04-09",
+    "paidSubscribers": 0,
+    "mrr": 0
   },
   "instagram": {
-    "followers": 682,
-    "views30d": 9347,
-    "interactions30d": 236,
-    "engagementRate": 2.52,
-    "netGrowth30d": 3
+    "followers": 0,
+    "views30d": 0,
+    "interactions30d": 0,
+    "engagementRate": 0,
+    "netGrowth30d": 0,
+    "status": "not_connected"
   },
   "twitter": {
-    "queued": 89,
-    "lastPosted": "2026-04-11T14:53:33.976674",
-    "status": "blocked",
-    "error": "401 Unauthorized \u2014 credentials expired"
+    "queued": 0,
+    "lastPosted": "",
+    "status": "not_connected",
+    "error": "API credentials not configured \u2014 Benjamin manages manually"
   },
   "agents": {
-    "cronJobs": 11,
-    "cronHealthy": 11,
+    "cronJobs": 0,
+    "cronHealthy": 0,
     "cronErrors": 0
   },
   "companies": {
     "rlm": {
-      "revenue": 2800000,
-      "margin": 34,
-      "activeProjects": 354
+      "status": "not_connected"
     },
     "nvcc": {
-      "members": 128,
-      "ytdRevenue": 145000,
-      "fleetValue": 4200000,
-      "rating": 4.8
+      "status": "not_connected"
     }
   },
   "services": {
     "missionControl": {
       "status": "up",
       "url": "https://mission-hub-iota.vercel.app"
-    },
-    "aiSupport": {
-      "status": "up",
-      "url": "https://ai-support-self.vercel.app"
-    },
-    "bookingIntake": {
-      "status": "up",
-      "port": 4344
-    },
-    "paperTrader": {
-      "status": "running"
-    },
-    "discord": {
-      "status": "up",
-      "note": "Gateway running, 13 channels monitored"
     },
     "gateway": {
       "status": "up"

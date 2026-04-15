@@ -1,7 +1,11 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "env": {},
+  "env": {
+    "ALPACA_API_KEY_PAPER": "@alpaca-api-key-paper",
+    "ALPACA_SECRET_KEY_PAPER": "@alpaca-secret-key-paper",
+    "ALPACA_BASE_URL_PAPER": "https://paper-api.alpaca.markets"
+  },
   "framework": "vite",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }

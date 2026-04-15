@@ -3,11 +3,8 @@ import { Users, Film, TrendingUp, CheckCircle, Zap } from 'lucide-react';
 
 export default function OverviewCard({ data, phase1Count, phase2Count }) {
   const totalPosts = phase1Count + phase2Count;
-  const currentFollowers = data.account.followers;
-  const phase1Growth = { min: 150, max: 200 };
-  const phase2Growth = { min: 500, max: 1000 };
-  const projectedFollowersMin = currentFollowers + phase1Growth.min + phase2Growth.min;
-  const projectedFollowersMax = currentFollowers + phase1Growth.max + phase2Growth.max;
+  const connected = data?.connected;
+  const currentFollowers = data?.account?.followers || 0;
 
   const stats = [
     {
@@ -19,30 +16,30 @@ export default function OverviewCard({ data, phase1Count, phase2Count }) {
     },
     {
       icon: <Users size={24} />,
-      label: 'Current Followers',
-      value: currentFollowers.toLocaleString(),
-      subtext: `@${data.account.handle}`,
-      color: 'cyan',
+      label: 'Followers',
+      value: connected ? currentFollowers.toLocaleString() : 'Not connected',
+      subtext: connected ? `@${data.account.handle}` : 'Connect Instagram API',
+      color: connected ? 'cyan' : 'gray',
     },
     {
       icon: <TrendingUp size={24} />,
       label: 'Engagement Rate',
-      value: `${data.account.engagement_rate}%`,
-      subtext: 'Current baseline',
-      color: 'cyan',
+      value: connected ? `${data.account.engagement_rate}%` : '—',
+      subtext: connected ? 'Current baseline' : 'Not connected',
+      color: connected ? 'cyan' : 'gray',
     },
     {
       icon: <CheckCircle size={24} />,
-      label: 'Status',
-      value: 'Ready to Launch',
-      subtext: 'All Phase 1 videos ready',
-      color: 'green',
+      label: 'API Status',
+      value: connected ? 'Connected' : 'Not Connected',
+      subtext: connected ? 'Instagram API active' : 'Benjamin manages manually',
+      color: connected ? 'green' : 'gray',
     },
     {
       icon: <Zap size={24} />,
-      label: 'Projected Growth',
-      value: `${projectedFollowersMin.toLocaleString()}–${projectedFollowersMax.toLocaleString()}`,
-      subtext: '20-week forecast',
+      label: 'Content Ready',
+      value: `${phase1Count + phase2Count}`,
+      subtext: 'Total posts planned',
       color: 'cyan',
     },
   ];

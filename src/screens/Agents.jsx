@@ -3,102 +3,99 @@ import { ChevronDown, ChevronRight, Wifi, WifiOff, AlertTriangle, Bot, Shield, B
 import { supabase } from '../lib/supabase';
 import { useTaskStore, STATE_COLORS, STATE_LABELS } from '../store/taskStore';
 
-const agentTree = {
-  id: 'charles',
-  name: 'Charles (CBV2)',
-  role: 'Primary AI Agent',
-  icon: '🧭',
-  status: 'active',
-  metric: 'Orchestrates everything',
-  children: [
-    {
-      id: 'trading',
-      name: 'Trading Orchestrator',
-      role: '6 strategies, continuous loop',
-      icon: '📈',
-      status: 'active',
-      metric: '$96,461 equity | 8 positions',
-      children: [
-        { id: 'watchdog', name: 'Stop-Loss Watchdog', role: '30s position checks', icon: '🐕', status: 'active', metric: 'Max 2% loss / $120 daily', children: [] },
-      ],
-    },
-    {
-      id: 'email',
-      name: 'Email Responder',
-      role: 'Auto-reply non-sensitive',
-      icon: '📧',
-      status: 'active',
-      metric: '655 replies | Sensitivity filters active',
-      children: [],
-    },
-    {
-      id: 'content',
-      name: 'Content Pipeline',
-      role: 'Newsletter + Instagram',
-      icon: '📝',
-      status: 'active',
-      metric: '',
-      children: [
-        { id: 'brief', name: "Bennett's Brief", role: 'Daily newsletter', icon: '📰', status: 'active', metric: '287 subs | 38% open rate | 6 issues', children: [] },
-        { id: 'instagram', name: 'Instagram Growth', role: '1 Reel/day strategy', icon: '📸', status: 'active', metric: '682 followers | 2.5% ER | 7 Reels scheduled', children: [] },
-      ],
-    },
-    {
-      id: 'social',
-      name: 'Social Media',
-      role: 'Twitter + Buffer',
-      icon: '🐦',
-      status: 'blocked',
-      metric: '⛔ Twitter 401 auth since Apr 1 | 89 tweets queued',
-      children: [],
-    },
-    {
-      id: 'cost-monitor',
-      name: 'Cost Monitor',
-      role: 'Budget guardian',
-      icon: '💰',
-      status: 'active',
-      metric: '$200/mo budget | Alerts at $50/$100/$150/$180',
-      children: [],
-    },
-    {
-      id: 'discord',
-      name: 'Discord Bot',
-      role: '13 channels, 24/7',
-      icon: '💬',
-      status: 'active',
-      metric: 'Gateway running | Nightly archive at 2 AM',
-      children: [],
-    },
-    {
-      id: 'rlm-estimator',
-      name: 'RLM Estimator',
-      role: 'Bid generation',
-      icon: '🏢',
-      status: 'idle',
-      metric: 'Syncs every 6 hours',
-      children: [],
-    },
-    {
-      id: 'demo-pipeline',
-      name: 'Demo Pipeline',
-      role: 'Cold email outreach',
-      icon: '🎯',
-      status: 'active',
-      metric: '63 emails sent | 0 demos (monitoring)',
-      children: [],
-    },
-    {
-      id: 'system-watchdog',
-      name: 'System Watchdog',
-      role: 'Cron health + services',
-      icon: '🔍',
-      status: 'active',
-      metric: '18/18 crons healthy',
-      children: [],
-    },
-  ],
-};
+function buildAgentTree(liveData) {
+  const d = liveData || {};
+  const t = d.trading || {};
+  const em = d.email || {};
+  const nl = d.newsletter || {};
+  const ig = d.instagram || {};
+  const tw = d.twitter || {};
+  const ag = d.agents || {};
+  const c = d.costs || {};
+
+  const tradingConnected = t.status === 'connected';
+  const igConnected = ig.status !== 'not_connected';
+  const twConnected = tw.status !== 'not_connected';
+
+  return {
+    id: 'charles',
+    name: 'Charles (CBV2)',
+    role: 'Primary AI Agent',
+    icon: '🧭',
+    status: 'active',
+    metric: 'Orchestrates everything',
+    children: [
+      {
+        id: 'trading',
+        name: 'Trading Orchestrator',
+        role: tradingConnected ? `${t.strategiesLoaded || 0} strategies` : 'Not connected',
+        icon: '📈',
+        status: tradingConnected ? (t.openPositions > 0 ? 'active' : 'idle') : 'idle',
+        metric: tradingConnected ? `$${(t.accountValue || 0).toLocaleString()} equity | ${t.openPositions || 0} positions` : 'Awaiting live data',
+        children: [
+          { id: 'watchdog', name: 'Stop-Loss Watchdog', role: '30s position checks', icon: '🐕', status: tradingConnected ? 'active' : 'idle', metric: 'Max 2% loss / $120 daily', children: [] },
+        ],
+      },
+      {
+        id: 'email',
+        name: 'Email Responder',
+        role: 'Auto-reply non-sensitive',
+        icon: '📧',
+        status: em.totalReplies > 0 ? 'active' : 'idle',
+        metric: em.totalReplies > 0 ? `${em.totalReplies} replies | Sensitivity filters active` : 'Not tracked',
+        children: [],
+      },
+      {
+        id: 'content',
+        name: 'Content Pipeline',
+        role: 'Newsletter + Instagram',
+        icon: '📝',
+        status: 'active',
+        metric: '',
+        children: [
+          { id: 'brief', name: "Bennett's Brief", role: 'Newsletter', icon: '📰', status: 'active', metric: `${nl.subscribers || 0} subs | ${nl.issuesPublished || 0} issues | $${nl.mrr || 0} MRR`, children: [] },
+          { id: 'instagram', name: 'Instagram Growth', role: '1 Reel/day strategy', icon: '📸', status: igConnected ? 'active' : 'idle', metric: igConnected ? `${ig.followers} followers | ${ig.engagementRate}% ER` : 'Not connected', children: [] },
+        ],
+      },
+      {
+        id: 'social',
+        name: 'Social Media',
+        role: 'Twitter + Buffer',
+        icon: '🐦',
+        status: twConnected ? (tw.status === 'blocked' ? 'blocked' : 'active') : 'idle',
+        metric: twConnected ? (tw.status === 'blocked' ? `⛔ ${tw.error}` : `${tw.queued || 0} queued`) : 'Not connected',
+        children: [],
+      },
+      {
+        id: 'cost-monitor',
+        name: 'Cost Monitor',
+        role: 'Budget guardian',
+        icon: '💰',
+        status: c.status !== 'not_tracked' ? 'active' : 'idle',
+        metric: c.status !== 'not_tracked' ? `$${(c.monthTotal || 0).toFixed(2)}/$${c.monthlyBudget || 200} budget` : 'Not tracked',
+        children: [],
+      },
+      {
+        id: 'discord',
+        name: 'Discord Bot',
+        role: 'Channels, 24/7',
+        icon: '💬',
+        status: 'active',
+        metric: 'Gateway running',
+        children: [],
+      },
+      {
+        id: 'system-watchdog',
+        name: 'System Watchdog',
+        role: 'Cron health + services',
+        icon: '🔍',
+        status: ag.cronJobs > 0 ? 'active' : 'idle',
+        metric: ag.cronJobs > 0 ? `${ag.cronHealthy}/${ag.cronJobs} crons healthy` : 'Not tracked',
+        children: [],
+      },
+    ],
+  };
+}
 
 function statusColor(status) {
   switch (status) {
@@ -189,172 +186,63 @@ function AgentTaskPerformance() {
   );
 }
 
-// Hermes Multi-Agent System Overview
-const HermesAgentsOverview = () => {
-  const agents = [
-    { id: 'trading-agent', name: 'Trading Agent', category: 'Specialized', status: 'online', priority: 'Critical', tasks: 12, success: 95, action: 'Strategy backtest completed', icon: TrendingUp },
-    { id: 'content-agent', name: 'Content Agent', category: 'Specialized', status: 'online', priority: 'High', tasks: 8, success: 98, action: 'Daily brief drafted', icon: Zap },
-    { id: 'sales-agent', name: 'Sales Agent', category: 'Specialized', status: 'online', priority: 'High', tasks: 24, success: 87, action: 'Cold email sent (15)', icon: MailIcon },
-    { id: 'ops-agent', name: 'Ops Agent', category: 'Specialized', status: 'online', priority: 'High', tasks: 18, success: 92, action: 'RLM automation: 3 bids scraped', icon: BarChart3 },
-    { id: 'market-monitor', name: 'Market Monitor', category: 'Background', status: 'online', priority: 'Critical', tasks: 144, success: 99, action: 'ORB setup detected: QQQ', icon: Activity },
-    { id: 'email-triage', name: 'Email Triage', category: 'Background', status: 'online', priority: 'High', tasks: 89, success: 94, action: 'Demo request: flagged', icon: MailIcon },
-    { id: 'dashboard-sync', name: 'Dashboard Sync', category: 'Background', status: 'online', priority: 'Normal', tasks: 267, success: 100, action: 'Real-time sync: active', icon: Zap },
-    { id: 'cost-monitor', name: 'Cost Monitor', category: 'Background', status: 'online', priority: 'High', tasks: 134, success: 100, action: 'Daily spend: $12.48', icon: BarChart3 },
-  ];
-
-  const getPriorityColor = (p) => {
-    switch(p) {
-      case 'Critical': return 'bg-red-500/20 text-red-400 border border-red-500/30';
-      case 'High': return 'bg-orange-500/20 text-orange-400 border border-orange-500/30';
-      case 'Normal': return 'bg-blue-500/20 text-blue-400 border border-blue-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border border-gray-500/30';
-    }
-  };
-
-  return (
-    <div className="glass-card p-6 mb-8">
-      <h2 className="text-2xl font-bold text-white mb-1">🤖 Hermes Multi-Agent System</h2>
-      <p className="text-gray-400 text-sm mb-6">8 autonomous agents, fully coordinated and monitored</p>
-      
-      {/* Stats */}
-      <div className="grid grid-cols-4 gap-3 mb-8">
-        <div className="glass-card p-3 text-center">
-          <div className="text-gray-400 text-[10px] font-semibold mb-1">Total Agents</div>
-          <div className="text-3xl font-bold text-green-400">8</div>
-        </div>
-        <div className="glass-card p-3 text-center">
-          <div className="text-gray-400 text-[10px] font-semibold mb-1">Tasks Completed</div>
-          <div className="text-3xl font-bold text-blue-400">896</div>
-        </div>
-        <div className="glass-card p-3 text-center">
-          <div className="text-gray-400 text-[10px] font-semibold mb-1">Success Rate</div>
-          <div className="text-3xl font-bold text-purple-400">95.4%</div>
-        </div>
-        <div className="glass-card p-3 text-center">
-          <div className="text-gray-400 text-[10px] font-semibold mb-1">System Status</div>
-          <div className="text-xl font-bold text-green-400">🟢 Nominal</div>
-        </div>
-      </div>
-
-      {/* Specialized Agents */}
-      <div className="mb-8">
-        <h3 className="text-lg font-bold text-white mb-3">🎯 Specialized Agents (4)</h3>
-        <div className="grid grid-cols-2 gap-3">
-          {agents.filter(a => a.category === 'Specialized').map(agent => {
-            const Icon = agent.icon;
-            return (
-              <div key={agent.id} className="glass-card p-3 hover:border-cyan/30 transition-all">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 text-cyan" />
-                    <div>
-                      <div className="font-semibold text-white text-sm">{agent.name}</div>
-                      <div className="text-[10px] text-gray-500">{agent.id}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 text-green-400">
-                    <CheckCircle className="w-3 h-3" />
-                    <span className="text-[10px] font-semibold">online</span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-3 gap-2 text-sm mb-2">
-                  <div>
-                    <div className="text-gray-500 text-[10px]">Priority</div>
-                    <span className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold mt-0.5 ${getPriorityColor(agent.priority)}`}>{agent.priority}</span>
-                  </div>
-                  <div>
-                    <div className="text-gray-500 text-[10px]">Success</div>
-                    <div className="font-semibold text-white text-sm">{agent.success}%</div>
-                  </div>
-                  <div>
-                    <div className="text-gray-500 text-[10px]">Tasks</div>
-                    <div className="font-semibold text-white text-sm">{agent.tasks}</div>
-                  </div>
-                </div>
-                <div className="pt-2 border-t border-cyan/10 text-[10px] text-gray-400">{agent.action}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Background Workers */}
-      <div>
-        <h3 className="text-lg font-bold text-white mb-3">⚙️ Background Workers (4)</h3>
-        <div className="grid grid-cols-2 gap-3">
-          {agents.filter(a => a.category === 'Background').map(agent => {
-            const Icon = agent.icon;
-            return (
-              <div key={agent.id} className="glass-card p-3 hover:border-cyan/30 transition-all">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 text-cyan" />
-                    <div>
-                      <div className="font-semibold text-white text-sm">{agent.name}</div>
-                      <div className="text-[10px] text-gray-500">{agent.id}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 text-green-400">
-                    <CheckCircle className="w-4 h-4" />
-                    <span className="text-xs font-semibold">online</span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-3 gap-2 text-sm mb-3">
-                  <div>
-                    <div className="text-gray-500 text-xs">Priority</div>
-                    <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold mt-0.5 ${getPriorityColor(agent.priority)}`}>{agent.priority}</span>
-                  </div>
-                  <div>
-                    <div className="text-gray-500 text-xs">Success</div>
-                    <div className="font-semibold text-white">{agent.success}%</div>
-                  </div>
-                  <div>
-                    <div className="text-gray-500 text-xs">Tasks</div>
-                    <div className="font-semibold text-white">{agent.tasks}</div>
-                  </div>
-                </div>
-                <div className="pt-2 border-t border-cyan/10 text-xs text-gray-400">{agent.action}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-};
+// Hermes Multi-Agent System removed — was entirely hardcoded/fake data.
+// Agent status is now driven by the Agent Family Tree (live from status.json)
+// and Task Performance (live from Supabase task store).
+const HermesAgentsOverview = () => null;
 
 export default function Agents() {
   const [supaAgents, setSupaAgents] = useState([]);
+  const [liveData, setLiveData] = useState(null);
 
   useEffect(() => {
     supabase.from('agent_status').select('*').then(({ data }) => {
       if (data) setSupaAgents(data);
     });
+    fetch('/api/status.json?t=' + Date.now())
+      .then(r => r.json())
+      .then(d => setLiveData(d))
+      .catch(() => {});
   }, []);
+
+  const agentTree = buildAgentTree(liveData);
+
+  // Count statuses from tree
+  const countStatuses = (node) => {
+    let counts = { active: 0, blocked: 0, idle: 0 };
+    if (node.status === 'active') counts.active++;
+    else if (node.status === 'blocked') counts.blocked++;
+    else counts.idle++;
+    (node.children || []).forEach(c => {
+      const cc = countStatuses(c);
+      counts.active += cc.active;
+      counts.blocked += cc.blocked;
+      counts.idle += cc.idle;
+    });
+    return counts;
+  };
+  const statusCounts = countStatuses(agentTree);
 
   return (
     <div className="w-full h-full overflow-y-auto pb-24 pt-6 px-4">
-      {/* Hermes Multi-Agent System */}
-      <HermesAgentsOverview />
-
-      {/* Original Agent Family Tree */}
+      {/* Agent Family Tree */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold glow-text mb-2">Original Agent Family Tree</h1>
-        <p className="text-gray-400 text-sm">Legacy system — organizational hierarchy</p>
+        <h1 className="text-3xl font-bold glow-text mb-2">Agent System</h1>
+        <p className="text-gray-400 text-sm">Live status from connected systems</p>
       </div>
 
       {/* Summary */}
       <div className="grid grid-cols-3 gap-3 mb-6">
         <div className="glass-card text-center py-3">
-          <p className="text-2xl font-bold text-green-400">9</p>
+          <p className="text-2xl font-bold text-green-400">{statusCounts.active}</p>
           <p className="text-[10px] text-gray-400">Active</p>
         </div>
         <div className="glass-card text-center py-3">
-          <p className="text-2xl font-bold text-red-400">1</p>
+          <p className="text-2xl font-bold text-red-400">{statusCounts.blocked}</p>
           <p className="text-[10px] text-gray-400">Blocked</p>
         </div>
         <div className="glass-card text-center py-3">
-          <p className="text-2xl font-bold text-gray-400">1</p>
+          <p className="text-2xl font-bold text-gray-400">{statusCounts.idle}</p>
           <p className="text-[10px] text-gray-400">Idle</p>
         </div>
       </div>

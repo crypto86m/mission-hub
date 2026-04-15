@@ -23,116 +23,24 @@ export default function SettingsScreen() {
     if (c.today !== undefined) setBudget(prev => ({ ...prev, current: c.today || 0 }));
   }, [liveData]);
 
-  const [cronJobs] = useState([
-    {
-      id: 1,
-      name: 'Morning Brief Generation',
-      schedule: '7:00 AM daily',
-      status: 'active',
-      lastRun: '2 hours ago',
-    },
-    {
-      id: 2,
-      name: 'Trading Signal Scan',
-      schedule: 'Every 15 min',
-      status: 'active',
-      lastRun: '1 min ago',
-    },
-    {
-      id: 3,
-      name: 'Bennett\'s Brief Publisher',
-      schedule: '3:00 PM daily',
-      status: 'active',
-      lastRun: 'pending',
-    },
-    {
-      id: 4,
-      name: 'AI Cost Optimizer',
-      schedule: 'Every 6 hours',
-      status: 'active',
-      lastRun: '3 hours ago',
-    },
-    {
-      id: 5,
-      name: 'Discord Status Sync',
-      schedule: 'Every 30 min',
-      status: 'active',
-      lastRun: '5 min ago',
-    },
-    {
-      id: 6,
-      name: 'Weekly Performance Review',
-      schedule: 'Friday 5:00 PM',
-      status: 'active',
-      lastRun: 'pending',
-    },
-  ]);
+  const cronCount = liveData?.agents?.cronJobs || 0;
+  const cronHealthy = liveData?.agents?.cronHealthy || 0;
+  const cronJobs = cronCount > 0 ? [
+    { id: 1, name: `${cronCount} Cron Jobs Configured`, schedule: 'Various schedules', status: 'active', lastRun: `${cronHealthy}/${cronCount} healthy` },
+  ] : [];
 
-  const [integrations] = useState([
-    {
-      id: 1,
-      name: 'Discord',
-      status: 'connected',
-      lastSync: '1 min ago',
-      icon: '💬',
-    },
-    {
-      id: 2,
-      name: 'Gmail',
-      status: 'connected',
-      lastSync: '5 min ago',
-      icon: '📧',
-    },
-    {
-      id: 3,
-      name: 'Google Calendar',
-      status: 'connected',
-      lastSync: '2 min ago',
-      icon: '📅',
-    },
-    {
-      id: 4,
-      name: 'ThinkorSwim (Trading)',
-      status: 'connected',
-      lastSync: '1 min ago',
-      icon: '📈',
-    },
-    {
-      id: 5,
-      name: 'GitHub',
-      status: 'connected',
-      lastSync: '15 min ago',
-      icon: '🔧',
-    },
-    {
-      id: 6,
-      name: 'Perplexity API',
-      status: 'connected',
-      lastSync: '3 min ago',
-      icon: '🔍',
-    },
-    {
-      id: 7,
-      name: 'Superhuman',
-      status: 'connected',
-      lastSync: '10 min ago',
-      icon: '⚡',
-    },
-    {
-      id: 8,
-      name: 'Supabase',
-      status: 'connected',
-      lastSync: '2 min ago',
-      icon: '💾',
-    },
-    {
-      id: 9,
-      name: 'OpenAI API',
-      status: 'connected',
-      lastSync: '1 min ago',
-      icon: '🤖',
-    },
-  ]);
+  // Integration status from live data
+  const t = liveData?.trading || {};
+  const ig = liveData?.instagram || {};
+  const tw = liveData?.twitter || {};
+  const integrations = [
+    { id: 1, name: 'Discord', status: 'connected', lastSync: 'Active', icon: '💬' },
+    { id: 2, name: 'Supabase', status: 'connected', lastSync: 'Active', icon: '💾' },
+    { id: 3, name: 'Alpaca (Trading)', status: t.status === 'connected' ? 'connected' : 'not connected', lastSync: t.status === 'connected' ? `$${(t.accountValue || 0).toLocaleString()}` : 'Not connected', icon: '📈' },
+    { id: 4, name: 'Instagram', status: ig.status !== 'not_connected' ? 'connected' : 'not connected', lastSync: ig.status !== 'not_connected' ? 'Active' : 'Not connected', icon: '📸' },
+    { id: 5, name: 'Twitter/X', status: tw.status !== 'not_connected' ? (tw.status === 'blocked' ? 'error' : 'connected') : 'not connected', lastSync: tw.status === 'not_connected' ? 'Not connected' : tw.status === 'blocked' ? 'Auth error' : 'Active', icon: '🐦' },
+    { id: 6, name: 'Vercel', status: 'connected', lastSync: 'Hosting active', icon: '▲' },
+  ];
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -272,7 +180,7 @@ export default function SettingsScreen() {
                 <div className="flex-1">
                   <h3 className="font-semibold text-white">{integration.name}</h3>
                   <div className="flex items-center gap-2 mt-1">
-                    <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                    <div className={`w-2 h-2 rounded-full ${integration.status === 'connected' ? 'bg-green-400' : integration.status === 'error' ? 'bg-red-400' : 'bg-yellow-400'}`}></div>
                     <span className="text-xs text-gray-400">
                       {integration.lastSync}
                     </span>
@@ -308,13 +216,8 @@ export default function SettingsScreen() {
 
         <div className="space-y-2 glass-card">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-400">OpenClaw Version</span>
-            <span className="font-semibold">2026.4.5</span>
-          </div>
-          <div className="border-t border-cyan/10 my-2"></div>
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-400">API Endpoints</span>
-            <span className="font-semibold">9/9 Active</span>
+            <span className="text-gray-400">Dashboard</span>
+            <span className="font-semibold">mission-hub-iota.vercel.app</span>
           </div>
           <div className="border-t border-cyan/10 my-2"></div>
           <div className="flex justify-between text-sm">
@@ -323,8 +226,13 @@ export default function SettingsScreen() {
           </div>
           <div className="border-t border-cyan/10 my-2"></div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-400">Last Backup</span>
-            <span className="font-semibold">Today 6:00 AM</span>
+            <span className="text-gray-400">Status Data</span>
+            <span className="font-semibold">{liveData ? `Updated ${new Date(liveData.generated).toLocaleString()}` : 'Loading...'}</span>
+          </div>
+          <div className="border-t border-cyan/10 my-2"></div>
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-400">Trading API</span>
+            <span className={`font-semibold ${t.status === 'connected' ? 'text-green-400' : 'text-yellow-400'}`}>{t.status === 'connected' ? 'Alpaca Connected' : 'Not connected'}</span>
           </div>
         </div>
       </div>
