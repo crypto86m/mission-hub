@@ -195,6 +195,15 @@ export default function Dashboard() {
       color: 'from-cyan-500 to-cyan-600',
       icon: '🤖',
     },
+    {
+      id: 6,
+      name: 'Freelance',
+      title: 'Upwork + Fiverr + LinkedIn',
+      stats: '3 Platforms',
+      subtitle: `Upwork bidding · 4 Fiverr gigs · LinkedIn outreach`,
+      color: 'from-purple-500 to-purple-600',
+      icon: '💼',
+    },
   ];
 
   const activityFeed = [
@@ -203,6 +212,10 @@ export default function Dashboard() {
     { id: 3, action: 'Instagram', details: ig.status === 'not_connected' ? 'Not connected' : `${ig.followers || 0} followers · ${ig.engagementRate || 0}% ER`, time: ig.status === 'not_connected' ? '' : '30d stats', status: ig.status === 'not_connected' ? 'pending' : 'active' },
     { id: 4, action: 'Twitter', details: tw.status === 'not_connected' ? 'Not connected' : tw.status === 'blocked' ? `Blocked: ${tw.error}` : `${tw.queued || 0} queued`, time: tw.lastPosted || '', status: tw.status === 'not_connected' ? 'pending' : tw.status === 'blocked' ? 'pending' : 'done' },
     { id: 5, action: 'Cron Jobs', details: `${ag.cronHealthy || 0}/${ag.cronJobs || 0} healthy`, time: 'Auto', status: ag.cronErrors > 0 ? 'pending' : 'done' },
+    { id: 6, action: 'Upwork', details: 'Daily bidding · 8 AM PT', time: 'Automated', status: 'active' },
+    { id: 7, action: 'Fiverr', details: '4 gigs live · Monitoring every 30m', time: 'Automated', status: 'active' },
+    { id: 8, action: 'LinkedIn', details: 'CTO outreach · 3x daily', time: 'Automated', status: 'active' },
+    { id: 9, action: 'Telegram', details: 'Backup channel · @CharlesbotV2bot', time: 'Active', status: 'done' },
   ];
 
   return (

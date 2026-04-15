@@ -43,6 +43,18 @@ const integrations = [
   // Internal Tools
   { name: "Superhuman", category: "Internal Tools", status: "Active", icon: "📬", color: "#0055FF", credentials: "Valid", lastActivity: "Daily", agents: ["Email management"], workflows: ["Email triage", "Priority sorting", "Smart drafting", "Follow-up tracking"], models: "N/A", envSource: "ben86m@gmail.com (manual)" },
   { name: "Lovable", category: "Internal Tools", status: "Active", icon: "💜", color: "#E879F9", credentials: "Valid", lastActivity: "Now", agents: ["Mission Control Builder"], workflows: ["Dashboard UI generation", "Component building", "Supabase integration"], models: "N/A", envSource: "lovable.dev project" },
+
+  // Communication (new)
+  { name: "Telegram", category: "Communication", status: "Active", icon: "📩", color: "#0088CC", credentials: "Valid", lastActivity: "Now", agents: ["Charles (CBV2)"], workflows: ["Backup communication channel", "24/7 fallback when Discord down"], models: "N/A", envSource: "Telegram Bot: @CharlesbotV2bot" },
+
+  // Freelance Platforms
+  { name: "Upwork", category: "Freelance Platforms", status: "Active", icon: "💼", color: "#14A800", credentials: "Valid", lastActivity: "Daily 8 AM PT", agents: ["Upwork Daily Bidder"], workflows: ["Job scraping", "Auto-bidding (3-5/day)", "Proposal generation"], models: "Haiku", envSource: "ben86m@gmail.com (freelancer)" },
+  { name: "Fiverr", category: "Freelance Platforms", status: "Active", icon: "🎯", color: "#1DBF73", credentials: "Valid", lastActivity: "Every 30 min", agents: ["Fiverr Inquiry Monitor"], workflows: ["4 gigs live", "Gmail notification monitoring", "Auto-response"], models: "Haiku", envSource: "ben86m@gmail.com (seller)" },
+  { name: "LinkedIn", category: "Freelance Platforms", status: "Active", icon: "🔗", color: "#0A66C2", credentials: "Valid", lastActivity: "3x daily", agents: ["LinkedIn Outreach Bot"], workflows: ["CTO/VP targeting", "Personalized pitches", "Response tracking"], models: "Haiku", envSource: "Safari browser automation" },
+
+  // Research Tools
+  { name: "Tavily", category: "Research Tools", status: "Active", icon: "🔍", color: "#6366F1", credentials: "Valid", lastActivity: "On demand", agents: ["Charles (CBV2)", "Market Research"], workflows: ["Web research API", "Real-time search", "Fact verification"], models: "N/A", envSource: ".env.tavily" },
+  { name: "Firecrawl", category: "Research Tools", status: "Active", icon: "🔥", color: "#F97316", credentials: "Valid", lastActivity: "On demand", agents: ["Charles (CBV2)"], workflows: ["Web scraping", "Data extraction", "Product research"], models: "N/A", envSource: ".env.firecrawl" },
 ];
 
 const categories = [...new Set(integrations.map(i => i.category))];
