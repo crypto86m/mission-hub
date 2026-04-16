@@ -23,7 +23,7 @@ const integrations = [
   // Publishing / Content
   { name: "Substack", category: "Publishing / Content", status: "Active", icon: "📰", color: "#FF6719", credentials: "Valid", lastActivity: "Weekly", agents: ["Content Agent"], workflows: ["Bennett's Brief publishing", "Subscriber metrics", "Newsletter distribution"], models: "Sonnet for drafting", envSource: "Substack API (app/api/substack/)" },
   { name: "Buffer", category: "Publishing / Content", status: "Active", icon: "📤", color: "#168EEA", credentials: "Valid", lastActivity: "Daily 9 AM PT", agents: ["Social Media Agent"], workflows: ["Twitter queue (90 tweets)", "Auto-posting", "Scheduling"], models: "N/A", envSource: "Buffer.com (web integration)" },
-  { name: "Twitter/X API", category: "Publishing / Content", status: "Active", icon: "🐦", color: "#1DA1F2", credentials: "Valid", lastActivity: "Daily", agents: ["Social Media Agent"], workflows: ["Auto-posting via Buffer", "Growth tracking"], models: "N/A", envSource: "TWITTER_BEARER_TOKEN + OAuth keys" },
+  { name: "Twitter/X API", category: "Publishing / Content", status: "Error", icon: "🐦", color: "#1DA1F2", credentials: "Expired", lastActivity: "Apr 1 (blocked)", agents: ["Social Media Agent"], workflows: ["401 Unauthorized — needs key regen at developer.twitter.com", "89 tweets queued in Buffer"], models: "N/A", envSource: ".env.twitter (keys expired)" },
   { name: "Instagram", category: "Publishing / Content", status: "Active", icon: "📸", color: "#E1306C", credentials: "Valid", lastActivity: "On demand", agents: ["Social Media Agent"], workflows: ["Direct publishing to @benjamin86m"], models: "N/A", envSource: "Instagram Business API credentials" },
 
   // Deployment / Infrastructure
@@ -35,7 +35,7 @@ const integrations = [
   // Automation
   { name: "Zapier", category: "Automation", status: "Configured", icon: "⚡", color: "#FF4A00", credentials: "Valid", lastActivity: "On triggers", agents: ["Demo Pipeline"], workflows: ["Demo request webhooks", "Email triggers", "CRM automation"], models: "N/A", envSource: "ZAPIER_USER + ZAPIER_PASSWORD" },
   { name: "OpenClaw Crons", category: "Automation", status: "Active", icon: "⏰", color: "#00D4FF", credentials: "N/A", lastActivity: "Every 30 min", agents: ["All agents"], workflows: ["Heartbeat (30 min)", "Email responder (30 min)", "Cost monitor (3h)", "Trading watchdog (3x/day)", "Budget alerts (3x/day)"], models: "Haiku", envSource: "launchd + openclaw cron" },
-  { name: "LaunchD Services", category: "Automation", status: "Active", icon: "🚀", color: "#A855F7", credentials: "N/A", lastActivity: "Now", agents: ["System layer"], workflows: ["13 active services: gateway, booking-intake, paper-trader, trading-watchdog, cost-monitor, budget-monitor, operational-excellence, semantic-indexer, servers, encrypted-backup, gdrive-reminder, ai-support-blitz, work-accountability"], models: "N/A", envSource: "~/Library/LaunchAgents/" },
+  { name: "LaunchD Services", category: "Automation", status: "Active", icon: "🚀", color: "#A855F7", credentials: "N/A", lastActivity: "Now", agents: ["System layer"], workflows: ["7 clean services: gateway, watchdog, health-server, booking-intake, paper-trader, orchestrator, stop-enforcer", "Cleaned from 22 → 7 on Apr 14"], models: "N/A", envSource: "~/Library/LaunchAgents/" },
 
   // Data / Storage
   { name: "Vercel PostgreSQL", category: "Data / Storage", status: "Active", icon: "🗄️", color: "#336791", credentials: "Valid", lastActivity: "On request", agents: ["Mission Control (old)"], workflows: ["Approval persistence", "Dashboard data"], models: "N/A", envSource: "BACKEND_URL (mission-control-app)" },
@@ -55,6 +55,37 @@ const integrations = [
   // Research Tools
   { name: "Tavily", category: "Research Tools", status: "Active", icon: "🔍", color: "#6366F1", credentials: "Valid", lastActivity: "On demand", agents: ["Charles (CBV2)", "Market Research"], workflows: ["Web research API", "Real-time search", "Fact verification"], models: "N/A", envSource: ".env.tavily" },
   { name: "Firecrawl", category: "Research Tools", status: "Active", icon: "🔥", color: "#F97316", credentials: "Valid", lastActivity: "On demand", agents: ["Charles (CBV2)"], workflows: ["Web scraping", "Data extraction", "Product research"], models: "N/A", envSource: ".env.firecrawl" },
+
+  // Developer Tools (NEW)
+  { name: "Claude Code (ACP)", category: "Developer Tools", status: "Active", icon: "💻", color: "#D97706", credentials: "Valid", lastActivity: "Today", agents: ["Charles (CBV2)", "Opus Subagents"], workflows: ["Code generation via ACP runtime", "Autonomous coding sessions", "Mission Control builds"], models: "Claude Opus 4.6", envSource: "OpenClaw ACP integration" },
+  { name: "Warp Terminal", category: "Developer Tools", status: "Active", icon: "⚡", color: "#01A4FF", credentials: "Valid", lastActivity: "Today", agents: ["Charles (CBV2)"], workflows: ["AI-powered terminal", "Command execution", "System administration"], models: "N/A", envSource: "Warp app (local)" },
+
+  // MCP Servers (NEW)
+  { name: "MCP: Extended Memory", category: "MCP Servers", status: "Active", icon: "🧠", color: "#8B5CF6", credentials: "N/A", lastActivity: "Now", agents: ["Charles (CBV2)"], workflows: ["Knowledge graph storage", "Entity/relation tracking", "Persistent memory"], models: "N/A", envSource: "mcp-server-memory (autoRestart)" },
+  { name: "MCP: Sequential Thinking", category: "MCP Servers", status: "Active", icon: "🧩", color: "#6366F1", credentials: "N/A", lastActivity: "On demand", agents: ["Charles (CBV2)"], workflows: ["Complex reasoning", "Multi-step problem solving", "Decision analysis"], models: "N/A", envSource: "mcp-server-sequential-thinking (autoRestart)" },
+  { name: "MCP: Alpha Vantage", category: "MCP Servers", status: "Active", icon: "📈", color: "#22C55E", credentials: "Valid", lastActivity: "Market hours", agents: ["Trading Bot", "Charles (CBV2)"], workflows: ["Stock prices", "Technical indicators (SMA, EMA, RSI)", "Company overviews", "Forex/Crypto"], models: "N/A", envSource: "alphavantage MCP (autoRestart)" },
+  { name: "MCP: Quantitative Finance", category: "MCP Servers", status: "Active", icon: "📊", color: "#3B82F6", credentials: "Valid", lastActivity: "On demand", agents: ["Trading Bot"], workflows: ["Strategy comparison", "Signal generation", "Performance tracking"], models: "N/A", envSource: "quanttogo-mcp (autoRestart)" },
+  { name: "MCP: Browser Automation", category: "MCP Servers", status: "Active", icon: "🌐", color: "#10B981", credentials: "N/A", lastActivity: "On demand", agents: ["Charles (CBV2)"], workflows: ["Puppeteer browser control", "Screenshot capture", "Form filling", "Web scraping"], models: "N/A", envSource: "mcp-server-puppeteer (autoRestart)" },
+
+  // Voice / Media (NEW)
+  { name: "ElevenLabs TTS", category: "Voice / Media", status: "Active", icon: "🎙️", color: "#FF6B35", credentials: "Valid", lastActivity: "On demand", agents: ["Charles (CBV2)"], workflows: ["Text-to-speech", "Newsletter narration", "Voice notifications"], models: "Default professional voice", envSource: ".env.elevenlabs" },
+  { name: "OpenAI Sora (Video)", category: "Voice / Media", status: "Active", icon: "🎥", color: "#10B981", credentials: "Valid", lastActivity: "Weekly", agents: ["Content Agent"], workflows: ["AI video generation", "Instagram Reels (5/week)", "Lifestyle content"], models: "Sora 2", envSource: "OPENAI_API_KEY" },
+
+  // Internal Systems (NEW)
+  { name: "Context Bus", category: "Internal Systems", status: "Active", icon: "🔗", color: "#00D4FF", credentials: "N/A", lastActivity: "Every heartbeat", agents: ["All agents"], workflows: ["Inter-agent communication", "Shared state", "Action broadcasting"], models: "N/A", envSource: "scripts/context-bus.py + Supabase" },
+  { name: "Memory Database", category: "Internal Systems", status: "Active", icon: "🗃️", color: "#A855F7", credentials: "N/A", lastActivity: "Every heartbeat", agents: ["Charles (CBV2)"], workflows: ["373 memories indexed", "30ms full-text search", "Auto-index from all sources"], models: "N/A", envSource: "scripts/memory-db.py (SQLite FTS5)" },
+  { name: "Agent Triggers", category: "Internal Systems", status: "Active", icon: "⚡", color: "#FBBF24", credentials: "N/A", lastActivity: "On events", agents: ["All agents"], workflows: ["8 trigger rules", "Trade → Content notification", "Stop-loss → Alert", "Demo → Notify"], models: "N/A", envSource: "scripts/agent-triggers.py" },
+  { name: "Stop-Loss Enforcer v2", category: "Internal Systems", status: "Active", icon: "🛡️", color: "#EF4444", credentials: "N/A", lastActivity: "Every 30s", agents: ["Stop-Loss Enforcer"], workflows: ["Universal position monitoring", "2% max loss per position", "$120 daily circuit breaker"], models: "N/A", envSource: "launchd: com.trading.stop-enforcer" },
+
+  // Trading (NEW)
+  { name: "Alpaca (Paper)", category: "Trading / Finance", status: "Active", icon: "📉", color: "#10B981", credentials: "Valid", lastActivity: "Market hours", agents: ["Paper Trader", "Orchestrator"], workflows: ["9 strategies active", "$98.6K equity", "30s position checks", "Auto stop-loss"], models: "N/A", envSource: "ALPACA_API_KEY_PAPER" },
+  { name: "Webull", category: "Trading / Finance", status: "Configured", icon: "💹", color: "#F97316", credentials: "Saved", lastActivity: "Not active", agents: ["N/A"], workflows: ["Data feeds (planned)"], models: "N/A", envSource: ".env.webull" },
+
+  // Monitoring (NEW)
+  { name: "Grafana Cloud", category: "Monitoring", status: "Active", icon: "📊", color: "#F46800", credentials: "Valid", lastActivity: "Continuous", agents: ["System Monitor"], workflows: ["System health dashboards", "Cost tracking", "SMS queue monitoring", "Trading performance"], models: "N/A", envSource: "ben86m.grafana.net (Service Account)" },
+
+  // Social (fix Twitter status)
+  { name: "TikTok", category: "Publishing / Content", status: "Planned", icon: "🎵", color: "#000000", credentials: "Saved", lastActivity: "Not active", agents: ["N/A"], workflows: ["Reel cross-posting (planned)"], models: "N/A", envSource: ".env.tiktok" },
 ];
 
 const categories = [...new Set(integrations.map(i => i.category))];

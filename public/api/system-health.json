@@ -1,0 +1,11 @@
+{
+  "gateway": { "status": "online", "memory_mb": 792 },
+  "web_chat": { "status": "online" },
+  "trading": { "agents": 6 },
+  "mcp": { "count": 4, "servers": ["sequential-thinking", "extended-memory", "pdf", "inspector"] },
+  "api_status": { "alpha_vantage": true, "alpaca": true, "tavily": true, "elevenlabs": true },
+  "costs": { "daily": 0, "monthly": 0, "budget": 200 },
+  "leads": { "total": 6, "due_outreach": 6 },
+  "compliance": { "entries_today": 12, "integrity": "verified" },
+  "alerts": []
+}

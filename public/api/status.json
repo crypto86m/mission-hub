@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-15T14:17:14.724751",
+  "generated": "2026-04-15T16:56:43.901599",
   "trading": {
     "accountValue": 0,
     "unrealizedPnl": 0,
@@ -12,11 +12,10 @@
     "positions": []
   },
   "costs": {
-    "today": 55.65,
+    "today": 78.11,
     "dailyLimit": 20,
     "monthlyBudget": 200,
-    "monthTotal": 133.1,
-    "note": "Budget: $200/month, Default: Haiku, Escalate for complex tasks"
+    "monthTotal": 155.56
   },
   "email": {
     "totalReplies": 755,
@@ -82,80 +81,6 @@
     },
     "gateway": {
       "status": "up"
-    },
-    "telegram": {
-      "status": "up",
-      "bot": "@CharlesbotV2bot",
-      "note": "Backup communication channel"
-    },
-    "gatewayRestartApi": {
-      "status": "up",
-      "port": 4345,
-      "note": "REST API for gateway restart (rate limited)"
     }
-  },
-  "freelance": {
-    "upwork": {
-      "status": "active",
-      "profile": "Public",
-      "categories": [
-        "Web/Mobile/Software Dev",
-        "IT & Networking",
-        "Data Science",
-        "Admin Support"
-      ],
-      "rate": "$125/hr",
-      "cronSchedule": "8 AM PT daily",
-      "lastScrape": "See freelance/jobs/"
-    },
-    "fiverr": {
-      "status": "active",
-      "gigsLive": 4,
-      "gigs": [
-        "AI Automation ($500)",
-        "Trading Bot ($2,500)",
-        "Dashboards ($1,500)",
-        "API Integration ($1,200)"
-      ],
-      "monitorSchedule": "Every 30 min"
-    },
-    "linkedin": {
-      "status": "active",
-      "outreachSchedule": "9 AM, 2 PM, 6 PM PT daily",
-      "target": "CTOs/VP Engineering"
-    }
-  },
-  "tools": {
-    "tavily": {
-      "status": "active",
-      "purpose": "Web research API"
-    },
-    "firecrawl": {
-      "status": "active",
-      "purpose": "Web scraping & data extraction"
-    },
-    "gmail": {
-      "status": "active",
-      "account": "crypto86m@gmail.com",
-      "autoResponder": true,
-      "totalReplies": 755
-    },
-    "supabase": {
-      "status": "active",
-      "tier": "Pro",
-      "tables": [
-        "agent_status",
-        "approvals",
-        "activity_feed",
-        "cost_tracking",
-        "trading_pnl"
-      ]
-    }
-  },
-  "communication": {
-    "primary": "Discord",
-    "backup": "Telegram (@CharlesbotV2bot)",
-    "emergency": "MEMORY.md write",
-    "sms": "7073377636@vtext.com"
   }
 }

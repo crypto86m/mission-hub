@@ -6,6 +6,22 @@ const InstagramReels = () => {
   const [copiedId, setCopiedId] = useState(null);
   const [previewVideo, setPreviewVideo] = useState(null);
 
+  // Clean function: Remove HTML entities and special characters
+  const cleanText = (text) => {
+    if (!text) return '';
+    return text
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&apos;/g, "'")
+      .replace(/\\u[0-9A-Fa-f]{4}/g, (match) => String.fromCharCode(parseInt(match.slice(2), 16)))
+      .replace(/[^\x00-\x7F]/g, (char) => char) // Keep Unicode but remove control chars
+      .trim();
+  };
+
   const VIDEO_MAP = {
     'post_1_authority.mp4': '/videos/napa-friday-drive.mp4',
     'post_2_vulnerability.mp4': '/videos/monday-car-lineup.mp4',
@@ -148,7 +164,8 @@ const InstagramReels = () => {
   ];
 
   const handleCopyCaption = (caption, id) => {
-    navigator.clipboard.writeText(caption);
+    const cleanedText = cleanText(caption);
+    navigator.clipboard.writeText(cleanedText);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
   };
@@ -198,7 +215,7 @@ const InstagramReels = () => {
                     className="caption-box"
                     onClick={() => handleCopyCaption(reel.caption, reel.id)}
                   >
-                    <p>{reel.caption}</p>
+                    <p>{cleanText(reel.caption)}</p>
                     {copiedId === reel.id && <span className="copy-indicator">✅ Copied!</span>}
                   </div>
                 </div>
@@ -209,7 +226,7 @@ const InstagramReels = () => {
                     className="hashtags-box"
                     onClick={() => handleCopyCaption(reel.hashtags, `hash-${reel.id}`)}
                   >
-                    {reel.hashtags}
+                    {cleanText(reel.hashtags)}
                     {copiedId === `hash-${reel.id}` && <span className="copy-indicator">✅ Copied!</span>}
                   </div>
                 </div>
