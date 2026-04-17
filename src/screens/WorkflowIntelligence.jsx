@@ -77,7 +77,7 @@ export default function WorkflowIntelligence() {
   }, []);
 
   return (
-    <div className="w-full h-full overflow-hidden flex flex-col bg-dark-bg">
+    <div className="w-full h-full overflow-auto flex flex-col bg-dark-bg">
       {/* Header */}
       <div className="p-6 border-b border-cyan/20 bg-dark-card/50 backdrop-blur">
         <div className="flex items-center justify-between mb-4">
@@ -157,9 +157,9 @@ export default function WorkflowIntelligence() {
       )}
 
       {/* Main Content */}
-      <div className="flex-1 overflow-hidden flex">
+      <div className="flex-1 overflow-x-auto overflow-y-auto flex max-w-full">
         {/* Visualization Area */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-auto min-w-0">
           {viewMode === 'graph' ? (
             <WorkflowGraph 
               workflows={filteredWorkflows} 

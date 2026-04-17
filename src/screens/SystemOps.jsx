@@ -162,7 +162,7 @@ export default function SystemOps() {
         <div>
           <h1 className="text-xl font-bold flex items-center gap-2">
             <Activity size={20} className="text-cyan-400" />
-            System Operations
+            System Operations — Gateway Control
           </h1>
           <p className="text-[10px] text-gray-500 mt-1">
             {lastUpdate ? `Updated ${lastUpdate.toLocaleTimeString()}` : 'Loading...'}
@@ -178,6 +178,13 @@ export default function SystemOps() {
       <div className="flex gap-1.5 mb-4 overflow-x-auto pb-1">
         {tabs.map(t => (
           <button key={t.id} onClick={() => setSection(t.id)}
+            title={{
+              health: 'Infrastructure health, gateway status, and system alerts',
+              positions: 'Live Alpaca paper + live account positions and P&L',
+              leads: 'AI Support, Brief, RLM, and NVCC lead pipelines',
+              audit: 'Immutable compliance audit trail with SHA-256 integrity',
+              apis: 'API credential status and MCP server health',
+            }[t.id]}
             className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
               section === t.id
                 ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
@@ -186,6 +193,15 @@ export default function SystemOps() {
             <t.icon size={11} />{t.label}
           </button>
         ))}
+      </div>
+
+      {/* Section Description */}
+      <div className="mb-3 text-[10px] text-gray-500">
+        {section === 'health' && 'Infrastructure health — gateway, trading processes, MCP servers, and budget overview.'}
+        {section === 'positions' && 'Live Alpaca account data — paper + live equity, open positions, and unrealized P&L.'}
+        {section === 'leads' && 'Lead pipeline — track prospects across AI Support, Brief sponsorships, RLM licensing, and NVCC memberships.'}
+        {section === 'audit' && 'Compliance audit trail — append-only JSONL with SHA-256 tamper detection for all agent actions.'}
+        {section === 'apis' && 'API credential status — trading, research, AI, and infrastructure API health at a glance.'}
       </div>
 
       {/* ===== SECTION: SYSTEM HEALTH ===== */}

@@ -165,42 +165,57 @@ export default function ContentPipeline() {
         </div>
       )}
 
-      {/* Newsletter Content */}
-      {activeTab === 'newsletters' && data && (
+      {/* Newsletter / Briefs Content */}
+      {activeTab === 'newsletters' && (
         <div className="space-y-3">
-          {(data.newsletters || []).map(article => {
-            const isExpanded = expanded === article.id;
-            return (
-              <div key={article.id} className="glass-card">
-                <button
-                  onClick={() => setExpanded(isExpanded ? null : article.id)}
-                  className="w-full flex items-center gap-3 text-left"
-                >
-                  {isExpanded ? <ChevronDown size={16} className="text-cyan shrink-0" /> : <ChevronRight size={16} className="text-gray-400 shrink-0" />}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-bold text-white">{article.title}</span>
-                      <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono border ${
-                        article.status === 'published' ? 'text-green-400 border-green-400/30 bg-green-400/10' : 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10'
-                      }`}>{article.status?.toUpperCase()}</span>
+          {(() => {
+            const articles = briefs?.articles || data?.newsletters || [];
+            const cleanMd = (text) => {
+              if (!text) return '';
+              return text
+                .replace(/^#{1,6}\s+/gm, '')
+                .replace(/\*\*(.*?)\*\*/g, '$1')
+                .replace(/\*(.*?)\*/g, '$1')
+                .replace(/`{1,3}[^`]*`{1,3}/g, (m) => m.replace(/`/g, ''))
+                .replace(/[\u200B-\u200D\uFEFF]/g, '')
+                .trim();
+            };
+            return articles.map(article => {
+              const isExpanded = expanded === article.id;
+              const cleanBody = cleanMd(article.body);
+              return (
+                <div key={article.id} className="glass-card">
+                  <button
+                    onClick={() => setExpanded(isExpanded ? null : article.id)}
+                    className="w-full flex items-center gap-3 text-left"
+                  >
+                    {isExpanded ? <ChevronDown size={16} className="text-cyan shrink-0" /> : <ChevronRight size={16} className="text-gray-400 shrink-0" />}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-bold text-white">Issue #{article.issue || '?'}: {article.title}</span>
+                        <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono border ${
+                          article.status === 'published' ? 'text-green-400 border-green-400/30 bg-green-400/10' : 'text-yellow-400 border-yellow-400/30 bg-yellow-400/10'
+                        }`}>{article.status?.toUpperCase()}</span>
+                      </div>
+                      <p className="text-[10px] text-gray-400 mt-0.5">{article.date} {article.wordCount ? `• ${article.wordCount} words` : ''} • {article.platform || 'Substack'}</p>
                     </div>
-                    <p className="text-[10px] text-gray-400 mt-0.5">{article.date} • {article.wordCount} words • {article.platform}</p>
-                  </div>
-                  <CopyButton text={article.body} label="Copy Full Article" />
-                </button>
+                    <CopyButton text={cleanBody} label="Copy" />
+                  </button>
 
-                {isExpanded && (
-                  <div className="mt-4 border-t border-cyan/10 pt-3">
-                    <pre className="text-xs text-gray-300 whitespace-pre-wrap font-sans leading-relaxed max-h-96 overflow-y-auto bg-black/20 rounded-lg p-4">{article.body}</pre>
-                    <div className="flex gap-2 mt-3">
-                      <CopyButton text={article.title} label="Copy Title" />
-                      <CopyButton text={article.body} label="Copy Body" />
+                  {isExpanded && (
+                    <div className="mt-4 border-t border-cyan/10 pt-3">
+                      <pre className="text-xs text-gray-300 whitespace-pre-wrap font-sans leading-relaxed max-h-96 overflow-y-auto bg-black/20 rounded-lg p-4">{cleanBody}</pre>
+                      <div className="flex gap-2 mt-3">
+                        <CopyButton text={article.title} label="Copy Title" />
+                        <CopyButton text={cleanBody} label="Copy Body" />
+                        <CopyButton text={`${article.title}\n\n${cleanBody}`} label="Copy All" />
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                  )}
+                </div>
+              );
+            });
+          })()}
         </div>
       )}
 

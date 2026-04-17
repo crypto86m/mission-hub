@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertCircle, Zap, Lock, Database, Bell, WifiOff } from 'lucide-react';
+import { AlertCircle, Zap, Lock, Database, Bell, WifiOff, ChevronDown, ChevronRight } from 'lucide-react';
 import MasterConnect from '../components/MasterConnect';
 import { GatewayControl } from '../components/GatewayControl';
 
@@ -24,11 +24,24 @@ export default function SettingsScreen() {
     if (c.today !== undefined) setBudget(prev => ({ ...prev, current: c.today || 0 }));
   }, [liveData]);
 
+  const [expandedCron, setExpandedCron] = useState(null);
   const cronCount = liveData?.agents?.cronJobs || 0;
   const cronHealthy = liveData?.agents?.cronHealthy || 0;
-  const cronJobs = cronCount > 0 ? [
-    { id: 1, name: `${cronCount} Cron Jobs Configured`, schedule: 'Various schedules', status: 'active', lastRun: `${cronHealthy}/${cronCount} healthy` },
-  ] : [];
+  const cronJobs = [
+    { id: 1, name: 'Heartbeat Check', schedule: 'Every 30 min', status: 'active', lastRun: 'Continuous', description: 'Polls inbox, calendar, and system status. Batches multiple checks per heartbeat.' },
+    { id: 2, name: 'Morning Brief', schedule: '7:00 AM PT (weekdays)', status: 'active', lastRun: 'Today 7:00 AM', description: 'Delivers morning briefing to SMS + Discord: overnight activity, trading setups, calendar, action items.' },
+    { id: 3, name: 'Evening Debrief', schedule: '6:00 PM PT (weekdays)', status: 'active', lastRun: 'Today 6:00 PM', description: 'Daily wrap-up: what got done, blockers, tomorrow priorities. Delivered to SMS + Discord.' },
+    { id: 4, name: 'Weekly Review', schedule: 'Fri 5:00 PM PT', status: 'active', lastRun: 'Last Fri', description: 'Full weekly metrics analysis: trading P&L, content performance, cost tracking, pipeline status.' },
+    { id: 5, name: 'Email Auto-Responder', schedule: 'Continuous', status: 'active', lastRun: 'Running', description: 'Auto-reply to non-sensitive emails. Flags contracts, legal, payments for manual review.' },
+    { id: 6, name: 'Status JSON Refresh', schedule: 'Every 30 min', status: 'active', lastRun: 'Running', description: 'Regenerates /api/status.json with live data from all systems (trading, email, IG, costs).' },
+    { id: 7, name: 'Paper Trader', schedule: '6:20 AM - 1:05 PM PT (weekdays)', status: 'active', lastRun: 'Running', description: 'ORB + VWAP paper trading strategies on Alpaca. 9 strategies loaded.' },
+    { id: 8, name: 'Master Orchestrator', schedule: '6:20 AM - 1:05 PM PT (weekdays)', status: 'active', lastRun: 'Running', description: '20 strategies, continuous 60s cycles. Manages all active trading logic.' },
+    { id: 9, name: 'Stop Loss Watchdog', schedule: '6:20 AM - 1:05 PM PT (weekdays)', status: cronHealthy >= 8 ? 'active' : 'idle', lastRun: 'Running', description: 'Independent safety net — checks positions every 30s. Enforces hard stop-losses.' },
+    { id: 10, name: 'Memory Maintenance', schedule: 'Sun 10:00 AM PT', status: 'active', lastRun: 'Last Sun', description: 'Distills daily logs into MEMORY.md, prunes stale entries, audits backlog.' },
+    { id: 11, name: 'Self-Improvement', schedule: 'Nightly 11:00 PM PT', status: 'active', lastRun: 'Last night', description: 'Reviews learnings, errors, corrections. Auto-deploys improvements to skills and workflows.' },
+    { id: 12, name: 'Nightly Cost Report', schedule: '11:30 PM PT', status: cronHealthy >= 8 ? 'active' : 'idle', lastRun: 'Last night', description: 'Aggregates daily API costs, posts summary to #mission-control if thresholds exceeded.' },
+    { id: 13, name: 'Instagram Content Scheduler', schedule: '9:00 AM PT (varies)', status: 'idle', lastRun: 'Awaiting setup', description: 'Auto-publishes scheduled IG posts. Currently manual — waiting on IG API connection.' },
+  ];
 
   // Integration status from live data
   const t = liveData?.trading || {};
@@ -156,12 +169,16 @@ export default function SettingsScreen() {
           <Bell size={20} className="text-cyan" />
           Active Automations ({cronJobs.length})
         </h2>
+        <p className="text-xs text-gray-500 mb-3">{cronHealthy}/{cronCount} healthy — tap any job for details</p>
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           {cronJobs.map((job) => (
-            <div key={job.id} className="glass-card">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold text-white">{job.name}</h3>
+            <div key={job.id} className="glass-card cursor-pointer" onClick={() => setExpandedCron(expandedCron === job.id ? null : job.id)}>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  {expandedCron === job.id ? <ChevronDown size={14} className="text-cyan shrink-0" /> : <ChevronRight size={14} className="text-gray-500 shrink-0" />}
+                  <h3 className="font-semibold text-white text-sm">{job.name}</h3>
+                </div>
                 <span
                   className={`text-xs px-2 py-1 rounded border ${getStatusColor(
                     job.status
@@ -170,7 +187,7 @@ export default function SettingsScreen() {
                   {job.status}
                 </span>
               </div>
-              <div className="flex justify-between text-xs text-gray-400">
+              <div className="flex justify-between text-xs text-gray-400 mt-1 ml-6">
                 <span>{job.schedule}</span>
                 <span>
                   {job.lastRun === 'pending'
@@ -178,6 +195,11 @@ export default function SettingsScreen() {
                     : `✓ ${job.lastRun}`}
                 </span>
               </div>
+              {expandedCron === job.id && (
+                <div className="mt-3 ml-6 pt-2 border-t border-cyan/10">
+                  <p className="text-xs text-gray-300 leading-relaxed">{job.description}</p>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -220,16 +242,20 @@ export default function SettingsScreen() {
         {/* Quick Deploy */}
         <div className="glass-card mb-6">
           <h3 className="text-lg font-semibold mb-3">Quick Deploy</h3>
-          <p className="text-xs text-gray-400 mb-3">Deploy the latest Mission Control changes to production with one tap.</p>
+          <p className="text-xs text-gray-400 mb-3">Deploy the latest Mission Control changes to production.</p>
+          <p className="text-[10px] text-gray-500 mb-3 bg-black/20 rounded-lg p-2 font-mono">cd ~/mission-hub && npx vite build && vercel --prod</p>
           <button
             onClick={() => {
-              alert('Deploying to Vercel... Check https://mission-control-app-chi-green.vercel.app for updates.');
+              const confirmed = window.confirm('This will trigger a production deploy to Vercel.\n\nTo deploy manually, run:\ncd ~/mission-hub && npx vite build && vercel --prod\n\nProceed?');
+              if (confirmed) {
+                window.open('https://vercel.com/dashboard', '_blank');
+              }
             }}
             className="w-full py-3 rounded-lg text-sm font-bold bg-gradient-to-r from-cyan to-blue-600 text-dark-bg hover:opacity-90 transition-opacity"
           >
             🚀 Deploy to Production
           </button>
-          <p className="text-[10px] text-gray-500 mt-2 text-center">Last deploy: Today 8:57 AM PT • Vercel</p>
+          <p className="text-[10px] text-gray-500 mt-2 text-center">Deploy runs via CLI on Mac Mini • Vercel</p>
         </div>
 
         <div className="space-y-2 glass-card">

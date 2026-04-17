@@ -19,13 +19,45 @@ export default function CalendarScreen() {
     const events = [];
     // Weekdays only (Mon-Fri)
     if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-      events.push({ id: `trading-${dayOfMonth}`, title: 'Trading Session', time: '6:20 AM', duration: '6h 40m', category: 'trading', location: 'Alpaca Paper' });
+      events.push({ id: `market-${dayOfMonth}`, title: 'Market Hours (Pre-market → Close)', time: '6:30 AM – 1:05 PM PT', duration: '6h 35m', category: 'trading', location: 'ThinkorSwim / Alpaca' });
+      events.push({ id: `trading-${dayOfMonth}`, title: 'Paper Trader + Master Orchestrator', time: '6:20 AM', duration: 'Until close', category: 'trading', location: 'Mac Mini — 9 strategies' });
+      events.push({ id: `watchdog-${dayOfMonth}`, title: 'Stop Loss Watchdog', time: '6:20 AM – 1:05 PM', duration: '30s cycles', category: 'trading', location: 'Safety net process' });
     }
-    // Daily
+    // Daily crons
     events.push({ id: `heartbeat-${dayOfMonth}`, title: 'Heartbeat Check', time: 'Every 30 min', duration: 'Auto', category: 'automation', location: 'OpenClaw Cron' });
+    events.push({ id: `email-check-${dayOfMonth}`, title: 'Email Auto-Responder', time: 'Continuous', duration: 'Auto', category: 'automation', location: 'Gmail API' });
+    events.push({ id: `status-gen-${dayOfMonth}`, title: 'Status JSON Refresh', time: 'Every 30 min', duration: 'Auto', category: 'automation', location: 'Mac Mini cron' });
+    // Morning brief weekdays
+    if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+      events.push({ id: `morning-brief-${dayOfMonth}`, title: 'Morning Brief → SMS + Discord', time: '7:00 AM PT', duration: '5 min', category: 'automation', location: 'OpenClaw Cron' });
+      events.push({ id: `evening-debrief-${dayOfMonth}`, title: 'Evening Debrief → SMS + Discord', time: '6:00 PM PT', duration: '5 min', category: 'automation', location: 'OpenClaw Cron' });
+    }
     // Sundays
     if (dayOfWeek === 0) {
-      events.push({ id: `review-${dayOfMonth}`, title: 'Weekly Review', time: '6:00 PM', duration: '30 min', category: 'automation', location: 'Auto (Charles)' });
+      events.push({ id: `review-${dayOfMonth}`, title: 'Weekly Review Brief', time: '6:00 PM', duration: '30 min', category: 'automation', location: 'Auto (Charles)' });
+      events.push({ id: `memory-maint-${dayOfMonth}`, title: 'Memory Maintenance', time: '10:00 AM', duration: '15 min', category: 'automation', location: 'OpenClaw Cron' });
+    }
+    // Fridays
+    if (dayOfWeek === 5) {
+      events.push({ id: `weekly-review-brief-${dayOfMonth}`, title: 'Weekly Review Brief → SMS', time: '5:00 PM PT', duration: '10 min', category: 'automation', location: 'OpenClaw Cron' });
+    }
+    // Content calendar — next week Apr 18-24
+    const contentCalendar = {
+      18: { title: 'IG Post: Weekend Mindset', time: '9:00 AM PT', category: 'content', location: '@benjamin86m' },
+      19: { title: 'IG Post: Napa Scenery', time: '6:00 PM PT', category: 'content', location: '@benjamin86m' },
+      20: { title: 'IG Post: Sunday Reset Routine', time: '9:00 AM PT', category: 'content', location: '@benjamin86m' },
+      21: { title: 'IG Post: Business Authority', time: '9:00 AM PT', category: 'content', location: '@benjamin86m' },
+      22: { title: 'IG Post: Napa Valley Life', time: '9:00 AM PT', category: 'content', location: '@benjamin86m' },
+      23: { title: 'IG Post: RLM Before/After', time: '9:00 AM PT', category: 'content', location: '@benjamin86m' },
+      24: { title: 'IG Post: AI Runs My Business', time: '9:00 AM PT', category: 'content', location: '@benjamin86m' },
+    };
+    if (contentCalendar[dayOfMonth]) {
+      const c = contentCalendar[dayOfMonth];
+      events.push({ id: `content-${dayOfMonth}`, title: c.title, time: c.time, duration: 'Post', category: c.category, location: c.location });
+    }
+    // Bennett's Brief publishing schedule (Wednesdays and Fridays)
+    if (dayOfWeek === 3 || dayOfWeek === 5) {
+      events.push({ id: `brief-${dayOfMonth}`, title: "Bennett's Brief — Publish", time: '8:00 AM PT', duration: 'Auto', category: 'content', location: 'Substack' });
     }
     return events;
   };
