@@ -1,0 +1,28 @@
+{
+  "account": {
+    "equity": 99308.45,
+    "buying_power": 197616.90,
+    "daily_pnl": 342.15,
+    "daily_roi": 0.345,
+    "daily_loss_limit": 2979.24,
+    "daily_loss_used": 0
+  },
+  "positions": {
+    "open": 1,
+    "closed_today": 6,
+    "max_concurrent": 4,
+    "current_concurrent": 1
+  },
+  "performance": {
+    "win_rate": 0.667,
+    "avg_trade_duration": "2.3min",
+    "avg_win": 152.33,
+    "avg_loss": -45.67,
+    "risk_reward_ratio": 3.33,
+    "profit_factor": 2.14
+  },
+  "strategies_active": 8,
+  "time_zone": "America/Los_Angeles",
+  "market_status": "OPEN",
+  "last_update": "2026-04-17T10:29:00Z"
+}

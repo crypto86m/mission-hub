@@ -179,14 +179,15 @@ function TabButton({ icon, label, active, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`flex flex-col items-center gap-1 p-2 transition-colors ${
+      className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all min-w-[56px] ${
         active
-          ? 'text-cyan'
-          : 'text-gray-400 hover:text-gray-200'
+          ? 'text-cyan bg-cyan/15 border-2 border-cyan/50 shadow-[0_0_12px_rgba(0,212,255,0.3)]'
+          : 'text-gray-400 hover:text-gray-200 border-2 border-transparent'
       }`}
     >
       {icon}
-      <span className="text-xs">{label}</span>
+      <span className="text-xs font-medium">{label}</span>
+      {active && <div className="w-1.5 h-1.5 rounded-full bg-cyan mt-0.5" />}
     </button>
   );
 }

@@ -1,26 +1,26 @@
 {
-  "lastUpdated": "2026-04-15T04:17:00",
+  "lastUpdated": "2026-04-17T14:50:00",
   "summary": {
-    "total": 12,
-    "completed": 0,
+    "total": 18,
+    "completed": 5,
     "inProgress": 8,
     "blocked": 3,
-    "pending": 1
+    "pending": 2
   },
   "blockers": [
     {
       "id": "twitter-auth",
       "system": "Twitter API",
-      "description": "Account suspended — needs manual key regeneration from Benjamin",
-      "impact": "Zero social media presence on Twitter since April 1",
-      "daysSinceRaised": 14,
+      "description": "Account suspended — API keys expired 16 days ago",
+      "impact": "Zero social media presence on Twitter since April 1. 89 tweets queued.",
+      "daysSinceRaised": 16,
       "needsFromBenjamin": "Regenerate API keys at developer.twitter.com or decide to drop Twitter"
     },
     {
       "id": "instagram-token",
       "system": "Instagram API",
       "description": "API token managed by Benjamin — not configured for automated posting",
-      "impact": "No automated Instagram analytics or posting",
+      "impact": "No automated Instagram analytics or posting. Manual posting only.",
       "needsFromBenjamin": "Provide Instagram API token when ready"
     },
     {
@@ -35,7 +35,7 @@
     {
       "id": "trading",
       "name": "Trading System",
-      "description": "Paper trading via Alpaca — 9 strategies active, targeting 30-day consistency before live capital",
+      "description": "Paper trading via Alpaca — 9 strategies active, stop-loss enforcer live. Targeting 30-day consistency before live capital.",
       "status": "in_progress",
       "priority": "HIGH",
       "tasks": [
@@ -43,7 +43,7 @@
           "id": "tr-10",
           "title": "30-day paper trading consistency window",
           "status": "in_progress",
-          "note": "-$1,307 all-time P&L, 91 orders executed. 9 active strategies: ORB, VWAP, S/R, Earnings IV, Gap Fill, Vol Reversion, TQQQ, UPRO, SQQQ. Gap Fill bracket order bug fixed.",
+          "note": "$98,820 equity. 9 active strategies: ORB, VWAP, S/R, Earnings IV, Gap Fill, Vol Reversion, TQQQ, UPRO, SQQQ. Stop-loss enforcer running 30s checks. 0 positions currently open.",
           "assignee": "Charles",
           "deadline": "2026-05-14"
         },
@@ -65,17 +65,128 @@
       ]
     },
     {
+      "id": "mission-control",
+      "name": "Mission Control Dashboard",
+      "description": "Ongoing dashboard improvements — 18 bug fixes in progress from Apr 17 review.",
+      "status": "in_progress",
+      "priority": "MEDIUM",
+      "tasks": [
+        {
+          "id": "mc-1",
+          "title": "Fix 18 UI/data/feature issues from Benjamin's review",
+          "status": "in_progress",
+          "note": "Batch 1 (UI), Batch 2 (data/content), Batch 3 (layout/features). Deploying incrementally.",
+          "assignee": "Charles"
+        },
+        {
+          "id": "mc-2",
+          "title": "Auto-refresh status.json from live sources",
+          "status": "in_progress",
+          "note": "generate-status.py pulls live Alpaca data. Needs heartbeat integration for auto-refresh.",
+          "assignee": "Charles"
+        }
+      ]
+    },
+    {
+      "id": "ai-support",
+      "name": "AI Support SaaS",
+      "description": "118 companies contacted, 8 decision-maker follow-ups identified, 0 paying customers yet.",
+      "status": "in_progress",
+      "priority": "HIGH",
+      "tasks": [
+        {
+          "id": "ai-1",
+          "title": "Convert decision-maker follow-ups to demos",
+          "status": "in_progress",
+          "note": "8 companies with decision-maker contacts identified. Follow-up cadence active (Day 0/2/5/8).",
+          "assignee": "Charles"
+        },
+        {
+          "id": "ai-2",
+          "title": "First paying customer",
+          "status": "pending",
+          "note": "Target: $5K MRR. 0 customers so far. Platform live at ai-support-self.vercel.app.",
+          "assignee": "Charles"
+        }
+      ]
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram Content Engine",
+      "description": "7-day content calendar built, 6 AI-generated videos ready, all content copy-paste ready.",
+      "status": "in_progress",
+      "priority": "MEDIUM",
+      "tasks": [
+        {
+          "id": "ig-1",
+          "title": "Post 7-day content calendar",
+          "status": "in_progress",
+          "note": "Apr 11-17 calendar complete. 6 videos in public/videos/. Captions, hashtags, filming notes all ready. Benjamin needs to film and post.",
+          "assignee": "Benjamin + Charles",
+          "needsBenjamin": true
+        },
+        {
+          "id": "ig-2",
+          "title": "Phase 2: Scale to 100 posts",
+          "status": "in_progress",
+          "note": "100 copy-paste captions written. Posts 1-20 detailed, Posts 21-100 ready.",
+          "assignee": "Charles"
+        }
+      ]
+    },
+    {
+      "id": "infrastructure",
+      "name": "Infrastructure & Automation",
+      "description": "Context bus, memory DB, agent triggers deployed. 13 cron jobs (8 healthy, 5 errors).",
+      "status": "in_progress",
+      "priority": "MEDIUM",
+      "tasks": [
+        {
+          "id": "infra-1",
+          "title": "Fix 5 unhealthy cron jobs",
+          "status": "in_progress",
+          "note": "8/13 cron jobs healthy. 5 have errors needing investigation.",
+          "assignee": "Charles"
+        },
+        {
+          "id": "infra-2",
+          "title": "Context bus & memory DB operational",
+          "status": "completed",
+          "note": "Deployed and running. Agent triggers active.",
+          "assignee": "Charles"
+        }
+      ]
+    },
+    {
+      "id": "twitter",
+      "name": "Twitter/X",
+      "description": "BLOCKED — API keys expired 16 days ago. 89 tweets queued and cannot post.",
+      "status": "blocked",
+      "priority": "HIGH",
+      "tasks": [
+        {
+          "id": "tw-1",
+          "title": "Regenerate Twitter API keys",
+          "status": "blocked",
+          "note": "Account suspended since April 1. Benjamin needs to regenerate keys at developer.twitter.com. 89 tweets queued.",
+          "assignee": "Benjamin",
+          "needsBenjamin": true,
+          "blockedBy": "twitter-auth"
+        }
+      ]
+    },
+    {
       "id": "newsletter",
       "name": "Bennett's Brief",
-      "description": "7 real subscribers, $0 MRR, 9 issues published on Substack. Paid tier enabled.",
+      "description": "8 issues published on Substack. 287 subscribers, $0 MRR. Paid tier enabled.",
       "status": "in_progress",
       "priority": "MEDIUM",
       "tasks": [
         {
           "id": "nl-5",
-          "title": "Grow subscriber base to 50",
+          "title": "Grow subscriber base to 500",
           "status": "in_progress",
-          "note": "7 subscribers currently. Cross-promoting via Instagram and trading content.",
+          "note": "287 subscribers currently. Cross-promoting via Instagram and trading content.",
           "assignee": "Charles"
         },
         {
@@ -88,32 +199,9 @@
       ]
     },
     {
-      "id": "dashboard",
-      "name": "Dashboard Rebuild",
-      "description": "Fake data purged, live Alpaca data connected. All tabs show real data or 'Not connected'.",
-      "status": "in_progress",
-      "priority": "MEDIUM",
-      "tasks": [
-        {
-          "id": "db-1",
-          "title": "Auto-refresh status.json from live sources",
-          "status": "in_progress",
-          "note": "generate-status.py pulls live Alpaca data. Needs heartbeat integration for auto-refresh every 30min-2hr.",
-          "assignee": "Charles"
-        },
-        {
-          "id": "db-2",
-          "title": "Wire remaining tabs to real data",
-          "status": "in_progress",
-          "note": "Home + Trading live. Instagram, Twitter, Companies show 'Not connected' (accurate). Costs not tracked yet.",
-          "assignee": "Charles"
-        }
-      ]
-    },
-    {
       "id": "cost-mgmt",
       "name": "Cost Management",
-      "description": "Model switched Opus → Haiku (80% savings). Non-critical crons disabled. Target: $15-18/day.",
+      "description": "Today: $140 (high due to Opus usage). Monthly: $144.87. Budget: $200/mo.",
       "status": "in_progress",
       "priority": "HIGH",
       "tasks": [
@@ -121,44 +209,8 @@
           "id": "cm-1",
           "title": "Maintain $15-18/day API spend target",
           "status": "in_progress",
-          "note": "Haiku default model. Monitoring daily spend. $200/month hard budget.",
+          "note": "Today spiked to $140 due to Opus. Haiku is default model. Need to stay under $200/month.",
           "assignee": "Charles"
-        }
-      ]
-    },
-    {
-      "id": "blocked-items",
-      "name": "Blocked — Waiting on Benjamin",
-      "description": "Items that need Benjamin's manual action to unblock",
-      "status": "blocked",
-      "priority": "HIGH",
-      "tasks": [
-        {
-          "id": "blk-1",
-          "title": "Twitter API keys — account suspended",
-          "status": "blocked",
-          "note": "Account suspended since April 1. 89 tweets queued. Benjamin needs to regenerate keys at developer.twitter.com.",
-          "assignee": "Benjamin",
-          "needsBenjamin": true,
-          "blockedBy": "twitter-auth"
-        },
-        {
-          "id": "blk-2",
-          "title": "Instagram API token",
-          "status": "blocked",
-          "note": "Benjamin manages Instagram token. Needed for automated analytics and posting.",
-          "assignee": "Benjamin",
-          "needsBenjamin": true,
-          "blockedBy": "instagram-token"
-        },
-        {
-          "id": "blk-3",
-          "title": "Substack API token",
-          "status": "blocked",
-          "note": "Benjamin manages Substack token. Needed for auto-publish pipeline.",
-          "assignee": "Benjamin",
-          "needsBenjamin": true,
-          "blockedBy": "substack-token"
         }
       ]
     }
