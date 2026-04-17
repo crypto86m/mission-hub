@@ -33,13 +33,17 @@ export default function ContentPipeline() {
   const [activeTab, setActiveTab] = useState('videos');
   const [expanded, setExpanded] = useState(null);
 
+  const [briefs, setBriefs] = useState(null);
+
   useEffect(() => {
     Promise.all([
       fetch('/api/content.json').then(r => r.json()).catch(() => null),
       fetch('/api/videos.json').then(r => r.json()).catch(() => null),
-    ]).then(([content, vids]) => {
+      fetch('/api/briefs.json').then(r => r.json()).catch(() => null),
+    ]).then(([content, vids, briefsData]) => {
       setData(content);
       setVideos(vids);
+      setBriefs(briefsData);
       setLoading(false);
     });
   }, []);
@@ -57,10 +61,11 @@ export default function ContentPipeline() {
   );
 
   const videoCount = videos?.videos?.length || 0;
+  const briefCount = briefs?.articles?.length || data?.newsletters?.length || 0;
   const tabs = [
     { key: 'videos', label: '🎥 Videos', count: videoCount },
     { key: 'instagram', label: '📸 IG Posts', count: data?.instagram?.length || 0 },
-    { key: 'newsletters', label: "📰 Brief", count: data?.newsletters?.length || 0 },
+    { key: 'newsletters', label: "📰 Brief", count: briefCount },
     { key: 'tweets', label: '🐦 Tweets', count: data?.tweets?.length || 0 },
   ];
 

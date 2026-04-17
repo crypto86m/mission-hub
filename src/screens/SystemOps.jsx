@@ -21,8 +21,8 @@ async function fetchAlpacaPositions() {
   try {
     const res = await fetch('https://paper-api.alpaca.markets/v2/positions', {
       headers: {
-        'APCA-API-KEY-ID': 'PKFUDSV2RNOHY3N46B7U4SDMPW',
-        'APCA-API-SECRET-KEY': 'Cj1VaCffjyddy8YsSwASV3EmPp7QgsVAhb8pv8WyZBhT',
+        'APCA-API-KEY-ID': 'PKWEXOYKX72DRSUAM3UH26LWCL',
+        'APCA-API-SECRET-KEY': 'CNm9ajzKtfFojB5HyXEWMgYieqpiRKNVjfHSP5BF41kY',
       }
     });
     if (res.ok) {
@@ -37,8 +37,8 @@ async function fetchAlpacaAccount(mode = 'paper') {
   const configs = {
     paper: {
       url: 'https://paper-api.alpaca.markets/v2/account',
-      key: 'PKFUDSV2RNOHY3N46B7U4SDMPW',
-      secret: 'Cj1VaCffjyddy8YsSwASV3EmPp7QgsVAhb8pv8WyZBhT',
+      key: 'PKWEXOYKX72DRSUAM3UH26LWCL',
+      secret: 'CNm9ajzKtfFojB5HyXEWMgYieqpiRKNVjfHSP5BF41kY',
     },
     live: {
       url: 'https://api.alpaca.markets/v2/account',

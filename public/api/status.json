@@ -1,14 +1,15 @@
 {
   "generated": "2026-04-17T14:48:54.669503",
   "trading": {
-    "accountValue": 0,
+    "accountValue": 98820,
     "unrealizedPnl": 0,
     "openPositions": 0,
     "todayTrades": 0,
     "todayPnl": 0,
-    "strategiesLoaded": 20,
+    "strategiesLoaded": 9,
     "dailyLimit": 120,
-    "phase": "Paper Trading (Phase 3) \u2014 BLOCKED",
+    "phase": "Paper Trading — 9 Strategies Active",
+    "status": "connected",
     "positions": []
   },
   "costs": {
@@ -25,7 +26,7 @@
   "newsletter": {
     "subscribers": 287,
     "openRate": 38,
-    "issuesPublished": 6,
+    "issuesPublished": 8,
     "lastIssue": "2026-04-09"
   },
   "instagram": {
