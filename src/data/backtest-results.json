@@ -1,9 +1,9 @@
 {
   "title": "Trading Strategy Backtest Results",
-  "timestamp": "2026-04-15T23:00:03.852727",
-  "date": "2026-04-15",
+  "timestamp": "2026-04-19T23:00:05.381610",
+  "date": "2026-04-19",
   "summary": {
-    "total_strategies": 16,
+    "total_strategies": 17,
     "new_winners": 0,
     "deteriorating": 0,
     "lookback_period": "2 years"
@@ -139,27 +139,32 @@
       "tag": "DISABLED"
     },
     {
-      "strategy": "strategy_02_macd_signal_cross",
+      "strategy": "strategy_01_orb_breakout",
       "sharpe": 0.0,
       "tag": "DISABLED"
     },
     {
-      "strategy": "strategy_04_supertrend_breakout",
+      "strategy": "strategy_02_vwap_reclaim",
       "sharpe": 0.0,
       "tag": "DISABLED"
     },
     {
-      "strategy": "strategy_06_rsi_oversold",
+      "strategy": "strategy_03_sr_rejection",
       "sharpe": 0.0,
       "tag": "DISABLED"
     },
     {
-      "strategy": "strategy_07_stochastic_extreme",
+      "strategy": "strategy_orb_30min",
       "sharpe": 0.0,
       "tag": "DISABLED"
     },
     {
-      "strategy": "strategy_20_volume_price_action",
+      "strategy": "strategy_sr_rejection",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_vwap_reclaim",
       "sharpe": 0.0,
       "tag": "DISABLED"
     }

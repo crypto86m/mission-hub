@@ -178,7 +178,7 @@
     {
       "id": "newsletter",
       "name": "Bennett's Brief",
-      "description": "8 issues published on Substack. 287 subscribers, $0 MRR. Paid tier enabled.",
+      "description": "9 issues published on Substack. ~7 subscribers, $0 MRR. Paid tier enabled.",
       "status": "in_progress",
       "priority": "MEDIUM",
       "tasks": [
@@ -186,7 +186,7 @@
           "id": "nl-5",
           "title": "Grow subscriber base to 500",
           "status": "in_progress",
-          "note": "287 subscribers currently. Cross-promoting via Instagram and trading content.",
+          "note": "~7 subscribers currently. Cross-promoting via Instagram and trading content.",
           "assignee": "Charles"
         },
         {

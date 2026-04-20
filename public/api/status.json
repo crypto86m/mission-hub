@@ -1,32 +1,31 @@
 {
-  "generated": "2026-04-17T14:48:54.669503",
+  "generated": "2026-04-18T22:00:07.979147",
   "trading": {
-    "accountValue": 98820,
+    "accountValue": 0,
     "unrealizedPnl": 0,
     "openPositions": 0,
     "todayTrades": 0,
     "todayPnl": 0,
-    "strategiesLoaded": 9,
+    "strategiesLoaded": 20,
     "dailyLimit": 120,
-    "phase": "Paper Trading — 9 Strategies Active",
-    "status": "connected",
+    "phase": "Paper Trading (Phase 3) \u2014 BLOCKED",
     "positions": []
   },
   "costs": {
-    "today": 140.02,
+    "today": 70.38,
     "dailyLimit": 20,
     "monthlyBudget": 200,
-    "monthTotal": 144.87
+    "monthTotal": 70.38
   },
   "email": {
-    "totalReplies": 795,
+    "totalReplies": 811,
     "unread": 0,
     "flagged": 0
   },
   "newsletter": {
     "subscribers": 287,
     "openRate": 38,
-    "issuesPublished": 8,
+    "issuesPublished": 6,
     "lastIssue": "2026-04-09"
   },
   "instagram": {
@@ -43,9 +42,9 @@
     "error": "401 Unauthorized \u2014 credentials expired"
   },
   "agents": {
-    "cronJobs": 13,
-    "cronHealthy": 8,
-    "cronErrors": 5
+    "cronJobs": 12,
+    "cronHealthy": 12,
+    "cronErrors": 0
   },
   "companies": {
     "rlm": {
