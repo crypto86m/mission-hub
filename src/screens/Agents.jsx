@@ -132,6 +132,50 @@ function AgentNode({ agent, depth = 0 }) {
           }`}>{agent.status}</span>
           <p className="text-[9px] text-gray-600 mt-1">{agent.lastActive}</p>
         </div>
+        {hasChildren && (
+          <div className="shrink-0 text-gray-400">
+            {expanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+          </div>
+        )}
+      </div>
+      {expanded && hasChildren && (
+        <div className="mt-1">
+          {agent.children.map(child => (
+            <AgentNode key={child.id} agent={child} depth={depth + 1} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AgentTaskPerformance() {
+  const { loaded, initialize, getAgentStats } = useTaskStore();
+  useEffect(() => { if (!loaded) initialize(); }, [loaded]);
+  const stats = getAgentStats();
+  if (!loaded || stats.length === 0) return null;
+  return (
+    <div className="mt-8">
+      <h2 className="text-lg font-bold mb-3">Task Performance by Agent</h2>
+      <div className="space-y-2">
+        {stats.map(s => (
+          <div key={s.agent} className="glass-card py-3">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-bold text-white">{s.agent}</span>
+              <span className={`text-sm font-mono font-bold ${s.efficiency >= 80 ? 'text-green-400' : s.efficiency >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>{s.efficiency}% eff</span>
+            </div>
+            <div className="w-full h-2 bg-gray-700 rounded-full mb-2">
+              <div className={`h-2 rounded-full transition-all ${s.efficiency >= 80 ? 'bg-green-400' : s.efficiency >= 50 ? 'bg-yellow-400' : 'bg-red-400'}`} style={{ width: `${s.efficiency}%` }} />
+            </div>
+            <div className="grid grid-cols-4 gap-2 text-center">
+              <div><p className="text-xs font-bold text-green-400">{s.completed}</p><p className="text-[9px] text-gray-500">Done</p></div>
+              <div><p className="text-xs font-bold text-blue-400">{s.inProgress}</p><p className="text-[9px] text-gray-500">Active</p></div>
+              <div><p className="text-xs font-bold text-orange-400">{s.delayed}</p><p className="text-[9px] text-gray-500">Delayed</p></div>
+              <div><p className="text-xs font-bold text-red-400">{s.blocked}</p><p className="text-[9px] text-gray-500">Blocked</p></div>
+            </div>
+            {s.avgTransitionHrs !== null && <p className="text-[10px] text-gray-500 mt-1 text-center">Avg transition: {s.avgTransitionHrs}h</p>}
+          </div>
+        ))}
       </div>
 
       {open && hasChildren && (
@@ -163,6 +207,95 @@ export default function Agents() {
       {agents.map(agent => (
         <AgentNode key={agent.id} agent={agent} depth={0} />
       ))}
+    </div>
+  );
+}
+
+// Hermes Multi-Agent System removed — was entirely hardcoded/fake data.
+// Agent status is now driven by the Agent Family Tree (live from status.json)
+// and Task Performance (live from Supabase task store).
+const HermesAgentsOverview = () => null;
+
+export default function Agents() {
+  const [supaAgents, setSupaAgents] = useState([]);
+  const [liveData, setLiveData] = useState(null);
+
+  useEffect(() => {
+    supabase.from('agent_status').select('*').then(({ data }) => {
+      if (data) setSupaAgents(data);
+    });
+    fetch('/api/status.json?t=' + Date.now())
+      .then(r => r.json())
+      .then(d => setLiveData(d))
+      .catch(() => {});
+  }, []);
+
+  const agentTree = buildAgentTree(liveData);
+
+  // Count statuses from tree
+  const countStatuses = (node) => {
+    let counts = { active: 0, blocked: 0, idle: 0 };
+    if (node.status === 'active') counts.active++;
+    else if (node.status === 'blocked') counts.blocked++;
+    else counts.idle++;
+    (node.children || []).forEach(c => {
+      const cc = countStatuses(c);
+      counts.active += cc.active;
+      counts.blocked += cc.blocked;
+      counts.idle += cc.idle;
+    });
+    return counts;
+  };
+  const statusCounts = countStatuses(agentTree);
+
+  return (
+    <div className="w-full h-full overflow-y-auto pb-24 pt-6 px-4">
+      {/* Agent Family Tree */}
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold glow-text mb-2">Agent System</h1>
+        <p className="text-gray-400 text-sm">Live status from connected systems</p>
+      </div>
+
+      {/* Summary */}
+      <div className="grid grid-cols-3 gap-3 mb-6">
+        <div className="glass-card text-center py-3">
+          <p className="text-2xl font-bold text-green-400">{statusCounts.active}</p>
+          <p className="text-[10px] text-gray-400">Active</p>
+        </div>
+        <div className="glass-card text-center py-3">
+          <p className="text-2xl font-bold text-red-400">{statusCounts.blocked}</p>
+          <p className="text-[10px] text-gray-400">Blocked</p>
+        </div>
+        <div className="glass-card text-center py-3">
+          <p className="text-2xl font-bold text-gray-400">{statusCounts.idle}</p>
+          <p className="text-[10px] text-gray-400">Idle</p>
+        </div>
+      </div>
+
+      {/* Tree */}
+      <AgentNode agent={agentTree} />
+
+      {/* Agent Task Performance (from shared Task Intelligence store) */}
+      <AgentTaskPerformance />
+
+      {/* Supabase Agent Data (if available) */}
+      {supaAgents.length > 0 && (
+        <div className="mt-8">
+          <h2 className="text-lg font-bold mb-3">Live Agent Status (Supabase)</h2>
+          <div className="space-y-2">
+            {supaAgents.map(a => (
+              <div key={a.id} className="glass-card flex items-center gap-3 py-2">
+                <div className={`w-2 h-2 rounded-full ${statusColor(a.status)}`} />
+                <div className="flex-1 min-w-0">
+                  <span className="text-sm font-medium text-white">{a.name}</span>
+                  <p className="text-[10px] text-gray-400 truncate">{a.task}</p>
+                </div>
+                <span className={`text-[9px] font-mono ${statusLabel(a.status)}`}>{a.status}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

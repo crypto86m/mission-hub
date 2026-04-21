@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Reels - Benjamin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .reel-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .reel-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(236, 72, 153, 0.5);
+            transform: translateY(-5px);
+        }
+        
+        .reel-number {
+            display: inline-block;
+            background: #ec4899;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .reel-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .reel-description {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .reel-specs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #888;
+        }
+        
+        .spec {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .video-preview {
+            width: 100%;
+            aspect-ratio: 9/16;
+            background: #000;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .download-btn:hover {
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .footer a {
+            color: #ec4899;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📹 Your Instagram Reels</h1>
+        
+        <!-- Reel 1 -->
+        <div class="reel-card">
+            <span class="reel-number">REEL 1</span>
+            <h2 class="reel-title">Cinematic Lifestyle</h2>
+            <p class="reel-description">Cool tones, moody, aspirational vibes. POV: You're building something worth documenting.</p>
+            
+            <div class="reel-specs">
+                <div class="spec">⏱️ 16s</div>
+                <div class="spec">📦 9.9 MB</div>
+                <div class="spec">1080×1920</div>
+            </div>
+            
+            <div class="video-preview">
+                <video controls>
+                    <source src="/reels/reel_1_cinematic_lifestyle.mp4" type="video/mp4">
+                    Your browser doesn't support video playback.
+                </video>
+            </div>
+            
+            <a href="/reels/reel_1_cinematic_lifestyle.mp4" download class="download-btn">⬇️ Download</a>
+        </div>
+        
+        <!-- Reel 2 -->
+        <div class="reel-card">
+            <span class="reel-number">REEL 2</span>
+            <h2 class="reel-title">Day In The Moment</h2>
+            <p class="reel-description">Warm vintage film look. Authentic, relatable. The best moments aren't planned.</p>
+            
+            <div class="reel-specs">
+                <div class="spec">⏱️ 17.6s</div>
+                <div class="spec">📦 12.5 MB</div>
+                <div class="spec">1080×1920</div>
+            </div>
+            
+            <div class="video-preview">
+                <video controls>
+                    <source src="/reels/reel_2_day_in_moment.mp4" type="video/mp4">
+                    Your browser doesn't support video playback.
+                </video>
+            </div>
+            
+            <a href="/reels/reel_2_day_in_moment.mp4" download class="download-btn">⬇️ Download</a>
+        </div>
+        
+        <!-- Reel 3 -->
+        <div class="reel-card">
+            <span class="reel-number">REEL 3</span>
+            <h2 class="reel-title">This Is Living</h2>
+            <p class="reel-description">Bold, saturated, high-energy. Making moments into memories. Viral-ready.</p>
+            
+            <div class="reel-specs">
+                <div class="spec">⏱️ 16.4s</div>
+                <div class="spec">📦 13.4 MB</div>
+                <div class="spec">1080×1920</div>
+            </div>
+            
+            <div class="video-preview">
+                <video controls>
+                    <source src="/reels/reel_3_this_is_living.mp4" type="video/mp4">
+                    Your browser doesn't support video playback.
+                </video>
+            </div>
+            
+            <a href="/reels/reel_3_this_is_living.mp4" download class="download-btn">⬇️ Download</a>
+        </div>
+        
+        <div class="footer">
+            <p>Ready to post to Instagram 🚀</p>
+            <p>Add audio in Instagram app before posting</p>
+            <p><a href="/api/reels.json">View captions & hashtags →</a></p>
+        </div>
+    </div>
+</body>
+</html>

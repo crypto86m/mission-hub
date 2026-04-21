@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-04-13T15:20:21.766188",
+  "system": "RLM Pipeline",
+  "data": {
+    "current": {
+      "active_projects": 354,
+      "ytd_revenue": "$2.8M",
+      "margin": "34%",
+      "status": "Strong operational performance"
+    },
+    "pending": {
+      "bids_outstanding": 12,
+      "est_value": "$450K",
+      "probability": "65%"
+    },
+    "metrics": {
+      "project_close_rate": "78%",
+      "avg_project_value": "$7900",
+      "repeat_client_rate": "82%",
+      "satisfaction": "4.8/5"
+    }
+  }
+}

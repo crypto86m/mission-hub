@@ -5,6 +5,52 @@ import ActivityFeed from '../components/ActivityFeed';
 import MasterConnect from '../components/MasterConnect';
 import SystemHealthWidget from '../components/SystemHealthWidget';
 
+function TaskSummaryWidget() {
+  const { summary, loaded, initialize, getSmartAlerts, getAtRiskTasks } = useTaskStore();
+  useEffect(() => { if (!loaded) initialize(); }, [loaded]);
+  if (!loaded) return null;
+  const alerts = getSmartAlerts();
+  const atRisk = getAtRiskTasks();
+  return (
+    <div className="mb-6">
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <CheckSquare size={16} className="text-cyan" />
+          <h2 className="text-lg font-bold">Task Intelligence</h2>
+        </div>
+        <span className="text-xs font-mono text-gray-400">{summary.total} TASKS</span>
+      </div>
+      {alerts.length > 0 && (
+        <div className="mb-2 space-y-1">
+          {alerts.map((a, i) => (
+            <div key={i} className={`px-3 py-1.5 rounded-lg text-xs font-medium border ${
+              a.type === 'danger' ? 'bg-red-500/10 border-red-500/20 text-red-300' : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-300'
+            }`}>{a.text}</div>
+          ))}
+        </div>
+      )}
+      <div className="grid grid-cols-4 gap-2 stagger-children">
+        {[
+          { label: 'Done', value: summary.completed, color: 'text-green-400' },
+          { label: 'Active', value: summary.inProgress, color: 'text-blue-400' },
+          { label: 'Approval', value: summary.awaitingApproval, color: 'text-yellow-400' },
+          { label: 'Blocked', value: summary.blocked + summary.delayed, color: 'text-red-400' },
+        ].map((c, i) => (
+          <div key={i} className="glass-card text-center py-2">
+            <p className={`text-xl font-bold number-animate ${c.color}`}>{c.value}</p>
+            <p className="text-[9px] text-gray-500">{c.label}</p>
+          </div>
+        ))}
+      </div>
+      {atRisk.length > 0 && (
+        <div className="mt-2 text-[10px] text-orange-400">
+          ⚠️ {atRisk.length} at-risk: {atRisk.slice(0, 3).map(t => t.title).join(', ')}{atRisk.length > 3 ? '...' : ''}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Dashboard() {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [liveData, setLiveData] = useState(null);
@@ -76,6 +122,15 @@ export default function Dashboard() {
       color: 'from-pink-500 to-pink-600',
       icon: '📸',
       detail: ig,
+    },
+    {
+      id: 6,
+      name: 'Freelance',
+      title: 'Upwork + Fiverr + LinkedIn',
+      stats: '3 Platforms',
+      subtitle: `Upwork bidding · 4 Fiverr gigs · LinkedIn outreach`,
+      color: 'from-purple-500 to-purple-600',
+      icon: '💼',
     },
   ];
 
@@ -272,6 +327,21 @@ export default function Dashboard() {
       <div>
         <h2 className="text-lg font-bold mb-4">Live Activity</h2>
         <ActivityFeed activities={activityFeed} />
+      </div>
+
+      {/* Agent Communications */}
+      <div className="mb-8">
+        <AgentCommsLog />
+      </div>
+
+      {/* Time Travel */}
+      <div className="mb-8">
+        <TimeTravelSlider />
+      </div>
+
+      {/* AI Optimization Recommendations */}
+      <div className="mb-8">
+        <SelfOptimization />
       </div>
     </div>
   );

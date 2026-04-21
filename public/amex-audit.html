@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AMEX NVCC Audit</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AMEX Audit">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #1f2937;
+        }
+
+        body {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 16px;
+            padding-top: max(16px, env(safe-area-inset-top));
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f3460, #16213e);
+            color: white;
+            padding: 20px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            margin-left: -16px;
+            margin-right: -16px;
+            margin-top: -16px;
+            margin-top: calc(-16px - env(safe-area-inset-top));
+            padding-top: calc(20px + env(safe-area-inset-top));
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid #10b981;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .section {
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #0f3460;
+            font-weight: 700;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th {
+            background: #f3f4f6;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        .highlight {
+            background: #fef3c7;
+        }
+
+        .alert-box {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 4px;
+        }
+
+        .alert-desc {
+            color: #7f1d1d;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .findings-list {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .finding {
+            padding: 12px;
+            border-left: 3px solid #3b82f6;
+            margin-bottom: 8px;
+            font-size: 13px;
+            background: #f0f9ff;
+        }
+
+        .finding:last-child {
+            margin-bottom: 0;
+        }
+
+        .finding-title {
+            font-weight: 600;
+            color: #0c4a6e;
+            margin-bottom: 4px;
+        }
+
+        .finding-desc {
+            color: #0f766e;
+            font-size: 12px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #9ca3af;
+            font-size: 12px;
+            margin-bottom: env(safe-area-inset-bottom);
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .cta-button:active {
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #e5e7eb;
+            overflow-x: auto;
+            padding-bottom: 0;
+        }
+
+        .tab {
+            padding: 12px 16px;
+            border: none;
+            background: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            color: #10b981;
+            border-bottom-color: #10b981;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+        }
+
+        .print-button {
+            background: #3b82f6;
+        }
+
+        .print-button:active {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 AMEX NVCC Audit</h1>
+            <p class="subtitle">Complete 27-Month Analysis</p>
+        </header>
+
+        <div class="section">
+            <div class="summary-card">
+                <div class="metric">
+                    <span class="metric-label">Total Spending (27 months)</span>
+                    <span class="metric-value">$3.42M</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Date Range</span>
+                    <span class="metric-value">Jan 2024 - Mar 2026</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Average Monthly</span>
+                    <span class="metric-value">$126,669</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Statements Found</span>
+                    <span class="metric-value">69 files</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('summary')">Summary</button>
+            <button class="tab" onclick="showTab('monthly')">Monthly</button>
+            <button class="tab" onclick="showTab('findings')">Findings</button>
+            <button class="tab" onclick="showTab('details')">Details</button>
+        </div>
+
+        <!-- Tab 1: Summary -->
+        <div id="summary" class="tab-content active">
+            <div class="section">
+                <h2>Key Metrics</h2>
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <div class="stat-number">$3.42M</div>
+                        <div class="stat-label">Total Spending</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">27</div>
+                        <div class="stat-label">Months Covered</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">$272K</div>
+                        <div class="stat-label">Peak Month</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">+47%</div>
+                        <div class="stat-label">YoY Growth</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>2024 vs 2025 vs 2026</h2>
+                <div class="chart-container">
+                    <table>
+                        <tr>
+                            <th>Year</th>
+                            <th>Total</th>
+                            <th>Avg/Month</th>
+                        </tr>
+                        <tr>
+                            <td><strong>2024</strong></td>
+                            <td class="amount">$1,124,570</td>
+                            <td class="amount">$102,234</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2025</strong></td>
+                            <td class="amount">$1,650,201</td>
+                            <td class="amount">$137,517</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2026 (Q1)</strong></td>
+                            <td class="amount">$545,705</td>
+                            <td class="amount">$181,902</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Monthly -->
+        <div id="monthly" class="tab-content">
+            <div class="section">
+                <h2>Monthly Breakdown</h2>
+                <div class="chart-container">
+                    <table>
+                        <tr>
+                            <th>Month</th>
+                            <th style="text-align: right">Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Jan 2024</td>
+                            <td class="amount" style="text-align: right">$61,245</td>
+                        </tr>
+                        <tr>
+                            <td>Feb 2024</td>
+                            <td class="amount" style="text-align: right">$9,181</td>
+                        </tr>
+                        <tr>
+                            <td>Mar 2024</td>
+                            <td class="amount" style="text-align: right">$30,317</td>
+                        </tr>
+                        <tr>
+                            <td>Apr 2024</td>
+                            <td class="amount" style="text-align: right">$62,950</td>
+                        </tr>
+                        <tr>
+                            <td>Aug 2024</td>
+                            <td class="amount highlight" style="text-align: right">$184,561</td>
+                        </tr>
+                        <tr>
+                            <td>Oct 2024</td>
+                            <td class="amount highlight" style="text-align: right">$188,051</td>
+                        </tr>
+                        <tr>
+                            <td>Oct 2025</td>
+                            <td class="amount highlight" style="text-align: right">$272,538</td>
+                        </tr>
+                        <tr>
+                            <td>Jan 2026</td>
+                            <td class="amount highlight" style="text-align: right">$193,191</td>
+                        </tr>
+                        <tr>
+                            <td>Mar 2026</td>
+                            <td class="amount highlight" style="text-align: right">$214,256</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Findings -->
+        <div id="findings" class="tab-content">
+            <div class="section">
+                <h2>🚨 Key Findings</h2>
+                
+                <div class="alert-box">
+                    <div class="alert-title">Spending Spike: Feb 2024 → Feb 2025</div>
+                    <div class="alert-desc">936% increase ($9,181 → $95,125). Requires investigation for new business initiatives or billing changes.</div>
+                </div>
+
+                <div class="alert-box">
+                    <div class="alert-title">Sustained Elevation: 2025</div>
+                    <div class="alert-desc">47% year-over-year growth from 2024. New recurring charges likely added in 2025.</div>
+                </div>
+
+                <div class="alert-box">
+                    <div class="alert-title">Peak Month: October 2025</div>
+                    <div class="alert-desc">$272,538 - highest month on record. 45% above normal. Check for one-time charges or bulk purchases.</div>
+                </div>
+
+                <div class="alert-box">
+                    <div class="alert-title">Continued Growth: 2026 Trend</div>
+                    <div class="alert-desc">Q1 average $181,902/month - 32% above 2025 average. Projected annual growth continuing.</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📋 Investigation Checklist</h2>
+                <div class="findings-list">
+                    <div class="finding">
+                        <div class="finding-title">Review February 2025 Charges</div>
+                        <div class="finding-desc">936% spike from 2024; identify root cause</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-title">Analyze Recurring Charges</div>
+                        <div class="finding-desc">New subscriptions/memberships added in 2025?</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-title">October 2025 Detail Analysis</div>
+                        <div class="finding-desc">$272K peak: check for large vendor payments, equipment, events</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-title">Merchant Categorization</div>
+                        <div class="finding-desc">Separate RLM vs NVCC vs Other spending</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-title">Duplicate Charge Detection</div>
+                        <div class="finding-desc">Same merchant, same amount, different dates</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Details -->
+        <div id="details" class="tab-content">
+            <div class="section">
+                <h2>Audit Details</h2>
+                <div class="summary-card">
+                    <div class="metric">
+                        <span class="metric-label">Statements Located</span>
+                        <span class="metric-value">69 files</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Unique Months</span>
+                        <span class="metric-value">27</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Source Folders</span>
+                        <span class="metric-value">2 (Google Drive)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Date Range</span>
+                        <span class="metric-value">Jan 2024 - Mar 2026</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Status</span>
+                        <span class="metric-value">✅ Complete</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Cost Optimization Potential</h2>
+                <div class="summary-card">
+                    <div class="metric">
+                        <span class="metric-label">Subscription Cleanup</span>
+                        <span class="metric-value">$5K-$15K/mo</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Vendor Consolidation</span>
+                        <span class="metric-value">$10K-$20K/mo</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Payment Terms</span>
+                        <span class="metric-value">$10K-$20K/mo</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Total Potential Savings</span>
+                        <span class="metric-value">$300K-$660K/yr</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Files Available</h2>
+                <div class="findings-list">
+                    <div class="finding">
+                        <div class="finding-title">Consolidated Monthly Statements</div>
+                        <div class="finding-desc">27 files (F2_*.pdf) - primary analysis source</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-title">Supplemental Detailed Statements</div>
+                        <div class="finding-desc">42 files (F1_*.pdf) - transaction verification</div>
+                    </div>
+                    <div class="finding">
+                        <div class="finding-title">Complete Audit Report</div>
+                        <div class="finding-desc">AMEX-NVCC-COMPLETE-DETAILED-AUDIT.md</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="section">
+            <button class="cta-button" onclick="window.print()">🖨️ Print Report</button>
+            <a href="file:///Users/bennysbot/.openclaw/workspace/AMEX-NVCC-COMPLETE-DETAILED-AUDIT.md" class="cta-button" style="background: linear-gradient(135deg, #3b82f6, #2563eb); text-decoration: none;">📄 Full Report</a>
+        </div>
+
+        <footer>
+            <p>AMEX NVCC Audit | April 15, 2026</p>
+            <p>All 69 statements analyzed • 27 unique months</p>
+        </footer>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Remove active from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+
+            // Mark tab as active
+            event.target.classList.add('active');
+        }
+
+        // Add to home screen prompt (iOS)
+        if (window.navigator && window.navigator.standalone === undefined) {
+            document.addEventListener('beforeinstallprompt', (e) => {
+                // Prevent the mini-infobar from appearing
+                e.preventDefault();
+            });
+        }
+    </script>
+</body>
+</html>

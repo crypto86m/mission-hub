@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Instagram Reels</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #fff; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .thumb {
+            width: 100%;
+            aspect-ratio: 9/16;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        video { width: 100%; height: 100%; object-fit: cover; }
+        .info { padding: 15px; }
+        .title { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #ec4899;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📹 Your Instagram Reels</h1>
+        <div class="grid" id="grid"></div>
+    </div>
+
+    <script>
+        const reels = [
+            { title: 'Entrepreneur', file: 'entrepreneur.mp4' },
+            { title: 'Discipline', file: 'discipline.mp4' },
+            { title: 'Wealth Mindset', file: 'wealth_mindset.mp4' },
+            { title: 'Friday Mindset', file: 'friday_mindset.mp4' },
+            { title: 'Morning Routine', file: 'morning_routine.mp4' },
+            { title: 'Trading Skill', file: 'trading_skill.mp4' },
+            { title: 'Hustle Culture', file: 'hustle_culture.mp4' },
+            { title: 'Focus', file: 'focus.mp4' },
+            { title: 'Compound Effect', file: 'compound_effect.mp4' },
+            { title: 'Closing Power', file: 'closing_power.mp4' },
+            { title: 'Saturday Napa', file: 'SATURDAY_NAPA_DIFFERENCE.mp4' }
+        ];
+
+        const grid = document.getElementById('grid');
+        reels.forEach((reel, i) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            const videoPath = `/downloads/${reel.file}`;
+            card.innerHTML = `
+                <div class="thumb">
+                    <video controls key="${i}" preload="metadata">
+                        <source src="${videoPath}" type="video/mp4">
+                    </video>
+                </div>
+                <div class="info">
+                    <div class="title">${i + 1}. ${reel.title}</div>
+                    <a href="${videoPath}" download class="btn">⬇️ Download</a>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+</html>
