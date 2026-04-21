@@ -1,9 +1,9 @@
 {
   "title": "Trading Strategy Backtest Results",
-  "timestamp": "2026-04-19T23:00:05.381610",
-  "date": "2026-04-19",
+  "timestamp": "2026-04-20T23:00:04.571421",
+  "date": "2026-04-20",
   "summary": {
-    "total_strategies": 17,
+    "total_strategies": 24,
     "new_winners": 0,
     "deteriorating": 0,
     "lookback_period": "2 years"
@@ -150,6 +150,41 @@
     },
     {
       "strategy": "strategy_03_sr_rejection",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_04_ema_crossover",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_05_macd_divergence",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_06_rsi_extreme",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_07_volume_breakout",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_08_bollinger_squeeze",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_09_vwap_bounce",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_10_adx_trend",
       "sharpe": 0.0,
       "tag": "DISABLED"
     },

@@ -189,28 +189,6 @@ function AgentTaskPerformance() {
   );
 }
 
-export default function Agents() {
-  return (
-    <div className="w-full h-full overflow-y-auto pb-24 px-4 pt-6">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold glow-text mb-1">Agent Fleet</h1>
-        <p className="text-gray-400 text-sm">Hierarchical agent tree — click to expand</p>
-      </div>
-
-      <div className="mb-4 flex gap-4 text-xs text-gray-500">
-        <span><span className="inline-block w-2 h-2 rounded-full bg-green-400 mr-1" />Active</span>
-        <span><span className="inline-block w-2 h-2 rounded-full bg-cyan mr-1" />Staged</span>
-        <span><span className="inline-block w-2 h-2 rounded-full bg-yellow-400 mr-1" />Pending</span>
-        <span><span className="inline-block w-2 h-2 rounded-full bg-gray-500 mr-1" />Idle</span>
-      </div>
-
-      {agents.map(agent => (
-        <AgentNode key={agent.id} agent={agent} depth={0} />
-      ))}
-    </div>
-  );
-}
-
 // Hermes Multi-Agent System removed — was entirely hardcoded/fake data.
 // Agent status is now driven by the Agent Family Tree (live from status.json)
 // and Task Performance (live from Supabase task store).
