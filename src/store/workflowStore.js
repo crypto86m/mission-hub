@@ -103,7 +103,7 @@ export const useWorkflowStore = create((set, get) => ({
         });
       }
 
-      if (wf.status === 'in-progress' && wf.completion < 20 && wf.duration > '4h') {
+      if (wf.status === 'in-progress' && wf.completion < 20 && parseFloat(wf.duration) > 4) {
         bottlenecks.push({
           workflowId: wf.id,
           workflowName: wf.name,

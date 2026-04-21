@@ -117,7 +117,7 @@ export default function RLMDashboard() {
       <div className="glass-card border-l-4 border-cyan/50 mb-8">
         <h3 className="font-semibold mb-3 text-cyan">Alert Configuration</h3>
         <div className="text-xs text-gray-400 space-y-2">
-          <p>✓ Critical alerts: Bids overdue >10 days</p>
+          <p>✓ Critical alerts: Bids overdue &gt;10 days</p>
           <p>✓ Warning alerts: Bids overdue 5-10 days</p>
           <p>✓ Info alerts: Upcoming milestones & deadlines</p>
           <p>✓ Auto-escalation: Daily check during bidding season</p>

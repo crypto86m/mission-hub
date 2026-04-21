@@ -1,0 +1,68 @@
+{
+  "generated": "2026-04-17T22:22:06.604539Z",
+  "trading": {
+    "accountValue": 197932.98,
+    "unrealizedPnl": 0,
+    "openPositions": 0,
+    "todayTrades": 0,
+    "todayPnl": 0,
+    "phase": "Paper Trading",
+    "strategiesLoaded": 3,
+    "account": "PA3HM54AE89H",
+    "status": "ready",
+    "launchTime": "Monday 6:20 AM PT"
+  },
+  "costs": {
+    "today": 1.53,
+    "monthTotal": 116.32,
+    "monthlyBudget": 200,
+    "dailyLimit": 25
+  },
+  "newsletter": {
+    "subscribers": 7,
+    "issuesPublished": 14,
+    "openRate": 0,
+    "lastIssue": "2026-04-17",
+    "nextIssue": "2026-04-18 07:00 PT"
+  },
+  "instagram": {
+    "followers": 682,
+    "engagementRate": 2.54,
+    "views30d": 0,
+    "reelsPosted": 0
+  },
+  "companies": {
+    "rlm": {
+      "revenue": 2800000,
+      "activeProjects": 354,
+      "margin": 34,
+      "ytd": "$2.8M",
+      "location": "Northern California"
+    },
+    "nvcc": {
+      "members": 128,
+      "fleetValue": 4200000,
+      "ytd": "$145K",
+      "rating": 4.8
+    }
+  },
+  "services": {
+    "gateway": "healthy",
+    "orchestrator": "staged",
+    "paperTrader": "staged",
+    "stopLossWatchdog": "staged"
+  },
+  "agents": {
+    "cronJobs": 8,
+    "cronHealthy": 7,
+    "cronErrors": 1,
+    "activeAgents": 0
+  },
+  "tasks": {
+    "total": 28,
+    "completed": 7,
+    "active": 3,
+    "blocked": 2,
+    "pending": 16
+  }
+}

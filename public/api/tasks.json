@@ -1,0 +1,212 @@
+{
+  "lastUpdated": "2026-04-17T22:00:00Z",
+  "summary": {
+    "total": 28,
+    "completed": 7,
+    "active": 3,
+    "blocked": 2,
+    "pending": 16
+  },
+  "tasks": [
+    {
+      "id": "task-001",
+      "title": "Hotel Oxbow Painting Takeoff",
+      "project": "RLM Enterprises",
+      "status": "active",
+      "priority": "high",
+      "description": "Extract full painting scope from 2,545 architectural floor plan pages. Color-code P1/P2/P3/accent/caulk for crew reference.",
+      "created": "2026-04-17",
+      "due": "2026-04-21"
+    },
+    {
+      "id": "task-002",
+      "title": "Togal.ai Integration",
+      "project": "RLM Enterprises",
+      "status": "active",
+      "priority": "high",
+      "description": "Build browser automation for Togal.ai PDF upload and takeoff extraction. No public API available.",
+      "created": "2026-04-17",
+      "due": "2026-04-21"
+    },
+    {
+      "id": "task-003",
+      "title": "Mission Control Dashboard Fixes",
+      "project": "Infrastructure",
+      "status": "active",
+      "priority": "critical",
+      "description": "Fix 18 dashboard issues: trading page, video loading, tab highlighting, outdated data, calendar, agents tree, settings.",
+      "created": "2026-04-17",
+      "due": "2026-04-17"
+    },
+    {
+      "id": "task-004",
+      "title": "Trading System Launch",
+      "project": "Trading",
+      "status": "pending",
+      "priority": "critical",
+      "description": "Launch master-orchestrator.py Monday 6:20 AM PT. 3 strategies: ORB, VWAP, S/R on SPY/QQQ/TSLA.",
+      "created": "2026-04-17",
+      "due": "2026-04-21"
+    },
+    {
+      "id": "task-005",
+      "title": "Cost Hardening System",
+      "project": "Infrastructure",
+      "status": "pending",
+      "priority": "high",
+      "description": "Build per-provider hard spending caps, real-time cost dashboard, anomaly detection, multi-channel alerts.",
+      "created": "2026-04-17",
+      "due": "2026-04-20"
+    },
+    {
+      "id": "task-006",
+      "title": "A+ Pine Script Indicator",
+      "project": "Trading",
+      "status": "completed",
+      "priority": "medium",
+      "description": "Pine Script v6 indicator with quality gate 8.0, multi-bar RSI confirmation, volume filter. File on Desktop.",
+      "created": "2026-04-17",
+      "due": "2026-04-17"
+    },
+    {
+      "id": "task-007",
+      "title": "Gmail App Password Configuration",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "low",
+      "description": "Saved Gmail app password to .env.gmail-password. Will auto-load for email operations.",
+      "created": "2026-04-17",
+      "due": "2026-04-17"
+    },
+    {
+      "id": "task-008",
+      "title": "Andrea Waters Support Email",
+      "project": "AI Support Platform",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Reply to Andrea re: discount code issue on checkout page. Email drafted and ready to send.",
+      "created": "2026-04-17",
+      "due": "2026-04-17"
+    },
+    {
+      "id": "task-009",
+      "title": "OpenClaw Config Update",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "high",
+      "description": "Updated model to sonnet-4-6, heartbeat to 20m, maxConcurrent to 4. Backup created.",
+      "created": "2026-04-17",
+      "due": "2026-04-17"
+    },
+    {
+      "id": "task-010",
+      "title": "Supabase Memory Schema",
+      "project": "Infrastructure",
+      "status": "blocked",
+      "priority": "medium",
+      "description": "Run SQL schema in Supabase dashboard. Blocked: needs Benjamin to run SQL manually (5 min).",
+      "created": "2026-04-10",
+      "due": "2026-04-20"
+    },
+    {
+      "id": "task-011",
+      "title": "Upwork/Fiverr/LinkedIn Re-enable",
+      "project": "Revenue",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Scripts ready. Awaiting re-enable approval from Benjamin.",
+      "created": "2026-04-10",
+      "due": "2026-04-21"
+    },
+    {
+      "id": "task-012",
+      "title": "Dead LaunchAgent Cleanup",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "low",
+      "description": "Removed 4 dead LaunchAgents (hermes-chat, gmail-token-keeper, instagram-reel-automation).",
+      "created": "2026-04-17",
+      "due": "2026-04-17"
+    },
+    {
+      "id": "task-013",
+      "title": "Bennett's Brief Newsletter Growth",
+      "project": "Revenue",
+      "status": "active",
+      "priority": "medium",
+      "description": "Auto-publish at 7 AM daily. Currently 7 subscribers. Need growth strategy.",
+      "created": "2026-04-01",
+      "due": "2026-04-30"
+    },
+    {
+      "id": "task-014",
+      "title": "RLM Takeoff Automation System",
+      "project": "RLM Enterprises",
+      "status": "pending",
+      "priority": "high",
+      "description": "Build web app: upload PDF -> Togal.ai auto-detect -> color-coded floor plans -> download for crew.",
+      "created": "2026-04-17",
+      "due": "2026-04-25"
+    },
+    {
+      "id": "task-015",
+      "title": "NVCC Membership Renewal System",
+      "project": "NVCC",
+      "status": "active",
+      "priority": "medium",
+      "description": "Automated renewal reminders and CRM reports running. 128 members active.",
+      "created": "2026-04-01",
+      "due": "2026-04-30"
+    },
+    {
+      "id": "task-016",
+      "title": "Gateway Stability Fix",
+      "project": "Infrastructure",
+      "status": "pending",
+      "priority": "high",
+      "description": "Gateway keeps restarting and killing subagents. Need to diagnose root cause and fix.",
+      "created": "2026-04-17",
+      "due": "2026-04-18"
+    },
+    {
+      "id": "task-017",
+      "title": "Twitter/X Account Recovery",
+      "project": "Social",
+      "status": "blocked",
+      "priority": "low",
+      "description": "Account suspended. Recovery status unclear. Needs Benjamin to check Twitter directly.",
+      "created": "2026-04-10",
+      "due": "2026-04-30"
+    },
+    {
+      "id": "task-018",
+      "title": "Google OAuth / Drive Access",
+      "project": "Infrastructure",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Run gog auth to set up Google Drive access. 10 min setup required.",
+      "created": "2026-04-10",
+      "due": "2026-04-20"
+    },
+    {
+      "id": "task-019",
+      "title": "Cost Audit Report",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "high",
+      "description": "Full audit of spending safeguards. 5 critical gaps identified. Report at COST_AUDIT_2026-04-17.md.",
+      "created": "2026-04-17",
+      "due": "2026-04-17"
+    },
+    {
+      "id": "task-020",
+      "title": "Stop Loss Watchdog Integration",
+      "project": "Trading",
+      "status": "pending",
+      "priority": "high",
+      "description": "Integrate SMS alerts into stop-loss watchdog as backup to Telegram.",
+      "created": "2026-04-17",
+      "due": "2026-04-21"
+    }
+  ]
+}

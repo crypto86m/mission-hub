@@ -127,7 +127,7 @@ export default function NewsFeed() {
         <div className="glass-card p-4">
           <p className="text-gray-400 text-xs mb-2">High Impact</p>
           <p className="text-3xl font-bold text-green-400">4</p>
-          <p className="text-xs text-gray-500 mt-1">Relevance >80%</p>
+          <p className="text-xs text-gray-500 mt-1">Relevance &gt;80%</p>
         </div>
         <div className="glass-card p-4">
           <p className="text-gray-400 text-xs mb-2">Sentiment</p>

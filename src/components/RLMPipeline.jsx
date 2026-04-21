@@ -265,7 +265,7 @@ export default function RLMPipeline() {
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div>
             <p className="text-gray-400">Overdue Bids</p>
-            <p className="text-lg font-bold text-red-400">{bidData.filter(b => b.daysOverude > 0).length}</p>
+            <p className="text-lg font-bold text-red-400">{bidData.filter(b => b.daysOverdue > 0).length}</p>
           </div>
           <div>
             <p className="text-gray-400">Win Probability</p>

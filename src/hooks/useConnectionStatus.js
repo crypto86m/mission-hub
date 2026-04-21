@@ -46,7 +46,7 @@ export const useConnectionStatus = () => {
       clearTimeout(timeoutId);
 
       const responseTime = Date.now() - startTime;
-      const isConnected = response.ok || response.status === 0 || responseTime < 5000;
+      const isConnected = response.ok;
 
       const updatedService = {
         ...service,
