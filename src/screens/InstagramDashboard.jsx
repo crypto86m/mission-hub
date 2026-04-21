@@ -8,6 +8,7 @@ import EngagementProjections from '../components/instagram/EngagementProjections
 import AnalyticsHub from '../components/instagram/AnalyticsHub';
 import QuickActions from '../components/instagram/QuickActions';
 import { loadInstagramData, loadPhase1Videos, loadPhase2Posts } from '../utils/instagram-data-loader';
+import ReadyToPost from '../components/instagram/ReadyToPost';
 
 export default function InstagramDashboard() {
   const [data, setData] = useState(null);
@@ -68,6 +69,11 @@ export default function InstagramDashboard() {
             <RefreshCw size={16} />
             Last refresh: {lastRefresh.toLocaleTimeString()}
           </div>
+        </div>
+
+        {/* Ready to Post — Curated Content Plan */}
+        <div className="mb-8">
+          <ReadyToPost />
         </div>
 
         {/* Overview Section */}
