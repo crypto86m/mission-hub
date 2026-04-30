@@ -1,0 +1,262 @@
+{
+  "title": "Trading Strategy Backtest Results",
+  "timestamp": "2026-04-23T23:00:04.336817",
+  "date": "2026-04-23",
+  "summary": {
+    "total_strategies": 35,
+    "new_winners": 0,
+    "deteriorating": 0,
+    "lookback_period": "2 years"
+  },
+  "top_performers": [
+    {
+      "rank": 1,
+      "strategy": "10_breakout_volume_confirmation_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED",
+      "symbols": 6
+    },
+    {
+      "rank": 2,
+      "strategy": "11_vwap_band_snapback_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED",
+      "symbols": 6
+    },
+    {
+      "rank": 3,
+      "strategy": "12_vwap_snapback_v2_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED",
+      "symbols": 6
+    },
+    {
+      "rank": 4,
+      "strategy": "13_vwap_snapback_v2_1_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED",
+      "symbols": 6
+    },
+    {
+      "rank": 5,
+      "strategy": "14_vwap_snapback_v2_2_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED",
+      "symbols": 6
+    },
+    {
+      "rank": 6,
+      "strategy": "15_vwap_snapback_v2_3_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED",
+      "symbols": 6
+    },
+    {
+      "rank": 7,
+      "strategy": "16_vwap_snapback_v2_4_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED",
+      "symbols": 6
+    },
+    {
+      "rank": 8,
+      "strategy": "1_ema_crossover_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED",
+      "symbols": 6
+    },
+    {
+      "rank": 9,
+      "strategy": "2_macd_divergence_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED",
+      "symbols": 6
+    },
+    {
+      "rank": 10,
+      "strategy": "3_bollinger_squeeze_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED",
+      "symbols": 6
+    }
+  ],
+  "new_winners": [],
+  "needs_attention": [],
+  "all_rankings": [
+    {
+      "strategy": "10_breakout_volume_confirmation_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "11_vwap_band_snapback_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "12_vwap_snapback_v2_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "13_vwap_snapback_v2_1_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "14_vwap_snapback_v2_2_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "15_vwap_snapback_v2_3_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "16_vwap_snapback_v2_4_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "1_ema_crossover_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "2_macd_divergence_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "3_bollinger_squeeze_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "4_gap_fade_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "5_volume_spike_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "6_adx_trend_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "7_stochastic_divergence_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "8_relative_strength_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "9_5min_momentum_burst_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "sr_rejection_v2_trader",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_01_orb_breakout",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_02_vwap_reclaim",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_03_sr_rejection",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_04_ema_crossover",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_05_macd_divergence",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_06_rsi_extreme",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_07_volume_breakout",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_08_bollinger_squeeze",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_09_vwap_bounce",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_10_adx_trend",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_11_vwap_snapback",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_12_pdh_pdl_sweep",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_13_ema_pullback",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_15_noise_area_breakout",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_16_0dte_gamma_butterfly",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_orb_30min",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_sr_rejection",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    },
+    {
+      "strategy": "strategy_vwap_reclaim",
+      "sharpe": 0.0,
+      "tag": "DISABLED"
+    }
+  ]
+}

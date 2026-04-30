@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://mission-control-nine-teal-77.vercel.app/$1",
+      "permanent": false
+    }
+  ]
+}

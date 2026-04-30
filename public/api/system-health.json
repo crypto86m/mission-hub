@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-04-29T21:04:35.968769",
+  "gateway_resilience": {
+    "status": "healthy",
+    "memory_mb": 2466,
+    "memory_limit_mb": 4096,
+    "healthy": true,
+    "restarts_24h": 10,
+    "last_restart_time": "[2026-04-28T04:26:46Z]",
+    "auto_restart_enabled": true
+  },
+  "cron_health": {
+    "total_jobs": 1,
+    "stuck_jobs": 0,
+    "never_run_jobs": 0,
+    "alert": false,
+    "problem_crons": [],
+    "healthy": true
+  },
+  "bluebubbles_system": {
+    "webhook_status": "running",
+    "port": 18789,
+    "process_running": true,
+    "pending_approvals": 0,
+    "recent_messages_1h": 0,
+    "reply_handler_status": "active",
+    "healthy": true
+  },
+  "trading_system": {
+    "paper_trader_status": "running",
+    "master_orchestrator_status": "running",
+    "stop_loss_watchdog_status": "running",
+    "all_processes_running": true,
+    "pre_market_validator_ready": false,
+    "last_verification_time": "N/A",
+    "strategies_active": 20,
+    "alert": false,
+    "healthy": false
+  },
+  "alerts": [
+    {
+      "level": "critical",
+      "system": "Trading",
+      "msg": "Trading system incomplete - not all processes running"
+    }
+  ],
+  "overall_health": "degraded"
+}

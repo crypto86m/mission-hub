@@ -1,0 +1,31 @@
+{
+  "consensus_filter": {
+    "status": "ACTIVE",
+    "min_consensus": 0.60,
+    "last_signal": "HOLD",
+    "confidence": 0.0
+  },
+  "sms_alerts": {
+    "status": "ACTIVE",
+    "total_alerts_today": 6,
+    "last_alert": "2026-04-17T10:29:55Z",
+    "alert_types": ["ENTRY", "EXIT", "STOP_HIT", "CIRCUIT_BREAKER"]
+  },
+  "active_strategies": {
+    "ORB": {"status": "monitoring", "signal": "HOLD"},
+    "VWAP": {"status": "monitoring", "signal": "HOLD"},
+    "RSI": {"status": "monitoring", "signal": "SELL"},
+    "MACD": {"status": "monitoring", "signal": "HOLD"},
+    "Earnings": {"status": "monitoring", "signal": "HOLD"},
+    "EMA": {"status": "monitoring", "signal": "HOLD"},
+    "GapFill": {"status": "monitoring", "signal": "HOLD"},
+    "VolReverts": {"status": "monitoring", "signal": "HOLD"}
+  },
+  "risk_status": {
+    "circuit_breaker": "ARMED",
+    "daily_loss_percentage": "0.00%",
+    "position_count": "1/4",
+    "largest_position": "AAPL 100@152.30",
+    "largest_loss": "TSLA -$45.67"
+  }
+}

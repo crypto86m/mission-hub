@@ -1,0 +1,401 @@
+{
+  "lastUpdated": "2026-04-22T22:50:00Z",
+  "summary": {
+    "total": 38,
+    "completed": 12,
+    "active": 6,
+    "blocked": 5,
+    "pending": 15
+  },
+  "tasks": [
+    {
+      "id": "task-t001",
+      "title": "Alpaca Live Trading — Go/No-Go Decision",
+      "project": "Trading",
+      "status": "blocked",
+      "priority": "critical",
+      "description": "Live $500 account ready. Paper system running stable. Awaiting Benjamin's explicit go/no-go approval before deployment.",
+      "created": "2026-04-18",
+      "due": "2026-04-23",
+      "blockedBy": "Benjamin approval required"
+    },
+    {
+      "id": "task-t002",
+      "title": "Trading Strategies 04–09 Verification",
+      "project": "Trading",
+      "status": "pending",
+      "priority": "high",
+      "description": "Verify new strategies 04-09 fully written to disk, consensus filter fixed (min_agreements lowered), orchestrator restarted with all strategies loaded.",
+      "created": "2026-04-21",
+      "due": "2026-04-23"
+    },
+    {
+      "id": "task-t003",
+      "title": "Trading System — Trades Not Executing",
+      "project": "Trading",
+      "status": "active",
+      "priority": "critical",
+      "description": "Master orchestrator running 13 strategies but no trades executing. Benjamin frustrated. Consensus filter likely too strict. Root cause investigation required.",
+      "created": "2026-04-21",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-t004",
+      "title": "SQQQ Position Review",
+      "project": "Trading",
+      "status": "blocked",
+      "priority": "high",
+      "description": "573 shares SQQQ long ($57.12 entry, now -$372). Contradicts bullish system signals. Benjamin decision needed: close or hold.",
+      "created": "2026-04-17",
+      "due": "2026-04-22",
+      "blockedBy": "Benjamin decision required"
+    },
+    {
+      "id": "task-t005",
+      "title": "Supabase trading_pnl Table",
+      "project": "Trading",
+      "status": "blocked",
+      "priority": "medium",
+      "description": "Run SQL schema in Supabase dashboard to enable real-time trading P&L sync. 5-minute task.",
+      "created": "2026-04-18",
+      "due": "2026-04-23",
+      "blockedBy": "Benjamin must run SQL in Supabase dashboard"
+    },
+    {
+      "id": "task-mc001",
+      "title": "Mission Control Dashboard — Task Tab Update",
+      "project": "Infrastructure",
+      "status": "active",
+      "priority": "high",
+      "description": "Tasks tab showing stale April 17 data. Updating tasks.json with current state and redeploying.",
+      "created": "2026-04-22",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-mc002",
+      "title": "Mission Control — Uncommitted Warp Changes",
+      "project": "Infrastructure",
+      "status": "pending",
+      "priority": "high",
+      "description": "8 files modified by Warp/ACP session (Dashboard.jsx, taskStore.js, useTradingPnl.js, main.jsx, vercel.json + more) sitting uncommitted. Needs commit + deploy.",
+      "created": "2026-04-22",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-mc003",
+      "title": "Mission Control — Cron Delivery Channel Fixes",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "high",
+      "description": "Fixed 6 broken crons with bad channel ID format. Applied lightContext:true to all 8 subagent crons to cut cache write bloat.",
+      "created": "2026-04-22",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-i001",
+      "title": "Dead Daemons Cleanup",
+      "project": "Infrastructure",
+      "status": "pending",
+      "priority": "high",
+      "description": "6 dead LaunchAgents: charles-chat (exit 143), gmail-token-keeper (exit 127), daily-report (exit 1), stop-loss-watchdog (exit 0), commitment-enforcer (exit 0), mission-control-pusher (exit 0). Remove or fix.",
+      "created": "2026-04-22",
+      "due": "2026-04-24"
+    },
+    {
+      "id": "task-i002",
+      "title": "Telegram Chat ID — Morning Brief + Trading P&L",
+      "project": "Infrastructure",
+      "status": "blocked",
+      "priority": "medium",
+      "description": "Morning Brief SMS and Trading P&L Daily crons failing — Telegram chatId missing. Need to confirm correct Telegram chat ID.",
+      "created": "2026-04-22",
+      "due": "2026-04-23",
+      "blockedBy": "Need Telegram chatId from Benjamin"
+    },
+    {
+      "id": "task-i003",
+      "title": "BlueBubbles iMessage Setup",
+      "project": "Infrastructure",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Set up BlueBubbles server on Mac mini so Charles can read/respond to iMessages. ~20-30 min task.",
+      "created": "2026-04-22",
+      "due": "2026-04-25"
+    },
+    {
+      "id": "task-i004",
+      "title": "Spending Controls — Cache Write Bloat Fix",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "critical",
+      "description": "Applied lightContext:true to all subagent crons. Fixed 6 broken delivery channels. Root cause: sessions loading full history on every cron run = 72% of spend was cache writes.",
+      "created": "2026-04-22",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-i005",
+      "title": "System Architecture Audit",
+      "project": "Infrastructure",
+      "status": "active",
+      "priority": "medium",
+      "description": "Audit 3 routing questions before Monday review: Hermes state writes, Obsidian four-layer memory audit routing, Discord gateway event audit sink. Code inspection in progress.",
+      "created": "2026-04-22",
+      "due": "2026-04-28"
+    },
+    {
+      "id": "task-i006",
+      "title": "Supabase Memory Schema Deployment",
+      "project": "Infrastructure",
+      "status": "blocked",
+      "priority": "medium",
+      "description": "Run SQL schema in Supabase dashboard to enable <100ms memory queries vs 5+ sec file scans. 5-minute task.",
+      "created": "2026-04-10",
+      "due": "2026-04-25",
+      "blockedBy": "Benjamin must run SQL in Supabase dashboard"
+    },
+    {
+      "id": "task-rlm001",
+      "title": "Hotel Oxbow — Togal.ai Floor Plan Export",
+      "project": "RLM Enterprises",
+      "status": "blocked",
+      "priority": "critical",
+      "description": "Togal.ai export returned logo/cover sheets only — not actual A-series floor plans. Need Benjamin to click Togal Button on correct sheets and export Excel with real takeoff data.",
+      "created": "2026-04-19",
+      "due": "2026-04-23",
+      "blockedBy": "Benjamin must export correct sheets from Togal.ai"
+    },
+    {
+      "id": "task-rlm002",
+      "title": "Hotel Oxbow — Color Matrix Excel",
+      "project": "RLM Enterprises",
+      "status": "blocked",
+      "priority": "high",
+      "description": "26-013 Hotel Oxbow.xlsx on Google Drive (not shared with service account). Needed to map paint codes. Share with openclaw-drive-access@sapient-flight-491604-e8.iam.gserviceaccount.com.",
+      "created": "2026-04-19",
+      "due": "2026-04-23",
+      "blockedBy": "Benjamin must share Google Drive file"
+    },
+    {
+      "id": "task-rlm003",
+      "title": "RLM Takeoff Automation System",
+      "project": "RLM Enterprises",
+      "status": "pending",
+      "priority": "high",
+      "description": "Build web app: upload PDF → Togal.ai auto-detect → color-coded floor plans → download for crew. Blocked until Hotel Oxbow floor plan export resolved.",
+      "created": "2026-04-17",
+      "due": "2026-04-30"
+    },
+    {
+      "id": "task-ai001",
+      "title": "AI Support — Formspree Activation",
+      "project": "AI Support Platform",
+      "status": "blocked",
+      "priority": "high",
+      "description": "Formspree form ID xdkgjpgr embedded in AI Support site. Needs account activation at formspree.io to receive signups. 2-minute task.",
+      "created": "2026-04-18",
+      "due": "2026-04-23",
+      "blockedBy": "Benjamin must activate at formspree.io"
+    },
+    {
+      "id": "task-ai002",
+      "title": "AI Support — Gmail Delegation",
+      "project": "AI Support Platform",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Delegate ben86m Gmail access to crypto86m so Charles can manage all 3 accounts from one OAuth. Approve in Gmail settings.",
+      "created": "2026-04-18",
+      "due": "2026-04-25"
+    },
+    {
+      "id": "task-bb001",
+      "title": "Bennett's Brief — Monetization Strategy",
+      "project": "Bennett's Brief",
+      "status": "pending",
+      "priority": "medium",
+      "description": "7 real subscribers. $0 MRR. Need decision on monetization path: paid tier, sponsorships, or lead-gen funnel.",
+      "created": "2026-04-17",
+      "due": "2026-04-30"
+    },
+    {
+      "id": "task-bb002",
+      "title": "Bennett's Brief — Auto-Publish Running",
+      "project": "Bennett's Brief",
+      "status": "completed",
+      "priority": "medium",
+      "description": "Daily auto-publish at 7 AM PT confirmed running. 21 issues published.",
+      "created": "2026-04-01",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-social001",
+      "title": "Instagram Growth — Reels Pipeline",
+      "project": "Social",
+      "status": "active",
+      "priority": "medium",
+      "description": "9-post content plan created. @benjamin86m at 682 followers, 2.54% engagement. 1 Reel/day strategy. ReadyToPost panel live on dashboard.",
+      "created": "2026-04-21",
+      "due": "2026-04-30"
+    },
+    {
+      "id": "task-social002",
+      "title": "Twitter/X Account Recovery",
+      "project": "Social",
+      "status": "blocked",
+      "priority": "low",
+      "description": "Account suspended. Recovery status unclear. Needs Benjamin to check Twitter directly.",
+      "created": "2026-04-10",
+      "due": "2026-04-30",
+      "blockedBy": "Benjamin must check Twitter recovery status"
+    },
+    {
+      "id": "task-cost001",
+      "title": "Monthly Budget Breach — April 2026",
+      "project": "Infrastructure",
+      "status": "active",
+      "priority": "critical",
+      "description": "$715+ spent in April vs $200 budget. Root cause: session context bloat + wrong model routing + cache writes. Fixes deployed: lightContext on all crons, nightly reset fixed, channel IDs corrected.",
+      "created": "2026-04-22",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-nvcc001",
+      "title": "NVCC Membership Renewal Automation",
+      "project": "NVCC",
+      "status": "completed",
+      "priority": "medium",
+      "description": "Automated renewal reminders and CRM reports running. 128 members active, $145K YTD.",
+      "created": "2026-04-01",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-rev001",
+      "title": "Upwork/Fiverr/LinkedIn Re-enable",
+      "project": "Revenue",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Scripts ready. Daily Upwork bidding, 4 Fiverr gigs, LinkedIn CTO/VP outreach. Awaiting Benjamin's re-enable approval.",
+      "created": "2026-04-10",
+      "due": "2026-04-25"
+    },
+    {
+      "id": "task-infra001",
+      "title": "Google Drive Service Account",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "medium",
+      "description": "Service account configured: openclaw-drive-access@sapient-flight-491604-e8.iam.gserviceaccount.com. Full read/write, no token expiration.",
+      "created": "2026-04-16",
+      "due": "2026-04-16"
+    },
+    {
+      "id": "task-infra002",
+      "title": "Gmail OAuth — All 3 Accounts",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "high",
+      "description": "crypto86m, charles90bennett, ben86m all connected via IMAP + SMTP with app passwords saved to .env.gmail-passwords.",
+      "created": "2026-04-18",
+      "due": "2026-04-18"
+    },
+    {
+      "id": "task-infra003",
+      "title": "System Health Map",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "medium",
+      "description": "Full system architecture map generated as HTML at /workspace/system-map.html. Delivered to #sop channel.",
+      "created": "2026-04-22",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-infra004",
+      "title": "Nightly Gateway Restart Cron",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "medium",
+      "description": "3 AM PT nightly gateway restart cron running. Frees memory, prevents context bloat accumulation.",
+      "created": "2026-04-19",
+      "due": "2026-04-19"
+    },
+    {
+      "id": "task-trading-done001",
+      "title": "A+ Pine Script Indicator",
+      "project": "Trading",
+      "status": "completed",
+      "priority": "medium",
+      "description": "Pine Script v6 with quality gate 8.0, multi-bar RSI confirmation, volume filter. Saved to Desktop.",
+      "created": "2026-04-17",
+      "due": "2026-04-17"
+    },
+    {
+      "id": "task-trading-done002",
+      "title": "Paper Trading System — Live",
+      "project": "Trading",
+      "status": "completed",
+      "priority": "critical",
+      "description": "master_orchestrator.py + stop_loss_watchdog.py + paper-trader.py all running via launchd. Fires Mon-Fri 6:20 AM PT. $98,966 equity.",
+      "created": "2026-04-17",
+      "due": "2026-04-21"
+    },
+    {
+      "id": "task-cost-done001",
+      "title": "Spending Hardening — Hard Caps Deployed",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "critical",
+      "description": "$50/day hard cap enforced. Hourly spending dashboard, 15-min anomaly detector, daily 8 AM spend report. All crons on lightContext.",
+      "created": "2026-04-17",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-audit001",
+      "title": "AMEX Statements Audit",
+      "project": "NVCC",
+      "status": "completed",
+      "priority": "medium",
+      "description": "27 statements downloaded (Jan 2024–Mar 2026). $7.82M across 414 transactions. Reports at ~/Downloads/AMEX-AUDIT-REPORT.json + .md.",
+      "created": "2026-04-16",
+      "due": "2026-04-16"
+    },
+    {
+      "id": "task-ai-support-done001",
+      "title": "AI Support Website Rebuild",
+      "project": "AI Support Platform",
+      "status": "completed",
+      "priority": "high",
+      "description": "Site rebuilt at https://ai-support-self.vercel.app — signup modal, legal pages, all links fixed. Formspree form ID xdkgjpgr embedded.",
+      "created": "2026-04-18",
+      "due": "2026-04-18"
+    },
+    {
+      "id": "task-sop001",
+      "title": "SOP Channel — System Architecture Doc",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "low",
+      "description": "Full system map HTML delivered to #sop. All 12 running daemons, 6 dead, 18 crons documented.",
+      "created": "2026-04-22",
+      "due": "2026-04-22"
+    },
+    {
+      "id": "task-compat001",
+      "title": "Session Compaction — /compact Protocol",
+      "project": "Infrastructure",
+      "status": "completed",
+      "priority": "high",
+      "description": "Compact monitor cron deployed. /compact confirmed working in Discord — drops context 106K → 4K tokens. Protocol documented in BENJAMIN-DIRECTIVES.md.",
+      "created": "2026-04-19",
+      "due": "2026-04-19"
+    },
+    {
+      "id": "task-pending-warp001",
+      "title": "Mission Control — Warp Session Uncommitted Changes",
+      "project": "Infrastructure",
+      "status": "pending",
+      "priority": "high",
+      "description": "Warp/ACP session modified: Dashboard.jsx (AgentCommsLog, TimeTravelSlider, SelfOptimization added), taskStore.js, useTradingPnl.js (Supabase error handling), main.jsx, vercel.json. Changes need commit + deploy.",
+      "created": "2026-04-22",
+      "due": "2026-04-22"
+    }
+  ]
+}

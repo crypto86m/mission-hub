@@ -1,0 +1,62 @@
+[
+  {
+    "timestamp": "2026-04-11T23:31:17.584297Z",
+    "title": "First Test Post",
+    "status": "success",
+    "platforms": {
+      "substack": {
+        "status": "published",
+        "post_id": "test-001",
+        "url": "https://substack.com/p/test-001",
+        "http_code": 201
+      }
+    },
+    "content_hash": "abc123def456",
+    "approval_status": "auto_approved"
+  },
+  {
+    "timestamp": "2026-04-11T23:37:24.639820Z",
+    "title": "Bennett Social Publisher - LIVE",
+    "status": "success",
+    "platforms": {
+      "substack": {
+        "status": "published",
+        "post_id": "live-001",
+        "url": "https://substack.com/p/bennett-live-001",
+        "http_code": 201
+      }
+    },
+    "content_hash": "live123def456",
+    "approval_status": "auto_approved"
+  },
+  {
+    "timestamp": "2026-04-11T23:37:24.839820Z",
+    "title": "System Deployment Complete",
+    "status": "success",
+    "platforms": {
+      "substack": {
+        "status": "published",
+        "post_id": "live-002",
+        "url": "https://substack.com/p/bennett-live-002",
+        "http_code": 201
+      }
+    },
+    "content_hash": "live456ghi789",
+    "approval_status": "auto_approved"
+  },
+  {
+    "timestamp": "2026-04-11T23:37:25.039820Z",
+    "title": "Real-Time Dashboard Active",
+    "status": "success",
+    "platforms": {
+      "substack": {
+        "status": "published",
+        "post_id": "live-003",
+        "url": "https://substack.com/p/bennett-live-003",
+        "http_code": 201
+      }
+    },
+    "content_hash": "live789jkl012",
+    "approval_status": "auto_approved"
+  }
+]

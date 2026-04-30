@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Reel Preview - Approval</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .header {
+            background: white;
+            border-radius: 16px 16px 0 0;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .preview {
+            background: white;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .phone-frame {
+            background: #000;
+            border-radius: 40px;
+            padding: 12px;
+            max-width: 100%;
+            aspect-ratio: 9/16;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 28px;
+            background: #000;
+            border-radius: 0 0 30px 30px;
+            z-index: 10;
+        }
+
+        .video-content {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+            font-size: 18px;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .video-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .script {
+            position: relative;
+            z-index: 2;
+        }
+
+        .script p {
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .script .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .details {
+            background: white;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .detail-item {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .caption {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .hashtags {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .hashtag {
+            display: inline-block;
+            background: #e8f0ff;
+            color: #667eea;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .actions {
+            background: white;
+            border-radius: 0 0 16px 16px;
+            padding: 24px;
+            display: flex;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .approve-btn {
+            background: #22c55e;
+            color: white;
+        }
+
+        .approve-btn:active {
+            background: #16a34a;
+            transform: scale(0.98);
+        }
+
+        .edit-btn {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .edit-btn:active {
+            background: #2563eb;
+            transform: scale(0.98);
+        }
+
+        .time-badge {
+            display: inline-block;
+            background: #fbbf24;
+            color: #78350f;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 16px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .preview {
+                padding: 16px;
+            }
+
+            .details {
+                padding: 16px;
+            }
+
+            .actions {
+                padding: 16px;
+            }
+
+            button {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Instagram Reel</h1>
+            <p>Preview & Approval</p>
+        </div>
+
+        <div class="preview">
+            <div class="phone-frame">
+                <div class="notch"></div>
+                <div class="video-content">
+                    <div class="script">
+                        <p>I spent 15 years failing. Here's what changed.</p>
+                        <p style="font-size: 16px; margin-top: 20px;">Most people think discipline is hard.</p>
+                        <p style="font-size: 16px;">Actually, discipline is boring.</p>
+                        <p style="font-size: 16px;">Real discipline looks like:</p>
+                        <p style="font-size: 14px; margin-top: 16px;">Same wake time (boring)</p>
+                        <p style="font-size: 14px;">Same trading signals (boring)</p>
+                        <p style="font-size: 14px;">Same content calendar (boring)</p>
+                        <p style="font-size: 16px; margin-top: 20px; font-weight: 700;">Why? Boring removes the decision.</p>
+                        <p style="font-size: 14px; margin-top: 16px;" class="subtitle">No willpower. No motivation. Just systems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="details">
+            <div class="time-badge">⏰ 9:00 AM PT</div>
+
+            <div class="detail-item">
+                <div class="detail-label">Script</div>
+                <div class="detail-value">
+                    "I spent 15 years failing. Here's what changed. Most people think discipline is hard. Actually, discipline is boring. Real discipline looks like: Same wake time. Same trading signals. Same content calendar. Why? Because boring removes the decision. No willpower needed. No motivation required. Just systems working."
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Duration</div>
+                <div class="detail-value">25 seconds</div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Format</div>
+                <div class="detail-value">Text overlay on lifestyle/trading footage</div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Caption</div>
+                <div class="detail-value">
+                    15 years of failing taught me one thing: discipline isn't hard, it's boring.
+                    <div class="caption">
+                        Real discipline = the system removes the decision. No willpower needed. No motivation required. Just consistency. What's your system? Link in bio for more.
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">Hashtags</div>
+                <div class="hashtags">
+                    <span class="hashtag">#SystemsOverMotivation</span>
+                    <span class="hashtag">#DisciplineDaily</span>
+                    <span class="hashtag">#EntrepreneurLife</span>
+                    <span class="hashtag">#TradingMindset</span>
+                    <span class="hashtag">#GoalGetter</span>
+                    <span class="hashtag">#Consistency</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="approve-btn" onclick="approve()">✓ Approve</button>
+            <button class="edit-btn" onclick="edit()">✏️ Edit</button>
+        </div>
+    </div>
+
+    <script>
+        function approve() {
+            alert('Instagram Reel approved! Charles will schedule it for 9:00 AM PT');
+            // In real implementation, would send approval to server
+        }
+
+        function edit() {
+            alert('Reply in Discord with your edits and Charles will update it');
+        }
+    </script>
+</body>
+</html>

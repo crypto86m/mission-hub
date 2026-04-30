@@ -1,0 +1,110 @@
+{
+  "bids": [
+    {
+      "bid_number": "RLM-2026-001",
+      "client": "Sample Hotel",
+      "project": "Exterior repaint 12k sqft",
+      "value": 48500,
+      "submitted": "2026-03-20",
+      "followup_due": "2026-03-27",
+      "status": "Submitted",
+      "notes": "Awaiting decision",
+      "contact_name": "John Smith",
+      "contact_email": "john.smith@hotelgroup.com",
+      "created": "2026-03-20",
+      "updated": "2026-03-29",
+      "daysOverdue": 17,
+      "priority": "high",
+      "winProbability": 30
+    },
+    {
+      "bid_number": "RLM-2026-002",
+      "client": "Napa Winery",
+      "project": "Interior common areas",
+      "value": 22000,
+      "submitted": "2026-03-25",
+      "followup_due": "2026-04-01",
+      "status": "Submitted",
+      "notes": "PM is Sarah",
+      "contact_name": "Sarah Johnson",
+      "contact_email": "sarah.j@napawinery.com",
+      "created": "2026-03-25",
+      "updated": "2026-03-29",
+      "daysOverdue": 12,
+      "priority": "high",
+      "winProbability": 30
+    },
+    {
+      "bid_number": "RLM-2026-003",
+      "client": "Medical Center",
+      "project": "3rd floor renovation",
+      "value": 67000,
+      "submitted": null,
+      "followup_due": null,
+      "status": "Estimating",
+      "notes": "Site walk 4/2",
+      "contact_name": "Dr. Robert Lee",
+      "contact_email": "r.lee@medcenter.org",
+      "created": "2026-03-29",
+      "updated": "2026-03-29",
+      "daysOverdue": 0,
+      "priority": "low",
+      "winProbability": 80
+    }
+  ],
+  "projects": [
+    {
+      "name": "[Sample] Marriott Renovation",
+      "client": "Marriott Hotels",
+      "location": "San Francisco",
+      "crew_lead": "TBD",
+      "status": "In Progress",
+      "start_date": "2026-03-15",
+      "completion": "2026-04-30",
+      "notes": "Exterior + lobby"
+    },
+    {
+      "name": "[Sample] Winery Repaint",
+      "client": "Stag's Leap",
+      "location": "Napa Valley",
+      "crew_lead": "TBD",
+      "status": "Estimating",
+      "start_date": "2026-03-28",
+      "completion": "2026-05-15",
+      "notes": "Full exterior"
+    },
+    {
+      "name": "[Sample] Hospital Wing",
+      "client": "Kaiser Permanente",
+      "location": "Sacramento",
+      "crew_lead": "TBD",
+      "status": "Scheduled",
+      "start_date": "2026-04-05",
+      "completion": "2026-05-20",
+      "notes": "Interior only"
+    }
+  ],
+  "metrics": {
+    "totalPipeline": 137500,
+    "expectedValue": 74750.0,
+    "overdueBids": 2,
+    "avgWinProbability": 47,
+    "activeBids": 3,
+    "activeProjects": 3,
+    "ytdRevenue": 2800000
+  },
+  "alerts": [
+    {
+      "level": "critical",
+      "message": "RLM-2026-001: 17 days overdue - Final follow-up required",
+      "bidNumber": "RLM-2026-001"
+    },
+    {
+      "level": "critical",
+      "message": "RLM-2026-002: 12 days overdue - Final follow-up required",
+      "bidNumber": "RLM-2026-002"
+    }
+  ],
+  "lastSync": "2026-04-13T15:09:49.311128",
+  "syncStatus": "success"
+}

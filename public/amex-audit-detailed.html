@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AMEX Audit - Detailed Year Breakdown</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #1f2937;
+        }
+
+        body {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 16px;
+            padding-top: max(16px, env(safe-area-inset-top));
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f3460, #16213e);
+            color: white;
+            padding: 20px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            margin-left: -16px;
+            margin-right: -16px;
+            margin-top: -16px;
+            margin-top: calc(-16px - env(safe-area-inset-top));
+            padding-top: calc(20px + env(safe-area-inset-top));
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            color: #0f3460;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .year-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid #10b981;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .year-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .year-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f3460;
+        }
+
+        .year-total {
+            font-size: 18px;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 14px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        th {
+            background: #f3f4f6;
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: #10b981;
+            text-align: right;
+        }
+
+        .change-positive {
+            color: #10b981;
+        }
+
+        .change-negative {
+            color: #ef4444;
+        }
+
+        .alert-box {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 4px;
+        }
+
+        .alert-desc {
+            color: #7f1d1d;
+        }
+
+        .comparison-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #f8f9fa 100%);
+            border: 2px solid #dbeafe;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .comparison-metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .comparison-label {
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .comparison-value {
+            font-weight: 600;
+            color: #0f3460;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .quarterly-box {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .quarterly-title {
+            font-weight: 600;
+            color: #0f3460;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .quarterly-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .quarterly-row:last-child {
+            border-bottom: none;
+        }
+
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #9ca3af;
+            font-size: 12px;
+            margin-bottom: env(safe-area-inset-bottom);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 6px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 AMEX NVCC Audit</h1>
+            <p class="subtitle">Detailed Year-by-Year Breakdown</p>
+        </header>
+
+        <!-- Year Overview -->
+        <div class="section">
+            <h2>Year Overview</h2>
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <div class="stat-number">$3.42M</div>
+                    <div class="stat-label">Total (27 mo)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">27</div>
+                    <div class="stat-label">Months Covered</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2024 DETAILED -->
+        <div class="section">
+            <div class="year-card">
+                <div class="year-header">
+                    <span class="year-title">2024</span>
+                    <span class="year-total">$1,124,570</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Monthly Average</span>
+                    <span class="metric-value">$93,714</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Baseline Period</span>
+                    <span class="metric-value">Full Year</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Highest Month</span>
+                    <span class="metric-value">Oct: $188,051</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Lowest Month</span>
+                    <span class="metric-value">Feb: $9,181</span>
+                </div>
+            </div>
+
+            <h3 style="font-size: 16px; margin: 16px 0 12px 0; font-weight: 600; color: #0f3460;">2024 Monthly Breakdown</h3>
+            <table>
+                <tr>
+                    <th>Month</th>
+                    <th style="text-align: right">Amount</th>
+                    <th style="text-align: right">Trend</th>
+                </tr>
+                <tr>
+                    <td>January</td>
+                    <td class="amount">$61,245</td>
+                    <td style="text-align: right; font-size: 11px;">Start</td>
+                </tr>
+                <tr>
+                    <td>February</td>
+                    <td class="amount">$9,181</td>
+                    <td style="text-align: right; font-size: 11px; color: #ef4444;">↓ -85%</td>
+                </tr>
+                <tr>
+                    <td>March</td>
+                    <td class="amount">$30,317</td>
+                    <td style="text-align: right; font-size: 11px; color: #10b981;">↑ +230%</td>
+                </tr>
+                <tr>
+                    <td>August</td>
+                    <td class="amount" style="background: #fef3c7;">$184,561</td>
+                    <td style="text-align: right; font-size: 11px; color: #b45309;">⚠️ Spike</td>
+                </tr>
+                <tr>
+                    <td>October</td>
+                    <td class="amount" style="background: #fef3c7;">$188,051</td>
+                    <td style="text-align: right; font-size: 11px; color: #b45309;">⚠️ Peak</td>
+                </tr>
+                <tr>
+                    <td>December</td>
+                    <td class="amount">$162,558</td>
+                    <td style="text-align: right; font-size: 11px; color: #10b981;">↑ +62%</td>
+                </tr>
+            </table>
+
+            <div class="quarterly-box">
+                <div class="quarterly-title">2024 Quarterly Breakdown</div>
+                <div class="quarterly-row">
+                    <span>Q1</span>
+                    <span style="font-weight: 600; color: #ef4444;">$100,743</span>
+                </div>
+                <div class="quarterly-row">
+                    <span>Q2</span>
+                    <span style="font-weight: 600; color: #f59e0b;">$173,178</span>
+                </div>
+                <div class="quarterly-row">
+                    <span>Q3</span>
+                    <span style="font-weight: 600; color: #10b981;">$399,062</span>
+                </div>
+                <div class="quarterly-row">
+                    <span>Q4</span>
+                    <span style="font-weight: 600; color: #10b981;">$451,587</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2025 DETAILED -->
+        <div class="section">
+            <div class="year-card" style="border-left-color: #3b82f6;">
+                <div class="year-header">
+                    <span class="year-title">2025</span>
+                    <span class="year-total">$1,650,201</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Monthly Average</span>
+                    <span class="metric-value">$137,517</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Growth vs 2024</span>
+                    <span class="metric-value change-positive">+47%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Highest Month</span>
+                    <span class="metric-value">Oct: $272,538</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Lowest Month</span>
+                    <span class="metric-value">Sep: $115,116</span>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <div class="alert-title">⚠️ February 2025 Anomaly</div>
+                <div class="alert-desc">$95,125 (+936% vs 2024 Feb). Investigate new charges, subscriptions, or business changes.</div>
+            </div>
+
+            <div class="alert-box">
+                <div class="alert-title">⚠️ October 2025 Peak</div>
+                <div class="alert-desc">$272,538 - highest single month ever. 45% above Oct 2024. Check for bulk purchases or large vendor payments.</div>
+            </div>
+
+            <h3 style="font-size: 16px; margin: 16px 0 12px 0; font-weight: 600; color: #0f3460;">2025 Monthly Breakdown</h3>
+            <table>
+                <tr>
+                    <th>Month</th>
+                    <th style="text-align: right">Amount</th>
+                    <th style="text-align: right">vs 2024</th>
+                </tr>
+                <tr>
+                    <td>January</td>
+                    <td class="amount">$94,541</td>
+                    <td style="text-align: right; font-size: 11px; color: #10b981;">+54%</td>
+                </tr>
+                <tr>
+                    <td>February</td>
+                    <td class="amount" style="background: #fee2e2;">$95,125</td>
+                    <td style="text-align: right; font-size: 11px; color: #ef4444;">+936%</td>
+                </tr>
+                <tr>
+                    <td>March</td>
+                    <td class="amount">$141,908</td>
+                    <td style="text-align: right; font-size: 11px; color: #10b981;">+368%</td>
+                </tr>
+                <tr>
+                    <td>May</td>
+                    <td class="amount">$175,683</td>
+                    <td style="text-align: right; font-size: 11px; color: #10b981;">+214%</td>
+                </tr>
+                <tr>
+                    <td>October</td>
+                    <td class="amount" style="background: #fee2e2;">$272,538</td>
+                    <td style="text-align: right; font-size: 11px; color: #ef4444;">+45%</td>
+                </tr>
+            </table>
+
+            <div class="quarterly-box">
+                <div class="quarterly-title">2025 Quarterly Breakdown</div>
+                <div class="quarterly-row">
+                    <span>Q1</span>
+                    <span style="font-weight: 600; color: #10b981;">$331,573</span>
+                </div>
+                <div class="quarterly-row">
+                    <span>Q2</span>
+                    <span style="font-weight: 600; color: #10b981;">$431,084</span>
+                </div>
+                <div class="quarterly-row">
+                    <span>Q3</span>
+                    <span style="font-weight: 600; color: #10b981;">$462,749</span>
+                </div>
+                <div class="quarterly-row">
+                    <span>Q4</span>
+                    <span style="font-weight: 600; color: #10b981;">$424,795</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2026 YTD -->
+        <div class="section">
+            <div class="year-card" style="border-left-color: #f59e0b;">
+                <div class="year-header">
+                    <span class="year-title">2026 (YTD)</span>
+                    <span class="year-total">$545,705</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Q1 Average</span>
+                    <span class="metric-value">$181,902</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Growth vs 2025 Q1</span>
+                    <span class="metric-value change-positive">+46%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Annualized Run Rate</span>
+                    <span class="metric-value">~$2,183,000</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Months Covered</span>
+                    <span class="metric-value">Jan - Mar</span>
+                </div>
+            </div>
+
+            <h3 style="font-size: 16px; margin: 16px 0 12px 0; font-weight: 600; color: #0f3460;">2026 YTD Breakdown (Jan-Mar)</h3>
+            <table>
+                <tr>
+                    <th>Month</th>
+                    <th style="text-align: right">Amount</th>
+                    <th style="text-align: right">vs 2025</th>
+                </tr>
+                <tr>
+                    <td>January</td>
+                    <td class="amount" style="background: #fef3c7;">$193,191</td>
+                    <td style="text-align: right; font-size: 11px; color: #b45309;">+104%</td>
+                </tr>
+                <tr>
+                    <td>February</td>
+                    <td class="amount">$138,258</td>
+                    <td style="text-align: right; font-size: 11px; color: #10b981;">+46%</td>
+                </tr>
+                <tr>
+                    <td>March</td>
+                    <td class="amount" style="background: #fef3c7;">$214,256</td>
+                    <td style="text-align: right; font-size: 11px; color: #b45309;">+51%</td>
+                </tr>
+            </table>
+
+            <div class="alert-box">
+                <div class="alert-title">⚠️ Acceleration Continuing</div>
+                <div class="alert-desc">2026 Q1 average ($181,902/mo) is 32% above 2025 average ($137,517). If trend continues, annualized spending: ~$2.18M</div>
+            </div>
+        </div>
+
+        <!-- Year Comparison -->
+        <div class="section">
+            <h2>Year-over-Year Comparison</h2>
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th style="text-align: right">2024</th>
+                    <th style="text-align: right">2025</th>
+                    <th style="text-align: right">Growth</th>
+                </tr>
+                <tr>
+                    <td>Annual Total</td>
+                    <td class="amount">$1,124,570</td>
+                    <td class="amount">$1,650,201</td>
+                    <td class="amount change-positive">+47%</td>
+                </tr>
+                <tr>
+                    <td>Monthly Avg</td>
+                    <td class="amount">$93,714</td>
+                    <td class="amount">$137,517</td>
+                    <td class="amount change-positive">+47%</td>
+                </tr>
+                <tr>
+                    <td>Peak Month</td>
+                    <td class="amount">$188,051</td>
+                    <td class="amount">$272,538</td>
+                    <td class="amount change-positive">+45%</td>
+                </tr>
+                <tr>
+                    <td>Q1 Total</td>
+                    <td class="amount">$100,743</td>
+                    <td class="amount">$331,573</td>
+                    <td class="amount change-positive">+229%</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>AMEX NVCC Detailed Audit | April 15, 2026</p>
+            <p>Jan 2024 - Mar 20, 2026 | 69 statements | 27 months</p>
+        </div>
+    </div>
+</body>
+</html>

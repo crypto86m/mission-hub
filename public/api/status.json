@@ -1,0 +1,86 @@
+{
+  "generated": "2026-04-27T20:37:18.922863",
+  "trading": {
+    "accountValue": 0,
+    "unrealizedPnl": 0,
+    "openPositions": 0,
+    "todayTrades": 0,
+    "todayPnl": 0,
+    "strategiesLoaded": 20,
+    "dailyLimit": 120,
+    "phase": "Paper Trading (Phase 3) \u2014 BLOCKED",
+    "positions": []
+  },
+  "costs": {
+    "today": 1.94,
+    "dailyLimit": 20,
+    "monthlyBudget": 200,
+    "monthTotal": 1.94
+  },
+  "email": {
+    "totalReplies": 811,
+    "unread": 0,
+    "flagged": 0
+  },
+  "newsletter": {
+    "subscribers": 287,
+    "openRate": 38,
+    "issuesPublished": 6,
+    "lastIssue": "2026-04-09"
+  },
+  "instagram": {
+    "followers": 682,
+    "views30d": 9347,
+    "interactions30d": 236,
+    "engagementRate": 2.52,
+    "netGrowth30d": 3
+  },
+  "twitter": {
+    "queued": 89,
+    "lastPosted": "2026-04-11T14:53:33.976674",
+    "status": "blocked",
+    "error": "401 Unauthorized \u2014 credentials expired"
+  },
+  "agents": {
+    "cronJobs": 29,
+    "cronHealthy": 28,
+    "cronErrors": 1
+  },
+  "companies": {
+    "rlm": {
+      "revenue": 2800000,
+      "margin": 34,
+      "activeProjects": 354
+    },
+    "nvcc": {
+      "members": 128,
+      "ytdRevenue": 145000,
+      "fleetValue": 4200000,
+      "rating": 4.8
+    }
+  },
+  "services": {
+    "missionControl": {
+      "status": "up",
+      "url": "https://mission-hub-iota.vercel.app"
+    },
+    "aiSupport": {
+      "status": "up",
+      "url": "https://ai-support-self.vercel.app"
+    },
+    "bookingIntake": {
+      "status": "up",
+      "port": 4344
+    },
+    "paperTrader": {
+      "status": "running"
+    },
+    "discord": {
+      "status": "up",
+      "note": "Gateway running, 13 channels monitored"
+    },
+    "gateway": {
+      "status": "up"
+    }
+  }
+}
