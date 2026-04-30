@@ -1,0 +1,106 @@
+{
+  "total": 10,
+  "completed": 3,
+  "videos": [
+    {
+      "id": 1,
+      "title": "Trading System Overview",
+      "status": "ready",
+      "url": "https://media.tenor.com/videos/trading-demo.mp4",
+      "caption": "See how our automated trading system identifies market opportunities and executes with precision.",
+      "hashtags": "#Trading #Automation #Markets #TradingStrategy",
+      "duration": 45,
+      "createdAt": "2026-04-28T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Daily Market Analysis",
+      "status": "ready",
+      "url": "https://media.tenor.com/videos/market-analysis.mp4",
+      "caption": "Breaking down today's market moves and what they mean for your portfolio.",
+      "hashtags": "#MarketAnalysis #Trading #Stocks #Investing",
+      "duration": 38,
+      "createdAt": "2026-04-28T14:15:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Risk Management Tips",
+      "status": "ready",
+      "url": "https://media.tenor.com/videos/risk-management.mp4",
+      "caption": "5 essential risk management techniques every trader should know.",
+      "hashtags": "#RiskManagement #Trading #Tips #Finance",
+      "duration": 42,
+      "createdAt": "2026-04-29T09:00:00Z"
+    },
+    {
+      "id": 4,
+      "title": "Momentum Strategy Deep Dive",
+      "status": "pending_text",
+      "url": null,
+      "caption": null,
+      "hashtags": null,
+      "duration": 0,
+      "createdAt": "2026-04-29T11:20:00Z"
+    },
+    {
+      "id": 5,
+      "title": "Support & Resistance Levels",
+      "status": "pending_text",
+      "url": null,
+      "caption": null,
+      "hashtags": null,
+      "duration": 0,
+      "createdAt": "2026-04-29T11:20:00Z"
+    },
+    {
+      "id": 6,
+      "title": "Volume Profile Analysis",
+      "status": "pending_audio",
+      "url": "https://media.tenor.com/videos/volume-profile.mp4",
+      "caption": "How to read volume profiles and find high-conviction trades.",
+      "hashtags": null,
+      "duration": 40,
+      "createdAt": "2026-04-29T12:45:00Z"
+    },
+    {
+      "id": 7,
+      "title": "Options Greeks Explained",
+      "status": "pending_text",
+      "url": null,
+      "caption": null,
+      "hashtags": null,
+      "duration": 0,
+      "createdAt": "2026-04-29T13:00:00Z"
+    },
+    {
+      "id": 8,
+      "title": "Trade Setup Checklist",
+      "status": "pending_text",
+      "url": null,
+      "caption": null,
+      "hashtags": null,
+      "duration": 0,
+      "createdAt": "2026-04-29T13:30:00Z"
+    },
+    {
+      "id": 9,
+      "title": "Market Hours Strategy",
+      "status": "pending_audio",
+      "url": "https://media.tenor.com/videos/market-hours.mp4",
+      "caption": "Why market hours matter and how to optimize your trading schedule.",
+      "hashtags": null,
+      "duration": 35,
+      "createdAt": "2026-04-29T14:00:00Z"
+    },
+    {
+      "id": 10,
+      "title": "Emotional Discipline",
+      "status": "pending_text",
+      "url": null,
+      "caption": null,
+      "hashtags": null,
+      "duration": 0,
+      "createdAt": "2026-04-29T14:20:00Z"
+    }
+  ]
+}

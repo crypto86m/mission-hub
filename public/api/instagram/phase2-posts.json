@@ -1,0 +1,51 @@
+{
+  "total": 100,
+  "completed": 0,
+  "posts": [
+    {
+      "id": 1,
+      "title": "Trading Tip #1: Entry Points",
+      "status": "draft",
+      "week": 1,
+      "caption": "The best entries happen when price rejects support. Look for these setups every day.",
+      "hashtags": "#Trading #Investing #TradingTips #Markets",
+      "createdAt": "2026-04-29T12:00:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Market Insight: Volatility Cycles",
+      "status": "draft",
+      "week": 1,
+      "caption": "Understanding VIX cycles helps predict when to be aggressive vs. defensive.",
+      "hashtags": "#MarketInsights #Trading #Volatility #Finance",
+      "createdAt": "2026-04-29T12:15:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Trading Tip #2: Exit Rules",
+      "status": "draft",
+      "week": 1,
+      "caption": "The key to consistent profits isn't the entry—it's having a clear exit plan.",
+      "hashtags": "#Trading #Rules #Investing #TradingStrategy",
+      "createdAt": "2026-04-29T12:30:00Z"
+    },
+    {
+      "id": 4,
+      "title": "Psychology: Avoiding Revenge Trading",
+      "status": "draft",
+      "week": 2,
+      "caption": "After a loss, the urge to 'get it back' is your biggest enemy. Wait for the next setup.",
+      "hashtags": "#TradingPsychology #Discipline #Investing #Trading",
+      "createdAt": "2026-04-29T12:45:00Z"
+    },
+    {
+      "id": 5,
+      "title": "Market Structure: Breakouts vs. Breakdowns",
+      "status": "draft",
+      "week": 2,
+      "caption": "How to spot the difference between a real breakout and a false breakout.",
+      "hashtags": "#TechnicalAnalysis #Trading #MarketStructure #Investing",
+      "createdAt": "2026-04-29T13:00:00Z"
+    }
+  ]
+}
