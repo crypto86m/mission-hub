@@ -4,7 +4,7 @@
       "id": "reel-ferrari-vineyard",
       "title": "Ferrari on Vineyard Road",
       "description": "Cinematic push-in: red Ferrari 488 on Napa vineyard road at golden hour.",
-      "url": "https://commondatastorage.googleapis.com/gtv-videos-library/sample/big_buck_bunny.mp4",
+      "url": "/videos/napa-friday-drive.mp4",
       "day": "Week of Apr 28 — NEW",
       "duration": 45
     },
@@ -12,7 +12,7 @@
       "id": "reel-mclaren-estate",
       "title": "McLaren at the Estate",
       "description": "Aerials of orange McLaren P1 parked at luxury estate with pool in background.",
-      "url": "https://commondatastorage.googleapis.com/gtv-videos-library/sample/elephant_dream.mp4",
+      "url": "/videos/monday-car-lineup.mp4",
       "day": "Apr 27",
       "duration": 38
     },
@@ -20,7 +20,7 @@
       "id": "reel-lambo-wine",
       "title": "Lamborghini Huracán — Wine Barrels",
       "description": "Low-angle pan across yellow Huracán with wine barrels and vineyard behind.",
-      "url": "https://commondatastorage.googleapis.com/gtv-videos-library/sample/for_bigger_blazes.mp4",
+      "url": "/videos/wednesday-napa-sunset.mp4",
       "day": "Apr 26",
       "duration": 42
     },
@@ -28,7 +28,7 @@
       "id": "reel-convoy",
       "title": "Exotic Car Convoy",
       "description": "Four-car lineup: Ferrari, McLaren, Lamborghini, Rolls-Royce shot from drone.",
-      "url": "https://commondatastorage.googleapis.com/gtv-videos-library/sample/for_bigger_escapes.mp4",
+      "url": "/videos/saturday-paint-job.mp4",
       "day": "Apr 25",
       "duration": 50
     },
@@ -36,7 +36,7 @@
       "id": "reel-rolls-winery",
       "title": "Rolls-Royce Ghost at Winery",
       "description": "Slow tracking shot of white Rolls-Royce parked outside luxury winery at sunset.",
-      "url": "https://commondatastorage.googleapis.com/gtv-videos-library/sample/for_bigger_joyrides.mp4",
+      "url": "/videos/demo-reel-ai-support.mp4",
       "day": "Apr 24",
       "duration": 35
     },
@@ -44,7 +44,7 @@
       "id": "reel-silverado-ranch",
       "title": "Silverado at the Ranch",
       "description": "Silverado pickup driving through ranch property with oak trees and rolling hills.",
-      "url": "https://commondatastorage.googleapis.com/gtv-videos-library/sample/sintel.mp4",
+      "url": "/videos/video-1.mp4",
       "day": "Apr 23",
       "duration": 40
     }
