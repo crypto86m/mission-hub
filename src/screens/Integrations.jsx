@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const integrations = [
+const defaultIntegrations = [
   { name: "Anthropic (Claude)", category: "AI / Model Providers", status: "Active", icon: "🧠", color: "#D97706", credentials: "Valid", lastActivity: "Now", agents: ["Charles (CBV2)", "Content Agent", "Email Responder"], workflows: ["All agent operations", "Content generation", "Email replies"], models: "Haiku, Sonnet, Opus 4.6", envSource: "ANTHROPIC_API_KEY" },
   { name: "OpenAI (GPT-4o)", category: "AI / Model Providers", status: "Error", icon: "🤖", color: "#10B981", credentials: "Invalid", lastActivity: "Apr 28", agents: ["Trading Bot", "Mission Control Builder"], workflows: ["Code generation", "Trading analysis"], models: "GPT-4o, GPT-4o-mini", envSource: "OPENAI_API_KEY", note: "⛔ BLOCKED 22+ hours — Stub/invalid key in ~/.openclaw/config/providers.yaml — memory search offline" },
   { name: "Ollama (Local)", category: "AI / Model Providers", status: "Active", icon: "🦙", color: "#8B5CF6", credentials: "N/A (Local)", lastActivity: "Today", agents: ["Local inference tasks"], workflows: ["Simple tasks, fast turnaround", "Cost-free local inference"], models: "llama3.2:latest, qwen2.5:14b, qwen2.5:32b", envSource: "localhost:11434" },
@@ -54,16 +54,17 @@ const integrations = [
   { name: "Grafana Cloud", category: "Monitoring", status: "Active", icon: "📊", color: "#F46800", credentials: "Valid", lastActivity: "Continuous", agents: ["System Monitor"], workflows: ["System health dashboards", "Cost tracking", "SMS queue monitoring", "Trading performance"], models: "N/A", envSource: "ben86m.grafana.net (Service Account)" },
 ];
 
-const categories = [...new Set(integrations.map(i => i.category))];
 const statusColors = {
-  "Active": "bg-green-500/20 text-green-400 border-green-500/30",
-  "Configured": "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  "Planned": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  "Error": "bg-red-500/20 text-red-400 border-red-500/30",
-  "Disabled": "bg-gray-500/20 text-gray-400 border-gray-500/30",
+  "active": "bg-green-500/20 text-green-400 border-green-500/30",
+  "configured": "bg-blue-500/20 text-blue-400 border-blue-500/30",
+  "planned": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+  "degraded": "bg-orange-500/20 text-orange-400 border-orange-500/30",
+  "offline": "bg-red-500/20 text-red-400 border-red-500/30",
 };
 
 export default function Integrations() {
+  const [integrations, setIntegrations] = useState(defaultIntegrations);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
   const [filterCategory, setFilterCategory] = useState('All');
@@ -71,6 +72,43 @@ export default function Integrations() {
   const [testing, setTesting] = useState(null);
   const [testResult, setTestResult] = useState(null);
   const [actionFeedback, setActionFeedback] = useState(null);
+
+  // Fetch integrations from API
+  useEffect(() => {
+    const fetchIntegrations = async () => {
+      try {
+        const response = await fetch('/api/integrations.json');
+        const data = await response.json();
+        if (data.integrations && Array.isArray(data.integrations)) {
+          // Transform API data to component format
+          const transformed = data.integrations.map(i => ({
+            name: i.name,
+            category: i.category,
+            status: i.status.charAt(0).toUpperCase() + i.status.slice(1), // capitalize first letter
+            icon: i.icon || '🔗',
+            color: i.color || '#6B7280',
+            credentials: i.authMethod || 'OAuth',
+            lastActivity: i.lastHealthCheck ? new Date(i.lastHealthCheck).toLocaleDateString() : 'Unknown',
+            agents: [i.type] || [],
+            workflows: [i.purpose] || [],
+            models: '',
+            envSource: i.envFile || 'config',
+            purpose: i.purpose,
+            type: i.type,
+            docs: i.docs,
+            configUrl: i.configUrl,
+          }));
+          setIntegrations(transformed);
+        }
+      } catch (error) {
+        console.error('Failed to fetch integrations:', error);
+        // Keep using default integrations if API fails
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchIntegrations();
+  }, []);
 
   const testConnection = async (integration) => {
     setTesting(integration.name);
@@ -96,6 +134,7 @@ export default function Integrations() {
     setTimeout(() => setActionFeedback(null), 3000);
   };
 
+  const categories = [...new Set(integrations.map(i => i.category))];
   const filtered = integrations.filter(i => {
     if (search && !i.name.toLowerCase().includes(search.toLowerCase())) return false;
     if (filterStatus !== 'All' && i.status !== filterStatus) return false;
@@ -114,10 +153,21 @@ export default function Integrations() {
         </div>
       )}
 
+      {loading && (
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="inline-block animate-spin mb-2 text-cyan text-2xl">⚙️</div>
+            <p className="text-gray-400 text-sm">Loading integrations...</p>
+          </div>
+        </div>
+      )}
+
+      {!loading && (
+      <>
       <div className="flex items-center justify-between mb-4">
         <div>
           <h1 className="text-lg font-bold text-white">Integrations</h1>
-          <p className="text-xs text-gray-400 font-mono">{activeCount}/{integrations.length} ACTIVE • FULL SYSTEM AUDIT</p>
+          <p className="text-xs text-gray-400 font-mono">{activeCount}/{integrations.length} ACTIVE • {integrations.length} SERVICES CONNECTED</p>
         </div>
       </div>
 
@@ -163,7 +213,7 @@ export default function Integrations() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <h3 className="text-sm font-medium text-white truncate">{i.name}</h3>
-                        <span className={`text-[9px] px-1.5 py-0.5 rounded-full border font-mono ${statusColors[i.status] || statusColors['Disabled']}`}>{i.status}</span>
+                        <span className={`text-[9px] px-1.5 py-0.5 rounded-full border font-mono ${statusColors[i.status.toLowerCase()] || statusColors['offline']}`}>{i.status}</span>
                       </div>
                       <p className="text-[10px] text-gray-400">{i.credentials} • Last: {i.lastActivity}</p>
                     </div>
@@ -215,6 +265,8 @@ export default function Integrations() {
           </div>
         );
       })}
+      </>
+      )}
     </div>
   );
 }
