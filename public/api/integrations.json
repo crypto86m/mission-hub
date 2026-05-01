@@ -70,8 +70,8 @@
       "name": "BlueBubbles",
       "category": "Communication & Chat",
       "type": "iMessage Bridge",
-      "status": "degraded",
-      "lastHealthCheck": "2026-04-30T04:21:00Z",
+      "status": "active",
+      "lastHealthCheck": "2026-05-01T08:00:00Z",
       "authMethod": "URL + Password",
       "purpose": "iMessage integration, webhook receiver",
       "envFile": ".env.bluebubbles",
@@ -203,7 +203,7 @@
       "status": "active",
       "lastHealthCheck": "2026-04-29T10:15:00Z",
       "authMethod": "API Key",
-      "purpose": "Substack → Mission Control webhook pipeline",
+      "purpose": "Substack \u2192 Mission Control webhook pipeline",
       "envFile": ".env.integrations.json.enc",
       "configUrl": "https://zapier.com",
       "docs": "https://zapier.com/help"
@@ -376,6 +376,19 @@
       "envFile": ".env.upwork",
       "configUrl": "https://www.upwork.com",
       "docs": "https://developers.upwork.com"
+    },
+    {
+      "id": "minimax",
+      "name": "MiniMax AI",
+      "category": "AI / Model Providers",
+      "type": "LLM + Video API",
+      "status": "active",
+      "lastHealthCheck": "2026-05-01T08:00:00Z",
+      "authMethod": "API Key",
+      "purpose": "Video generation (Hailuo), multi-modal content, speech synthesis",
+      "envFile": "MINIMAX_API_KEY",
+      "configUrl": "https://www.minimaxi.com",
+      "docs": "https://api.minimax.chat/document"
     }
   ],
   "categories": [
@@ -390,8 +403,8 @@
     "Specialty Integration"
   ],
   "summary": {
-    "total": 29,
-    "active": 19,
+    "total": 30,
+    "active": 26,
     "configured": 6,
     "degraded": 1,
     "offline": 0,
