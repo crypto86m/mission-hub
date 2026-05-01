@@ -352,6 +352,19 @@
       "docs": "https://help.togal.com"
     },
     {
+      "id": "mac-mini",
+      "name": "Mac Mini System",
+      "category": "Monitoring & Analytics",
+      "type": "System Health",
+      "status": "active",
+      "lastHealthCheck": "2026-05-01T08:00:00Z",
+      "authMethod": "Local SSH",
+      "purpose": "System health monitoring, resource tracking, daemon management",
+      "envFile": "launchd plist files",
+      "configUrl": "http://localhost:3000/system",
+      "docs": "macOS System Monitoring"
+    },
+    {
       "id": "upwork",
       "name": "Upwork",
       "category": "Specialty Integration",
@@ -377,8 +390,8 @@
     "Specialty Integration"
   ],
   "summary": {
-    "total": 28,
-    "active": 18,
+    "total": 29,
+    "active": 19,
     "configured": 6,
     "degraded": 1,
     "offline": 0,
