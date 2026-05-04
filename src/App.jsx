@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Building2, Brain, Plug, Database, Trophy, CheckCircle, FileVideo, Share2, Activity } from 'lucide-react';
+import { Home, CheckSquare, Calendar, Users, Workflow, Settings, Building2, Brain, Plug, Database, Trophy, CheckCircle, FileVideo, Share2, Activity, Zap } from 'lucide-react';
 import Dashboard from './screens/Dashboard';
 import Tasks from './screens/Tasks';
 import CalendarScreen from './screens/Calendar';
@@ -15,6 +15,7 @@ import Approvals from './screens/Approvals';
 import ContentPipeline from './screens/ContentPipeline';
 import SocialPublisher from './screens/SocialPublisher';
 import SystemOps from './screens/SystemOps';
+import SkillsManager from './screens/SkillsManager';
 import './index.css';
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
       case 'content': return <ContentPipeline />;
       case 'social': return <SocialPublisher />;
       case 'sysops': return <SystemOps />;
+      case 'skills': return <SkillsManager />;
       case 'settings': return <SettingsScreen />;
       default: return <Dashboard />;
     }
@@ -56,6 +58,7 @@ export default function App() {
     { id: 'content', icon: <FileVideo size={20} />, label: 'Content' },
     { id: 'social', icon: <Share2 size={20} />, label: 'Social' },
     { id: 'sysops', icon: <Activity size={20} />, label: 'System' },
+    { id: 'skills', icon: <Zap size={20} />, label: 'Skills' },
     { id: 'settings', icon: <Settings size={20} />, label: 'Settings' },
   ];
 

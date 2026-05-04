@@ -1,0 +1,127 @@
+{
+  "timestamp": "2026-05-03T17:39:51.014398+00:00",
+  "agents": {
+    "charles": {
+      "agent": "charles",
+      "status": "WARNING",
+      "current_cost": 22.5,
+      "daily_budget": 30.0,
+      "cost_pct": 75.0,
+      "remaining": 7.5,
+      "threshold_level": "warning",
+      "action": "ALERT_DISCORD",
+      "enforcement_active": false,
+      "can_continue": true
+    },
+    "brooke": {
+      "agent": "brooke",
+      "status": "CRITICAL",
+      "current_cost": 3.8,
+      "daily_budget": 4.0,
+      "cost_pct": 95.0,
+      "remaining": 0.2,
+      "threshold_level": "critical",
+      "action": "CRITICAL_ALERT",
+      "enforcement_active": true,
+      "can_continue": true
+    },
+    "nova": {
+      "agent": "nova",
+      "status": "EXCEEDED",
+      "current_cost": 5.2,
+      "daily_budget": 5.0,
+      "cost_pct": 104.0,
+      "remaining": -0.2,
+      "threshold_level": "exceeded",
+      "action": "HARD_STOP",
+      "enforcement_active": true,
+      "can_continue": false
+    },
+    "quinn": {
+      "agent": "quinn",
+      "status": "HEALTHY",
+      "current_cost": 2.1,
+      "daily_budget": 3.0,
+      "cost_pct": 70.0,
+      "remaining": 0.9,
+      "threshold_level": "healthy",
+      "action": "CONTINUE",
+      "enforcement_active": false,
+      "can_continue": true
+    },
+    "skyler": {
+      "agent": "skyler",
+      "status": "CRITICAL",
+      "current_cost": 7.2,
+      "daily_budget": 8.0,
+      "cost_pct": 90.0,
+      "remaining": 0.8,
+      "threshold_level": "critical",
+      "action": "CRITICAL_ALERT",
+      "enforcement_active": true,
+      "can_continue": true
+    },
+    "atlas": {
+      "agent": "atlas",
+      "status": "WARNING",
+      "current_cost": 1.5,
+      "daily_budget": 2.0,
+      "cost_pct": 75.0,
+      "remaining": 0.5,
+      "threshold_level": "warning",
+      "action": "ALERT_DISCORD",
+      "enforcement_active": false,
+      "can_continue": true
+    },
+    "studio": {
+      "agent": "studio",
+      "status": "WARNING",
+      "current_cost": 4.5,
+      "daily_budget": 6.0,
+      "cost_pct": 75.0,
+      "remaining": 1.5,
+      "threshold_level": "warning",
+      "action": "ALERT_DISCORD",
+      "enforcement_active": false,
+      "can_continue": true
+    },
+    "vault": {
+      "agent": "vault",
+      "status": "WARNING",
+      "current_cost": 0.8,
+      "daily_budget": 1.0,
+      "cost_pct": 80.0,
+      "remaining": 0.2,
+      "threshold_level": "warning",
+      "action": "ALERT_DISCORD",
+      "enforcement_active": false,
+      "can_continue": true
+    }
+  },
+  "summary": {
+    "healthy": 1,
+    "warning": 4,
+    "critical": 2,
+    "exceeded": 1
+  },
+  "alerts": [
+    {
+      "level": "WARNING",
+      "agent": "brooke",
+      "message": "BROOKE at 95.0% of budget",
+      "action": "CRITICAL_ALERT"
+    },
+    {
+      "level": "CRITICAL",
+      "agent": "nova",
+      "message": "NOVA at 104.0% of budget",
+      "action": "HARD_STOP"
+    },
+    {
+      "level": "WARNING",
+      "agent": "skyler",
+      "message": "SKYLER at 90.0% of budget",
+      "action": "CRITICAL_ALERT"
+    }
+  ]
+}

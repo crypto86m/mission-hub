@@ -1,26 +1,211 @@
 {
-  "generated": "2026-05-01T09:39:47.458334",
+  "generated": "2026-05-03T13:44:00.000000",
+  "heartbeat": {
+    "status": "DEGRADED",
+    "lastCheck": "2026-05-03T13:44:00.000000",
+    "blockers": [
+      {
+        "service": "Gmail Auth",
+        "status": "OFFLINE",
+        "failedSince": "2026-05-01T12:57:00",
+        "impact": "Email responder OFFLINE, calendar checks blocked"
+      },
+      {
+        "service": "Discord Bot Token",
+        "status": "EXPIRED",
+        "failedSince": "2026-04-25T00:00:00",
+        "impact": "Promise detection OFFLINE, channel monitoring degraded"
+      },
+      {
+        "service": "ACK-Protocol",
+        "status": "HUNG",
+        "failedSince": "2026-05-01T16:00:00",
+        "impact": "Process hung/killed, auto-acknowledgments not executing"
+      }
+    ],
+    "blockerLevel": "MEDIUM",
+    "recoveryInProgress": true
+  },
+  "workingProjects": [
+    {
+      "name": "Trading System (Phase 2)",
+      "status": "ACTIVE",
+      "details": "6 strategies running: BOLLINGER_SQUEEZE (63.6%), ORB_30MIN (61.9%), ORB_v4 (61.9%), RSI_EXTREMES (59.0%), VWAP_RECLAIM (60.9%), MACD_CROSSOVER (58.5%)",
+      "universe": "Indices (SPY, QQQ, DIA, IWM) + Mag 7 (AAPL, MSFT, GOOGL, AMZN, META, NVDA, TSLA)",
+      "lastUpdate": "2026-04-24T06:26:00",
+      "progress": 85
+    },
+    {
+      "name": "Cost Attribution Dashboard",
+      "status": "OPERATIONAL",
+      "details": "Real-time cost aggregation: OpenClaw + Claude Code + Alpaca + infrastructure",
+      "dailyReport": "8 AM PT to #mac-mini-health-check",
+      "lastReportDate": "2026-04-21",
+      "progress": 100
+    },
+    {
+      "name": "Stock Tracker Dashboard",
+      "status": "BUILT",
+      "details": "Live Alpaca paper account, 11-ticker watchlist, dark premium theme (Keychron-inspired), #e8ff48 accent",
+      "features": [
+        "Real-time equity + day P&L + buying power",
+        "Position sparklines with Long/Short badges",
+        "Filter tabs: All / Indices / Mag 7",
+        "Auto-refresh 15 sec, price flash animation"
+      ],
+      "file": "/Users/bennysbot/.openclaw/workspace/trading/dashboard/stock-tracker.html",
+      "deploymentStatus": "Ready for Vercel push",
+      "progress": 100
+    },
+    {
+      "name": "Obsidian Vault (BenjaminsBrain)",
+      "status": "OPERATIONAL",
+      "details": "Inspiration tiles, images, ideas vault",
+      "location": "~/Documents/BenjaminsBrain/",
+      "folders": [
+        "Inspiration/Design",
+        "Inspiration/Cars & Events",
+        "Inspiration/UI & Apps",
+        "Inspiration/Business & Strategy",
+        "Inspiration/Branding",
+        "Projects",
+        "Ideas",
+        "Daily Notes",
+        "Resources"
+      ],
+      "workflow": "Benjamin provides content → Charles saves to appropriate folder",
+      "progress": 100
+    },
+    {
+      "name": "Mission Control Dashboard Restyle",
+      "status": "PENDING",
+      "details": "Cinematic dark theme: Orbitron headings, #00d4ff cyan + #ffd700 gold, #0a0a0b dark bg, glassmorphism cards",
+      "targetStyle": "charles-presentation theme",
+      "progress": 0
+    }
+  ],
+  "buildingProjects": [
+    {
+      "name": "Trading Consensus Fix",
+      "status": "BLOCKED",
+      "issue": "Only 6/20 strategies loading; consensus threshold min_agreements=2 nearly impossible with 6 active",
+      "solution": "New strategies 04-09 built with StrategyBase extension (April 21 Opus session)",
+      "nextAction": "Verify strategies written to disk, restart orchestrator, confirm test trade executes",
+      "priority": "CRITICAL — Benjamin frustrated, Level 1"
+    },
+    {
+      "name": "Alpaca Cron Repair",
+      "status": "BLOCKED",
+      "issue": "7 consecutive delivery channel errors (April 21), cron disabled",
+      "estimatedFix": "5 minutes (re-enable + verify log)",
+      "lastStatus": "2026-04-21"
+    },
+    {
+      "name": "Hotel Oxbow Paint Mapping",
+      "status": "BLOCKED",
+      "issue": "Paint finish schedule not found in architectural PDF; Benjamin to provide paint codes + finish list",
+      "deliverables": [
+        "IMAGE 1: WALLS & BASEBOARDS — color actual wall lines per finish schedule",
+        "IMAGE 2: CEILINGS — separate image showing all ceiling colors",
+        "LEGEND — bottom left corner, larger + legible"
+      ],
+      "targetPage": "A3.14 (West Building Second Floor, PDF page 32)"
+    },
+    {
+      "name": "NVCC CRM Automation",
+      "status": "DISABLED",
+      "issue": "Cron was turned off during April cleanup; no follow-ups sent to members",
+      "action": "Re-enable NVCC member renewal + event automation crons"
+    },
+    {
+      "name": "Formspree Booking Intake",
+      "status": "NOT ACTIVATED",
+      "issue": "Integrated into Booking Intake (port 4344) but never wired to send confirmations",
+      "scope": "Low priority, awaiting Benjamin approval to activate"
+    }
+  ],
   "trading": {
+    "status": "Paper Trading (Phase 3) — BLOCKED",
     "accountValue": 0,
     "unrealizedPnl": 0,
     "openPositions": 0,
     "todayTrades": 0,
     "todayPnl": 0,
-    "strategiesLoaded": 20,
+    "strategiesLoaded": 6,
+    "strategiesTotal": 20,
     "dailyLimit": 120,
-    "phase": "Paper Trading (Phase 3) \u2014 BLOCKED",
+    "activeStrategies": [
+      {
+        "name": "BOLLINGER_SQUEEZE",
+        "winRate": 0.636,
+        "riskRewardRatio": 1.81,
+        "status": "active"
+      },
+      {
+        "name": "ORB_30MIN",
+        "winRate": 0.619,
+        "riskRewardRatio": 1.56,
+        "status": "active"
+      },
+      {
+        "name": "ORB_v4",
+        "winRate": 0.619,
+        "riskRewardRatio": 1.56,
+        "status": "active"
+      },
+      {
+        "name": "RSI_EXTREMES",
+        "winRate": 0.59,
+        "riskRewardRatio": 1.74,
+        "status": "active"
+      },
+      {
+        "name": "VWAP_RECLAIM",
+        "winRate": 0.609,
+        "riskRewardRatio": 1.64,
+        "status": "active"
+      },
+      {
+        "name": "MACD_CROSSOVER",
+        "winRate": 0.585,
+        "riskRewardRatio": 1.56,
+        "status": "active"
+      }
+    ],
+    "watchlist": [
+      "SPY",
+      "QQQ",
+      "DIA",
+      "IWM",
+      "AAPL",
+      "MSFT",
+      "GOOGL",
+      "AMZN",
+      "META",
+      "NVDA",
+      "TSLA"
+    ],
     "positions": []
   },
   "costs": {
-    "today": 33.8,
+    "today": 0,
     "dailyLimit": 20,
     "monthlyBudget": 200,
-    "monthTotal": 48.49
+    "monthTotal": 0,
+    "thresholds": {
+      "warning": 25,
+      "pause": 30,
+      "halt": 35
+    },
+    "alerts": []
   },
   "email": {
+    "status": "OFFLINE",
+    "reason": "Gmail auth failed May 1 12:57 PM",
     "totalReplies": 811,
     "unread": 0,
-    "flagged": 0
+    "flagged": 0,
+    "autoResponder": "DISABLED — awaiting auth recovery"
   },
   "newsletter": {
     "subscribers": 287,
@@ -39,30 +224,66 @@
     "queued": 89,
     "lastPosted": "2026-04-11T14:53:33.976674",
     "status": "blocked",
-    "error": "401 Unauthorized \u2014 credentials expired"
+    "error": "401 Unauthorized — credentials expired"
+  },
+  "discord": {
+    "status": "OFFLINE",
+    "reason": "Bot token expired since April 25",
+    "note": "Gateway running, 13 channels monitored (degraded)",
+    "channelsMonitored": 13,
+    "promiseDetection": "OFFLINE"
   },
   "agents": {
-    "cronJobs": 39,
-    "cronHealthy": 27,
-    "cronErrors": 12
+    "cronJobs": 23,
+    "cronHealthy": 23,
+    "cronErrors": 0,
+    "activeAgents": 8,
+    "roster": [
+      "Charles (Hub/Coordinator)",
+      "Brooke (Primary Contact)",
+      "Nova (Bennett's Brief)",
+      "Quinn (RLM Operations)",
+      "Skyler (Trading Monitor)",
+      "Atlas (Health & Compliance)",
+      "Studio (Content Creation)",
+      "Vault (Knowledge & Memory)"
+    ]
   },
   "companies": {
     "rlm": {
       "revenue": 2800000,
       "margin": 34,
-      "activeProjects": 354
+      "activeProjects": 354,
+      "name": "RLM Enterprises Inc.",
+      "status": "Operational"
     },
     "nvcc": {
       "members": 128,
       "ytdRevenue": 145000,
       "fleetValue": 4200000,
-      "rating": 4.8
+      "rating": 4.8,
+      "name": "Napa Valley Car Club",
+      "status": "Operational"
+    },
+    "napa_event": {
+      "name": "The Napa Event",
+      "status": "Operational",
+      "focus": "Annual luxury automotive + lifestyle event"
+    },
+    "atlas": {
+      "name": "Atlas",
+      "status": "Operational",
+      "focus": "Strategic business development & operations",
+      "activeProjects": 0,
+      "ytdRevenue": 0,
+      "notes": "New business entity — details pending"
     }
   },
   "services": {
     "missionControl": {
       "status": "up",
-      "url": "https://mission-hub-iota.vercel.app"
+      "url": "https://mission-hub-iota.vercel.app",
+      "needsUpdate": "Restyle pending (cinematic dark theme)"
     },
     "aiSupport": {
       "status": "up",
@@ -70,17 +291,269 @@
     },
     "bookingIntake": {
       "status": "up",
-      "port": 4344
+      "port": 4344,
+      "formspreeStatus": "Integrated but not activated"
     },
     "paperTrader": {
       "status": "running"
     },
-    "discord": {
-      "status": "up",
-      "note": "Gateway running, 13 channels monitored"
+    "stockTracker": {
+      "status": "built",
+      "url": "file:///Users/bennysbot/.openclaw/workspace/trading/dashboard/stock-tracker.html",
+      "deploymentStatus": "Ready for Vercel push",
+      "theme": "Dark premium (Keychron-inspired), #e8ff48 accent"
     },
     "gateway": {
-      "status": "up"
+      "status": "up",
+      "healthCheck": "OK"
+    }
+  },
+  "recentActivity": {
+    "lastUpdated": "2026-05-03T13:58:00.000000",
+    "lastUpdate": {
+      "service": "Heartbeat Poll",
+      "timestamp": "2026-05-03T13:58:00.000000",
+      "action": "Full system status update with all previous requests integrated"
+    }
+  },
+  "skills": {
+    "total": 38,
+    "categories": {
+      "content_creation": {
+        "name": "Content & Media Creation",
+        "skills": [
+          {
+            "name": "bennett-social-publisher",
+            "description": "Social media publishing (Instagram, Twitter, multi-channel)",
+            "status": "active"
+          },
+          {
+            "name": "instagram-content-engine",
+            "description": "Instagram content generation + scheduling",
+            "status": "active"
+          },
+          {
+            "name": "instagram-voiceover",
+            "description": "Audio voiceover generation for Instagram content",
+            "status": "active"
+          },
+          {
+            "name": "video-captioning",
+            "description": "Auto-caption generation for videos",
+            "status": "active"
+          },
+          {
+            "name": "video-frames",
+            "description": "Extract frames from video files",
+            "status": "active"
+          },
+          {
+            "name": "advanced-video-processing",
+            "description": "Complex video editing + effects",
+            "status": "active"
+          },
+          {
+            "name": "product-disassembly-video",
+            "description": "Generate product teardown videos",
+            "status": "active"
+          }
+        ]
+      },
+      "document_processing": {
+        "name": "Document Processing",
+        "skills": [
+          {
+            "name": "pdf",
+            "description": "PDF analysis + extraction",
+            "status": "active"
+          },
+          {
+            "name": "docx",
+            "description": "Word document parsing + manipulation",
+            "status": "active"
+          },
+          {
+            "name": "pptx",
+            "description": "PowerPoint presentation automation",
+            "status": "active"
+          },
+          {
+            "name": "xlsx",
+            "description": "Excel spreadsheet processing",
+            "status": "active"
+          }
+        ]
+      },
+      "automation_integration": {
+        "name": "Automation & Integration",
+        "skills": [
+          {
+            "name": "taskflow",
+            "description": "Workflow orchestration + task automation",
+            "status": "active"
+          },
+          {
+            "name": "taskflow-inbox-triage",
+            "description": "Smart inbox organization + triage",
+            "status": "active"
+          },
+          {
+            "name": "email-responder",
+            "description": "Auto-email responses + filtering",
+            "status": "active"
+          },
+          {
+            "name": "discord",
+            "description": "Discord bot integration + monitoring",
+            "status": "degraded"
+          },
+          {
+            "name": "bluebubbles",
+            "description": "iMessage integration + control",
+            "status": "active"
+          }
+        ]
+      },
+      "business_ops": {
+        "name": "Business Operations",
+        "skills": [
+          {
+            "name": "lead-pipeline",
+            "description": "Lead management + pipeline tracking",
+            "status": "active"
+          },
+          {
+            "name": "compliance-audit",
+            "description": "Compliance checks + audit reporting",
+            "status": "active"
+          },
+          {
+            "name": "accountability",
+            "description": "Task tracking + accountability monitoring",
+            "status": "active"
+          },
+          {
+            "name": "scheduled-briefs",
+            "description": "Automated daily/weekly briefing reports",
+            "status": "active"
+          }
+        ]
+      },
+      "system_health": {
+        "name": "System Health & Recovery",
+        "skills": [
+          {
+            "name": "healthcheck",
+            "description": "System health + diagnostics",
+            "status": "active"
+          },
+          {
+            "name": "power-recovery",
+            "description": "Recovery from power loss + crashes",
+            "status": "active"
+          },
+          {
+            "name": "doctor-fix",
+            "description": "Automated issue diagnosis + repair",
+            "status": "active"
+          },
+          {
+            "name": "capability-verification",
+            "description": "Verify system capabilities + permissions",
+            "status": "active"
+          }
+        ]
+      },
+      "knowledge_memory": {
+        "name": "Knowledge & Memory",
+        "skills": [
+          {
+            "name": "memory-maintenance",
+            "description": "Knowledge base + memory management",
+            "status": "active"
+          },
+          {
+            "name": "self-improvement",
+            "description": "Auto-optimization + self-learning",
+            "status": "active"
+          },
+          {
+            "name": "find-skills",
+            "description": "Skill discovery + management",
+            "status": "active"
+          }
+        ]
+      },
+      "web_tools": {
+        "name": "Web & Search Tools",
+        "skills": [
+          {
+            "name": "tavily-search",
+            "description": "Web search + content aggregation",
+            "status": "active"
+          },
+          {
+            "name": "browser-automation",
+            "description": "Browser control + web automation",
+            "status": "active"
+          },
+          {
+            "name": "sandboxed-browser-automation",
+            "description": "Secure sandboxed browser control",
+            "status": "active"
+          }
+        ]
+      },
+      "developer_tools": {
+        "name": "Developer & Admin Tools",
+        "skills": [
+          {
+            "name": "skill-creator",
+            "description": "Create + deploy new skills",
+            "status": "active"
+          },
+          {
+            "name": "acp-router",
+            "description": "ACP agent routing + coordination",
+            "status": "active"
+          },
+          {
+            "name": "node-connect",
+            "description": "Node.js environment integration",
+            "status": "active"
+          },
+          {
+            "name": "openai-whisper-api",
+            "description": "Audio transcription via Whisper",
+            "status": "active"
+          },
+          {
+            "name": "gog",
+            "description": "GOG platform integration",
+            "status": "active"
+          },
+          {
+            "name": "nano-banana-pro",
+            "description": "Banana ML platform integration",
+            "status": "active"
+          },
+          {
+            "name": "google-auth-recovery",
+            "description": "Google OAuth recovery + renewal",
+            "status": "active"
+          },
+          {
+            "name": "screenshot",
+            "description": "Screenshot capture + management",
+            "status": "active"
+          },
+          {
+            "name": "weather",
+            "description": "Weather data + forecasting",
+            "status": "active"
+          }
+        ]
+      }
     }
   }
 }

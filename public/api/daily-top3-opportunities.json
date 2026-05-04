@@ -1,0 +1,39 @@
+{
+  "generated": "2026-05-03T10:39:52.562152",
+  "date": "Sunday, May 03, 2026",
+  "opportunities": [
+    {
+      "rank": 1,
+      "type": "TRADING",
+      "ticker": "NVDA",
+      "score": 10,
+      "action": "BUY",
+      "reason": "Strong consensus (2 strategies agree)",
+      "entry": 123.45,
+      "target": 128.0,
+      "stop_loss": 120.5
+    },
+    {
+      "rank": 2,
+      "type": "TRADING",
+      "ticker": "QQQ",
+      "score": 10,
+      "action": "BUY",
+      "reason": "Moderate consensus (3 strategies mixed)",
+      "entry": 445.2,
+      "target": 452.0,
+      "stop_loss": 441.0
+    },
+    {
+      "rank": 3,
+      "type": "CONTENT",
+      "title": "How to Use Bollinger Bands for Breakout Trading",
+      "score": 8.6,
+      "category": "Education",
+      "reason": "High-demand educational content, script ready for recording",
+      "readiness": "script_ready",
+      "production_days": 1
+    }
+  ],
+  "summary": "\ud83d\udcca 2 Trading Opportunityies | \ud83c\udfac 1 Content Idea"
+}
